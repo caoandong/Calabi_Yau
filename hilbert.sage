@@ -132,8 +132,13 @@ def Triang(p, output):
     output.write("Vol: %s\n" % vol_min)
     #print 'vol_min: ', vol_min
 
-input_path = 'input.csv'
-output_path = 'output.txt'
+input_path = raw_input("Please input the input path: ")
+input_path = str(input_path)
+output_path = raw_input("Please input the output path: ")
+output_path = str(output_path)
+
+#input_path = 'input.csv'
+#output_path = 'output.txt'
 with open(input_path) as f:
     pts = []
     pts_tmp = []
