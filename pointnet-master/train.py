@@ -23,7 +23,7 @@ parser.add_argument('--model', default='pointnet_cls', help='Model name: pointne
 parser.add_argument('--log_dir', default='log', help='Log dir [default: log]')
 parser.add_argument('--num_point', type=int, default=1024, help='Point Number [256/512/1024/2048] [default: 1024]')
 parser.add_argument('--max_epoch', type=int, default=250, help='Epoch to run [default: 250]')
-parser.add_argument('--batch_size', type=int, default=10, help='Batch Size during training [default: 10]')
+parser.add_argument('--batch_size', type=int, default=6, help='Batch Size during training [default: 6]')
 parser.add_argument('--learning_rate', type=float, default=0.001, help='Initial learning rate [default: 0.001]')
 parser.add_argument('--momentum', type=float, default=0.9, help='Initial learning rate [default: 0.9]')
 parser.add_argument('--optimizer', default='adam', help='adam or momentum [default: adam]')
@@ -68,7 +68,8 @@ HOSTNAME = socket.gethostname()
 #    os.path.join(BASE_DIR, 'data/modelnet40_ply_hdf5_2048/test_files.txt'))
 
 #TRAIN_FILES_path = input("Please input the path of the training file (example: /home/carnd/MLCY/output/train/cube_337.txt): ")
-TRAIN_FILES_path = '/home/carnd/MLCY/output/train/train_cube_337.txt'
+#TRAIN_FILES_path = '/home/carnd/MLCY/output/train/train_cube_337.txt'
+TRAIN_FILES_path = '/home/carnd/CYML/output/train/train_cube_5_35.txt'
 TRAIN_FILES_path = str(TRAIN_FILES_path)
 
 train_file = open(TRAIN_FILES_path, 'r')
@@ -77,16 +78,20 @@ TRAIN_FILES = [ eval(line) for line in train_file]
 
 #TODO: figure out a good way to find the number of points
 #NUM_POINT = len(TRAIN_FILES)
-NUM_POINT = 35
+NUM_POINT = 128
+SCALE = 1e10
+print("Scale: ", SCALE)
 
 TRAIN_FILES = np.array(TRAIN_FILES)
-TRAIN_FILES = TRAIN_FILES.reshape((10, -1, 2))
+print("Train file shape: ", TRAIN_FILES.shape)
+TRAIN_FILES = TRAIN_FILES.reshape((6, -1, 2))
 print("Train file loaded: ", TRAIN_FILES.size)
 TRAIN_FILES = TRAIN_FILES.tolist()
 print("Sample: ", TRAIN_FILES[0][0])
 
 #TEST_FILES_path = input("Please input the path of the test file (example: /home/carnd/MLCY/output/train/test_cube_30.txt): ")
-TEST_FILES_path = '/home/carnd/MLCY/output/train/test_cube_30.txt'
+#TEST_FILES_path = '/home/carnd/MLCY/output/train/test_cube_30.txt'
+TEST_FILES_path = '/home/carnd/CYML/output/train/cube_3_35.txt'
 TEST_FILES_path = str(TEST_FILES_path)
 
 test_file = open(TEST_FILES_path, 'r')
@@ -168,9 +173,11 @@ def train():
         config.log_device_placement = False
         sess = tf.Session(config=config)
 
+        '''
         #Restore graph
         saver.restore(sess, tf.train.latest_checkpoint(LOG_DIR))
-
+        '''
+        
         # Add summary writers
         #merged = tf.merge_all_summaries()
         merged = tf.summary.merge_all()
@@ -236,7 +243,7 @@ def train_one_epoch(sess, ops, train_writer, output_train):
         print("num batches: ", num_batches)
 
         current_data = np.array(current_data)
-        current_label = np.array(current_label)
+        current_label = SCALE*np.array(current_label)
         print("current_data size: ", current_data.shape)
 
         total_correct = 0
@@ -261,7 +268,7 @@ def train_one_epoch(sess, ops, train_writer, output_train):
             train_writer.add_summary(summary, step)
             #pred_val = np.argmax(pred_val, 1)
             pred_val = np.squeeze(pred_val)
-            correct = np.sum(pred_val - current_label[start_idx:end_idx] <= 0.01 )
+            correct = np.sum(pred_val - current_label[start_idx:end_idx] <= 1 )
             total_correct += correct
             total_seen += BATCH_SIZE
             loss_sum += loss_val
@@ -311,9 +318,9 @@ def eval_one_epoch(sess, ops, test_writer, output_test):
                          ops['is_training_pl']: is_training}
             summary, step, loss_val, pred_val = sess.run([ops['merged'], ops['step'],
                 ops['loss'], ops['pred']], feed_dict=feed_dict)
-            pred_val = np.argmax(pred_val, 1)
+            pred_val = pred_val/SCALE#np.argmax(pred_val, 1)
             #correct = np.sum(pred_val == current_label[start_idx:end_idx])
-            correct = np.sum(pred_val - current_label[start_idx:end_idx] <= 0.01 )
+            correct = np.sum(pred_val - current_label[start_idx:end_idx] <= 0.001 )
             total_correct += correct
             total_seen += BATCH_SIZE
 

@@ -377,7 +377,7 @@ def NSolve(Series):
 
 MAX_PTS = 35
 
-def generate_hilbert_vol(input_path, output_hilb, output_vol):
+def generate_hilbert_vol(input_path, output_hilb_path, output_vol_path):
     pts = input_data(input_path)
     for i in range(len(pts)):
         pts_new = pts[i]
@@ -399,13 +399,16 @@ def generate_hilbert_vol(input_path, output_hilb, output_vol):
 
         if num_pts < MAX_PTS:
             for j in range(MAX_PTS - num_pts):
-                img_num =
                 pts_new.append([1j,1j,1j])
 
         output_list = [pts_new, vol]
         print i,'-th output: ', output_list
+        output_hilb = open(output_hilb_path, 'a')
+        output_vol = open(output_vol_path, 'a')
         output_hilb.write("%s\n" % str([Series, sol]))
         output_vol.write("%s\n" % str(output_list))
+        output_hilb.close()
+        output_vol.close()
 
 #output/polygon/poly_out_2.txt
 #output/series/series_cube_30.txt
@@ -420,9 +423,9 @@ output_vol_path = str(output_vol_path)
 
 #output_hilb_path = 'output/series/output_2.txt'
 #output_vol_path = 'output/vol/output_cube_30.txt'
-output_hilb = open(output_hilb_path, 'w')
-output_vol = open(output_vol_path, 'w')
-generate_hilbert_vol(input_path, output_hilb, output_vol)
-output_hilb.close()
-output_vol.close()
+#output_hilb = open(output_hilb_path, 'w')
+#output_vol = open(output_vol_path, 'w')
+generate_hilbert_vol(input_path, output_hilb_path, output_vol_path)
+#output_hilb.close()
+#output_vol.close()
 print 'Done.'

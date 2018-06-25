@@ -59,17 +59,17 @@ def add_lattice(poly):
     pts = []
     vert = list(poly.vertices())
     num_pts = len(vert)
-    
+
     for i in range(num_pts):
         pts.append(list(vert[i]))
-        
+
     #find the maximum of points
     pts = np.array(pts)
     pts_max = int(max(np.amax(np.absolute(pts), axis=_sage_const_0 )))+_sage_const_1 
     pts_new = pts
-    
+
     faces = face_list(poly)
-    
+
     for i in range(-pts_max, pts_max):
         for j in range(-pts_max, pts_max):
             for k in range(-pts_max, pts_max):
@@ -78,14 +78,14 @@ def add_lattice(poly):
                     continue
                 if poly.contains(latt) == _sage_const_1  or on_edge(latt, faces) == _sage_const_1 :
                 #if on_edge(latt, faces) == 1:
-                    pts_new = np.append(pts_new, np.array(latt).reshape((_sage_const_1 ,_sage_const_3 )), axis = _sage_const_0 )  
+                    pts_new = np.append(pts_new, np.array(latt).reshape((_sage_const_1 ,_sage_const_3 )), axis = _sage_const_0 )
     #print 'pts_new: '
     #print pts_new
     pts_new = pts_new.tolist()
     poly_new = Polyhedron(vertices = pts_new)
-    
-    
-    
+
+
+
     return poly_new, pts_new
 
 
@@ -95,38 +95,38 @@ def add_lattice(poly):
 def remove_pts(pts, remove_pt):
     #points to remove
     pts_removed = pts
-    
+
     #backup points
     pts_save = np.array(pts)
-    
+
     #remove points
     pts_removed.remove(remove_pt)
-    
+
     #restore
     pts = pts_save.tolist()
-    
+
     poly_new = Polyhedron(vertices = pts_removed)
-    
+
     return poly_new
 
 #Count the number of lattice points inside a polytope
 def num_latt(poly):
     count = _sage_const_0 
-    
+
     #convert vertices to points
     pts = []
     vert = list(poly.vertices())
     num_pts = len(vert)
-    
+
     for i in range(num_pts):
         pts.append(list(vert[i]))
-    
+
     #find the maximum of points
     pts = np.array(pts)
     pts_max = int(max(np.amax(pts, axis=_sage_const_0 )))+_sage_const_1 
-    
+
     faces = face_list(poly)
-    
+
     for i in range(-pts_max, pts_max):
         for j in range(-pts_max, pts_max):
             for k in range(-pts_max, pts_max):
@@ -136,7 +136,7 @@ def num_latt(poly):
                 if poly.contains(latt) == _sage_const_1 :
                     count += _sage_const_1 
     return count
-   
+
 
 
 
@@ -145,17 +145,17 @@ def num_latt(poly):
 output_path = 'output/polygon/poly_out_1024.txt'
 
 def generate_poly(size, num_poly, output_path):
-    
+
     output = open(output_path, 'w')
-    
+
     p1 = polytopes.hypercube(_sage_const_3 )
     p1 = p1.dilation(size)
-    
+
     poly, pts = add_lattice(p1)
     print "Step 1: add lattice done."
-    
+
     for i in range(num_poly):
-        
+
         face_pts = list(poly.faces(_sage_const_2 ))
         num_faces = len(face_pts)
         face_idx = np.random.randint(num_faces)
@@ -166,11 +166,11 @@ def generate_poly(size, num_poly, output_path):
         output.write("%s\n" % poly_vert)
         #poly.plot().save("img/plot_2_%d.png" % i)
         print 'Polytope ', i, ' done.'
-        
+
         if len(poly_vert) <= _sage_const_4 :
             print 'Not enough points.'
             break
-    
+
     print "Step 2: remove points done."
     output.close()
 
