@@ -172,6 +172,46 @@ def generate_poly(size, num_poly, output_path):
     print "Step 2: remove points done."
     output.close()
 
+#def tetra():
+
+def cylinder_tri(height):
+    out_path = 'output/polygon/cylinder/cyl_tri_%d.txt' % height
+    out_file = open(out_path, 'w')
+    for N in range(1, height):
+        for h1 in range(1, N+1):
+            for h2 in range(1, h1+1):
+                h3 = N-h1-h2
+                if h3 > 0 and h3 <= h2:
+                    out = [[0,0,0],[1,0,0],[0,1,0],[0,0,h1],[1,0,h2],[0,1,h3]]
+                    out_file.write("%s\n" % out)
+    out_file.close()
+    print("Done.")
+
+def cylinder_sq(height):
+    out_path = 'output/polygon/cylinder/cyl_sq_%d.txt' % height
+    out_file = open(out_path, 'w')
+    for N in range(1, height):
+        for h1 in range(1, N+1):
+            for h2 in range(1, h1+1):
+                for h3 in range(1, h2+1):
+                    h4 = N-h1-h2-h3
+                    if h4 > 0 and h4 <= h3:
+                        out = [[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,h1],[1,0,h2],[0,1,h3],[1,1,h4]]
+                        out_file.write("%s\n" % out)
+    out_file.close()
+    print("Done.")
+
+def simplex(height):
+    out_path = 'output/polygon/simplex/xyz_%d.txt' % height
+    out_file = open(out_path, 'w')
+    for x in range(1, height):
+        for y in range(1, height):
+            for z in range(1, height):
+                out = [[x,0,0],[0,y,0],[0,0,z]]
+                out_file.write("%s\n" % out)
+    out_file.close()
+    print("Done.")
+
 '''
 size = raw_input("Please input the size of the cube: ")
 size = int(size)
@@ -184,4 +224,9 @@ size = 2.5
 num_poly = 2048
 output_path = 'output/polygon/cube/5x5.txt'
 
-generate_poly(size, num_poly, output_path)
+#generate_poly(size, num_poly, output_path)
+height = 100
+
+cylinder_tri(height)
+cylinder_sq(height)
+simplex(height)
