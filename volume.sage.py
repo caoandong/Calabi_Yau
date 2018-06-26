@@ -11,6 +11,7 @@ import scipy.optimize
 import csv
 #from scipy.optimize import minimize
 #import tensorflow as tf
+import os
 
 PointConfiguration.set_engine('internal')
 #PointConfiguration.set_engine('topcom')
@@ -383,38 +384,49 @@ def NSolve(Series):
 MAX_PTS = _sage_const_35 
 
 def generate_hilbert_vol(input_path, output_hilb_path, output_vol_path):
+    count = _sage_const_0 
     pts = input_data(input_path)
     for i in range(len(pts)):
-        pts_new = pts[i]
-        points = PointConfiguration(pts_new)
+        try:
+            pts_new = pts[i]
+            points = PointConfiguration(pts_new)
 
-        #Triangulate
-        triang = points.triangulate()
-        triang = [list(triang[i]) for i in range(len(triang))]
-        triang_new = []
-        check_triang(triang, pts_new, triang_new)
+            #Triangulate
+            try:
+                triang = points.triangulate()
+            except:
+                print("Cannot Triangulate.")
+                poly = Polyhedron(pts_new)
+                poly.plot().save("img/failed/triang/plot_2_%d.png" % count)
+                count += _sage_const_1 
+                continue
+            triang = [list(triang[i]) for i in range(len(triang))]
+            triang_new = []
+            check_triang(triang, pts_new, triang_new)
 
-        #Calculate Hilbert Series (write to output)
-        Series = Hilb(triang_new, _sage_const_0 )
-        print("Hilbert Series: ", Series)
+            #Calculate Hilbert Series (write to output)
+            Series = Hilb(triang_new, _sage_const_0 )
+            print("Hilbert Series: ", Series)
 
-        #Calculate Volume (write to output)
-        vol, sol = NSolve(Series)
+            #Calculate Volume (write to output)
+            vol, sol = NSolve(Series)
 
-        num_pts = len(pts_new)
+            num_pts = len(pts_new)
 
-        if num_pts < MAX_PTS:
-            for j in range(MAX_PTS - num_pts):
-                pts_new.append([_sage_const_1j ,_sage_const_1j ,_sage_const_1j ])
+            if num_pts < MAX_PTS:
+                for h in range(MAX_PTS - num_pts):
+                    pts_new.append([_sage_const_1j ,_sage_const_1j ,_sage_const_1j ])
 
-        output_list = [pts_new, vol]
-        print i,'-th output: ', output_list
-        output_hilb = open(output_hilb_path, 'a')
-        output_vol = open(output_vol_path, 'a')
-        output_hilb.write("%s\n" % str([Series, sol]))
-        output_vol.write("%s\n" % str(output_list))
-        output_hilb.close()
-        output_vol.close()
+            output_list = [pts_new, vol]
+            print i,'-th output: ', output_list
+            output_hilb = open(output_hilb_path, 'a')
+            output_vol = open(output_vol_path, 'a')
+            output_hilb.write("%s\n" % str([Series, sol]))
+            output_vol.write("%s\n" % str(output_list))
+            output_hilb.close()
+            output_vol.close()
+        except:
+            continue
 
 #output/polygon/poly_out_2.txt
 #output/series/series_cube_30.txt

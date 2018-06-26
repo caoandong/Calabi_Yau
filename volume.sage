@@ -6,6 +6,7 @@ import scipy.optimize
 import csv
 #from scipy.optimize import minimize
 #import tensorflow as tf
+import os
 
 PointConfiguration.set_engine('internal')
 #PointConfiguration.set_engine('topcom')
@@ -378,6 +379,7 @@ def NSolve(Series):
 MAX_PTS = 35
 
 def generate_hilbert_vol(input_path, output_hilb_path, output_vol_path):
+    count = 0
     pts = input_data(input_path)
     for i in range(len(pts)):
         try:
@@ -385,7 +387,14 @@ def generate_hilbert_vol(input_path, output_hilb_path, output_vol_path):
             points = PointConfiguration(pts_new)
 
             #Triangulate
-            triang = points.triangulate()
+            try:
+                triang = points.triangulate()
+            except:
+                print("Cannot Triangulate.")
+                poly = Polyhedron(pts_new)
+                poly.plot().save("img/failed/triang/plot_2_%d.png" % count)
+                count += 1
+                continue
             triang = [list(triang[i]) for i in range(len(triang))]
             triang_new = []
             check_triang(triang, pts_new, triang_new)
