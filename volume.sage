@@ -386,6 +386,8 @@ def generate_vol_cylinder(input_path, output_hilb_path, output_vol_path):
     pts = [eval(line) for line in input_file]
     for i in range(len(pts)):
         pts_new = pts[i]
+        
+        '''
         print("pts_new: ", pts_new)
         Series = Triang(pts_new, 0)
         '''
@@ -397,7 +399,6 @@ def generate_vol_cylinder(input_path, output_hilb_path, output_vol_path):
             fail_out.write("%s\n" % pts_new)
             fail_out.close()
             continue
-        '''
         
         #Calculate Volume (write to output)
         vol, sol = NSolve(Series)
