@@ -333,7 +333,7 @@ def func(p, *d):
 
 def constraint(Series, sol):
     vol = Series(b1 = sol[0], b2 = sol[1], b3 = sol[2])
-    if vol <= 1 and vol >= 0:
+    if vol <= 1 and vol >= float(1/((3*SIDE_LENGTH)**3)):
         return 1, vol
 
     print 'volume: ', vol, ' is out of bounds.'
@@ -358,8 +358,8 @@ def NSolve(Series):
             print 'solution: ', sol
         except:
             continue
-        if abs(sol[0]) > 100 or abs(sol[1]) > 100 or abs(sol[2]) > 100:
-            continue
+        #if abs(sol[0]) > 1000 or abs(sol[1]) > 1000 or abs(sol[2]) > 1000:
+        #    continue
         const, vol = constraint(Series, sol)
 
         count += 1
@@ -380,52 +380,59 @@ MAX_PTS = 35
 def generate_hilbert_vol(input_path, output_hilb_path, output_vol_path):
     pts = input_data(input_path)
     for i in range(len(pts)):
-        pts_new = pts[i]
-        points = PointConfiguration(pts_new)
+        try:
+            pts_new = pts[i]
+            points = PointConfiguration(pts_new)
 
-        #Triangulate
-        triang = points.triangulate()
-        triang = [list(triang[i]) for i in range(len(triang))]
-        triang_new = []
-        check_triang(triang, pts_new, triang_new)
+            #Triangulate
+            triang = points.triangulate()
+            triang = [list(triang[i]) for i in range(len(triang))]
+            triang_new = []
+            check_triang(triang, pts_new, triang_new)
 
-        #Calculate Hilbert Series (write to output)
-        Series = Hilb(triang_new, 0)
+            #Calculate Hilbert Series (write to output)
+            Series = Hilb(triang_new, 0)
+            print("Hilbert Series: ", Series)
 
-        #Calculate Volume (write to output)
-        vol, sol = NSolve(Series)
+            #Calculate Volume (write to output)
+            vol, sol = NSolve(Series)
 
-        num_pts = len(pts_new)
+            num_pts = len(pts_new)
 
-        if num_pts < MAX_PTS:
-            for j in range(MAX_PTS - num_pts):
-                pts_new.append([1j,1j,1j])
+            if num_pts < MAX_PTS:
+                for h in range(MAX_PTS - num_pts):
+                    pts_new.append([1j,1j,1j])
 
-        output_list = [pts_new, vol]
-        print i,'-th output: ', output_list
-        output_hilb = open(output_hilb_path, 'a')
-        output_vol = open(output_vol_path, 'a')
-        output_hilb.write("%s\n" % str([Series, sol]))
-        output_vol.write("%s\n" % str(output_list))
-        output_hilb.close()
-        output_vol.close()
+            output_list = [pts_new, vol]
+            print i,'-th output: ', output_list
+            output_hilb = open(output_hilb_path, 'a')
+            output_vol = open(output_vol_path, 'a')
+            output_hilb.write("%s\n" % str([Series, sol]))
+            output_vol.write("%s\n" % str(output_list))
+            output_hilb.close()
+            output_vol.close()
+        except:
+            continue
 
 #output/polygon/poly_out_2.txt
 #output/series/series_cube_30.txt
 #output/train/train.txt
 
+SIDE_LENGTH = 10
+'''
 input_path = raw_input("Please input the input path (example: output/polygon/poly_out_1024.txt): ")
 input_path = str(input_path)
 output_hilb_path = raw_input("Please input the output path of the hilbert series (example: output/series/series_cube_1024.txt): ")
 output_hilb_path = str(output_hilb_path)
 output_vol_path = raw_input("Please input the output path of the volume (example: output/vol/vol_cube_30.txt): ")
 output_vol_path = str(output_vol_path)
-
-#output_hilb_path = 'output/series/output_2.txt'
-#output_vol_path = 'output/vol/output_cube_30.txt'
-#output_hilb = open(output_hilb_path, 'w')
-#output_vol = open(output_vol_path, 'w')
+'''
+input_path = 'output/polygon/cube/3x3.txt'
+output_hilb_path = 'output/series/cube/3x3_series.txt'
+output_vol_path = 'output/vol/cube/3x3_vol.txt'
+output_hilb = open(output_hilb_path, 'w')
+output_vol = open(output_vol_path, 'w')
 generate_hilbert_vol(input_path, output_hilb_path, output_vol_path)
-#output_hilb.close()
-#output_vol.close()
+output_hilb.close()
+output_vol.close()
 print 'Done.'

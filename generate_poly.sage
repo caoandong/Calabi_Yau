@@ -141,14 +141,15 @@ output_path = 'output/polygon/poly_out_1024.txt'
 
 def generate_poly(size, num_poly, output_path):
 
-    #output = open(output_path, 'w')
+    output = open(output_path, 'w')
 
     p1 = polytopes.hypercube(3)
+    p1 = p1.translation([1,1,1])
     p1 = p1.dilation(size)
 
     poly, pts = add_lattice(p1)
     print "Step 1: add lattice done."
-
+    
     for i in range(num_poly):
 
         face_pts = list(poly.faces(2))
@@ -158,9 +159,9 @@ def generate_poly(size, num_poly, output_path):
         remove_pt = list(face_pts[face_idx].vertices()[pt_idx])
         poly = remove_pts(pts, remove_pt)
         poly_vert = vert_to_list(poly.vertices())
-        output = open(output_path, 'a')
+        
         output.write("%s\n" % poly_vert)
-        output.close()
+        
         #poly.plot().save("img/plot_2_%d.png" % i)
         print 'Polytope ', i, ' done.'
 
@@ -169,13 +170,18 @@ def generate_poly(size, num_poly, output_path):
             break
 
     print "Step 2: remove points done."
-    #output.close()
+    output.close()
 
+'''
 size = raw_input("Please input the size of the cube: ")
 size = int(size)
 num_poly = raw_input("Please input the number of polygon: ")
 num_poly = int(num_poly)
 output_path = raw_input("Please input the output path: ")
 output_path = str(output_path)
+'''
+size = 2.5
+num_poly = 2048
+output_path = 'output/polygon/cube/5x5.txt'
 
 generate_poly(size, num_poly, output_path)

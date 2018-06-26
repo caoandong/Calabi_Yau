@@ -50,8 +50,12 @@ def rotate_point_cloud(batch_data):
         Return:
           BxNx3 array, rotated batch of point clouds
     """
+    
+    
     batch_data = np.array(batch_data)
     rotated_data = []
+    
+    '''
     for k in range(batch_data.shape[0]):
         rotation_angle = np.random.uniform() * 2 * np.pi
         cosval = np.cos(rotation_angle)
@@ -61,6 +65,40 @@ def rotate_point_cloud(batch_data):
                                     [-sinval, 0, cosval]])
         shape_pc = np.array(batch_data[k])
         rotated_data.append(np.dot(shape_pc.reshape((-1, 3)), rotation_matrix).tolist())
+    return np.array(rotated_data)
+    '''
+    
+    # GL(3,Z) transformation of the set
+    option = np.random.randint(2)
+    if option == 0:
+        # Rotation
+        option = np.random.randint(3)
+        if option == 0:
+            # Around x-axis
+            mat = np.array([[1, 0, 0], [0, 0, 1], [0, -1, 0]])
+        elif option == 1:
+            # Around y-axis
+            mat = np.array([[0, 0, -1], [0, 1, 0], [1, 0, 0]])
+        elif option == 2:
+            # Around z-axis
+            mat = np.array([[0, 1, 0], [0, 0, -1], [0, 0, 1]])
+    elif option == 1:
+        # Reflection
+        option = np.random.randint(3)
+        if option == 0:
+            # Around yz-plane
+            mat = np.array([[-1, 0, 0], [0, 1, 0], [0, 0, 1]])
+        elif option == 1:
+            # Around xz-plane
+            mat = np.array([[1, 0, 0], [0, -1, 0], [0, 0, 1]])
+        elif option == 2:
+            # Around xy-plane
+            mat = np.array([[1, 0, 0], [0, 1, 0], [0, 0, -1]])
+    
+    for k in range(batch_data.shape[0]):
+        shape_pc = np.array(batch_data[k])
+        rotated_data.append(np.dot(shape_pc.reshape((-1, 3)), mat).tolist())
+    
     return np.array(rotated_data)
 
 
@@ -108,13 +146,31 @@ def load_h5(h5_filename):
 
 def loadDataFile(input_list):
     len_input = len(input_list)
+    print(len_input)
     data = [input_list[i][0] for i in range(len_input)]
     label = [input_list[i][1] for i in range(len_input)]
-    #print("data: ", data)
-    #print("label: ", label)
     return (data, label)
     #return load_h5(filename)
-
+    
+def to_grid(batch_data, size):
+    batch_grid = []
+    batch_num = batch_data.shape[0]
+    num_pts = batch_data.shape[1]
+    for i in range(batch_num):
+        grid = np.zeros((2*size, 2*size, 2*size))
+        data = batch_data[i]
+        for k in range(num_pts):
+            if isinstance(data[k][0], int) and isinstance(data[k][1], int) and isinstance(data[k][2], int):
+                for h in range(3):
+                    x = data[k][0] + size
+                    y = data[k][1] + size
+                    z = data[k][2] + size
+                    grid[x][y][z] = 1
+        grid = grid.flatten()
+        batch_grid.append(grid)
+    batch_grid = np.array(batch_grid)
+    return batch_grid
+    
 def load_h5_data_label_seg(h5_filename):
     f = h5py.File(h5_filename)
     data = f['data'][:]

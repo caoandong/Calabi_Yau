@@ -10,6 +10,8 @@ import sys
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 #print(os.path.join(BASE_DIR, 'data/modelnet40_ply_hdf5_2048/train_files.txt'))
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+
 sys.path.append(BASE_DIR)
 sys.path.append(os.path.join(BASE_DIR, 'models'))
 sys.path.append(os.path.join(BASE_DIR, 'utils'))
@@ -18,7 +20,7 @@ import tf_util
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--gpu', type=int, default=0, help='GPU to use [default: GPU 0]')
-parser.add_argument('--model', default='pointnet_cls', help='Model name: pointnet_cls or pointnet_cls_basic [default: pointnet_cls]')
+parser.add_argument('--model', default='pointnet_cls_grid', help='Model name: pointnet_cls or pointnet_cls_basic [default: pointnet_cls]')
 parser.add_argument('--log_dir', default='log', help='Log dir [default: log]')
 parser.add_argument('--num_point', type=int, default=1024, help='Point Number [256/512/1024/2048] [default: 1024]')
 parser.add_argument('--max_epoch', type=int, default=250, help='Epoch to run [default: 250]')
@@ -77,10 +79,7 @@ TRAIN_FILES = [ eval(line) for line in train_file]
 
 #TODO: figure out a good way to find the number of points
 #NUM_POINT = len(TRAIN_FILES)
-NUM_POINT = 128
 NUM_POINT_GRID = 1000
-SCALE = 1e10
-print("Scale: ", SCALE)
 
 TRAIN_FILES = np.array(TRAIN_FILES)
 print("Train file shape: ", TRAIN_FILES.shape)
@@ -133,11 +132,11 @@ def train():
     with tf.Graph().as_default():
         with tf.device('/gpu:'+str(GPU_INDEX)):
 
-            pointclouds_pl, labels_pl = MODEL.placeholder_inputs(BATCH_SIZE, NUM_POINT)
-            print("pointclouds_pl shape: ", BATCH_SIZE, NUM_POINT)
+            pointclouds_pl, labels_pl = MODEL.placeholder_inputs(BATCH_SIZE, NUM_POINT_GRID)
+            print("pointclouds_pl shape: ", BATCH_SIZE, NUM_POINT_GRID)
             is_training_pl = tf.placeholder(tf.bool, shape=())
             print(is_training_pl)
-
+            
             # Note the global_step=batch parameter to minimize.
             # That tells the optimizer to helpfully increment the 'batch' parameter for you every time it trains.
             batch = tf.Variable(0)
@@ -243,7 +242,7 @@ def train_one_epoch(sess, ops, train_writer, output_train):
         print("num batches: ", num_batches)
 
         current_data = np.array(current_data)
-        current_label = SCALE*np.array(current_label)
+        current_label = np.array(current_label)
         print("current_data size: ", current_data.shape)
 
         total_correct = 0
@@ -256,6 +255,7 @@ def train_one_epoch(sess, ops, train_writer, output_train):
 
             # Augment batched point clouds by rotation
             rotated_data = provider.rotate_point_cloud(current_data[start_idx:end_idx])
+            rotated_data = provider.to_grid(rotated_data, 5)
             print("")
 
             #Not jitter
@@ -268,7 +268,7 @@ def train_one_epoch(sess, ops, train_writer, output_train):
             train_writer.add_summary(summary, step)
             #pred_val = np.argmax(pred_val, 1)
             pred_val = np.squeeze(pred_val)
-            correct = np.sum(pred_val - current_label[start_idx:end_idx] <= 1 )
+            correct = np.sum(pred_val - current_label[start_idx:end_idx] <= 0.001 )
             total_correct += correct
             total_seen += BATCH_SIZE
             loss_sum += loss_val
@@ -318,7 +318,7 @@ def eval_one_epoch(sess, ops, test_writer, output_test):
                          ops['is_training_pl']: is_training}
             summary, step, loss_val, pred_val = sess.run([ops['merged'], ops['step'],
                 ops['loss'], ops['pred']], feed_dict=feed_dict)
-            pred_val = pred_val/SCALE#np.argmax(pred_val, 1)
+            pred_val = pred_val#np.argmax(pred_val, 1)
             #correct = np.sum(pred_val == current_label[start_idx:end_idx])
             correct = np.sum(pred_val - current_label[start_idx:end_idx] <= 0.001 )
             total_correct += correct

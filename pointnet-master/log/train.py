@@ -10,7 +10,6 @@ import sys
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 #print(os.path.join(BASE_DIR, 'data/modelnet40_ply_hdf5_2048/train_files.txt'))
 
-
 sys.path.append(BASE_DIR)
 sys.path.append(os.path.join(BASE_DIR, 'models'))
 sys.path.append(os.path.join(BASE_DIR, 'utils'))
@@ -79,6 +78,7 @@ TRAIN_FILES = [ eval(line) for line in train_file]
 #TODO: figure out a good way to find the number of points
 #NUM_POINT = len(TRAIN_FILES)
 NUM_POINT = 128
+NUM_POINT_GRID = 1000
 SCALE = 1e10
 print("Scale: ", SCALE)
 

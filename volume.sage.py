@@ -338,7 +338,7 @@ def func(p, *d):
 
 def constraint(Series, sol):
     vol = Series(b1 = sol[_sage_const_0 ], b2 = sol[_sage_const_1 ], b3 = sol[_sage_const_2 ])
-    if vol <= _sage_const_1  and vol >= _sage_const_0 :
+    if vol <= _sage_const_1  and vol >= float(_sage_const_1 /((_sage_const_3 *SIDE_LENGTH)**_sage_const_3 )):
         return _sage_const_1 , vol
 
     print 'volume: ', vol, ' is out of bounds.'
@@ -363,8 +363,8 @@ def NSolve(Series):
             print 'solution: ', sol
         except:
             continue
-        if abs(sol[_sage_const_0 ]) > _sage_const_100  or abs(sol[_sage_const_1 ]) > _sage_const_100  or abs(sol[_sage_const_2 ]) > _sage_const_100 :
-            continue
+        #if abs(sol[0]) > 1000 or abs(sol[1]) > 1000 or abs(sol[2]) > 1000:
+        #    continue
         const, vol = constraint(Series, sol)
 
         count += _sage_const_1 
@@ -396,6 +396,7 @@ def generate_hilbert_vol(input_path, output_hilb_path, output_vol_path):
 
         #Calculate Hilbert Series (write to output)
         Series = Hilb(triang_new, _sage_const_0 )
+        print("Hilbert Series: ", Series)
 
         #Calculate Volume (write to output)
         vol, sol = NSolve(Series)
@@ -419,19 +420,22 @@ def generate_hilbert_vol(input_path, output_hilb_path, output_vol_path):
 #output/series/series_cube_30.txt
 #output/train/train.txt
 
+SIDE_LENGTH = _sage_const_10 
+'''
 input_path = raw_input("Please input the input path (example: output/polygon/poly_out_1024.txt): ")
 input_path = str(input_path)
 output_hilb_path = raw_input("Please input the output path of the hilbert series (example: output/series/series_cube_1024.txt): ")
 output_hilb_path = str(output_hilb_path)
 output_vol_path = raw_input("Please input the output path of the volume (example: output/vol/vol_cube_30.txt): ")
 output_vol_path = str(output_vol_path)
-
-#output_hilb_path = 'output/series/output_2.txt'
-#output_vol_path = 'output/vol/output_cube_30.txt'
-#output_hilb = open(output_hilb_path, 'w')
-#output_vol = open(output_vol_path, 'w')
+'''
+input_path = 'output/polygon/cube/3x3.txt'
+output_hilb_path = 'output/series/cube/3x3_series.txt'
+output_vol_path = 'output/vol/cube/3x3_vol.txt'
+output_hilb = open(output_hilb_path, 'w')
+output_vol = open(output_vol_path, 'w')
 generate_hilbert_vol(input_path, output_hilb_path, output_vol_path)
-#output_hilb.close()
-#output_vol.close()
+output_hilb.close()
+output_vol.close()
 print 'Done.'
 
