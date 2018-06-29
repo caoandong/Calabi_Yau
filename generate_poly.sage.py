@@ -179,30 +179,64 @@ def generate_poly(size, num_poly, output_path):
 
 #def tetra():
 
-def cylinder_tri(height):
-    out_path = 'output/polygon/cylinder/cyl_tri_%d.txt' % height
+def cylinder_tri(height, num_height):
+    out_path = 'output/polygon/cylinder/cyl_tri_%d_%d.txt' % (num_height, height)
     out_file = open(out_path, 'w')
-    for N in range(_sage_const_1 , height):
-        for h1 in range(_sage_const_1 , N+_sage_const_1 ):
-            for h2 in range(_sage_const_1 , h1+_sage_const_1 ):
-                h3 = N-h1-h2
-                if h3 > _sage_const_0  and h3 <= h2:
-                    out = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h2],[_sage_const_0 ,_sage_const_1 ,h3]]
+    if num_height <= _sage_const_1 :
+        print('Wrong input')
+        return -_sage_const_1 
+    if num_height == _sage_const_2 :
+        for N in range(_sage_const_1 , height):
+            for h1 in range(_sage_const_1 , N+_sage_const_1 ):
+                h2 = N-h1
+                if h2 > _sage_const_0  and h2 <= h1:
+                    out = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h2],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ]]
                     out_file.write("%s\n" % out)
+    if num_height == _sage_const_3 :
+        for N in range(_sage_const_1 , height):
+            for h1 in range(_sage_const_1 , N+_sage_const_1 ):
+                for h2 in range(_sage_const_1 , h1+_sage_const_1 ):
+                    h3 = N-h1-h2
+                    if h3 > _sage_const_0  and h3 <= h2:
+                        out = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h2],[_sage_const_0 ,_sage_const_1 ,h3]]
+                        out_file.write("%s\n" % out)
     out_file.close()
     print("Done.")
 
-def cylinder_sq(height):
-    out_path = 'output/polygon/cylinder/cyl_sq_%d.txt' % height
+def cylinder_sq(height, num_height):
+    out_path = 'output/polygon/cylinder/cyl_sq_%d_%d.txt' % (num_height, height)
     out_file = open(out_path, 'w')
-    for N in range(_sage_const_1 , height):
-        for h1 in range(_sage_const_1 , N+_sage_const_1 ):
-            for h2 in range(_sage_const_1 , h1+_sage_const_1 ):
-                for h3 in range(_sage_const_1 , h2+_sage_const_1 ):
-                    h4 = N-h1-h2-h3
-                    if h4 > _sage_const_0  and h4 <= h3:
-                        out = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h2],[_sage_const_0 ,_sage_const_1 ,h3],[_sage_const_1 ,_sage_const_1 ,h4]]
+    if num_height <= _sage_const_0 :
+        print('Wrong input')
+        return -_sage_const_1 
+    if num_height == _sage_const_1 :
+        for N in range(_sage_const_1 , height):
+            out = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,N],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ]]
+            out_file.write("%s\n" % out)
+    if num_height == _sage_const_2 :
+        for N in range(_sage_const_1 , height):
+            for h1 in range(_sage_const_1 , N+_sage_const_1 ):
+                h2 = N - h1
+                if h2 > _sage_const_0  and h2 <= h1:
+                    out = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h2],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ]]
+                    out_file.write("%s\n" % out)
+    if num_height == _sage_const_3 :
+        for N in range(_sage_const_1 , height):
+            for h1 in range(_sage_const_1 , N+_sage_const_1 ):
+                for h2 in range(_sage_const_1 , h1+_sage_const_1 ):
+                    h3 = N-h1-h2
+                    if h3 > _sage_const_0  and h3 <= h2:
+                        out = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h2],[_sage_const_0 ,_sage_const_1 ,h3],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ]]
                         out_file.write("%s\n" % out)
+    if num_height == _sage_const_4 :
+        for N in range(_sage_const_1 , height):
+            for h1 in range(_sage_const_1 , N+_sage_const_1 ):
+                for h2 in range(_sage_const_1 , h1+_sage_const_1 ):
+                    for h3 in range(_sage_const_1 , h2+_sage_const_1 ):
+                        h4 = N-h1-h2-h3
+                        if h4 > _sage_const_0  and h4 <= h3:
+                            out = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h2],[_sage_const_0 ,_sage_const_1 ,h3],[_sage_const_1 ,_sage_const_1 ,h4]]
+                            out_file.write("%s\n" % out)
     out_file.close()
     print("Done.")
 
@@ -232,7 +266,17 @@ output_path = 'output/polygon/cube/5x5.txt'
 #generate_poly(size, num_poly, output_path)
 height = _sage_const_100 
 
-cylinder_tri(height)
-cylinder_sq(height)
-simplex(height)
+cylinder_tri(height, _sage_const_2 )
+print('Done.')
+cylinder_tri(height, _sage_const_3 )
+print('Done.')
+cylinder_sq(height, _sage_const_1 )
+print('Done.')
+cylinder_sq(height, _sage_const_2 )
+print('Done.')
+cylinder_sq(height, _sage_const_3 )
+print('Done.')
+cylinder_sq(height, _sage_const_4 )
+print('Done.')
+#simplex(height)
 

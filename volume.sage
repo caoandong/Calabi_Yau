@@ -383,7 +383,19 @@ MAX_PTS = 35
 
 def generate_vol_cylinder(input_path, output_hilb_path, output_vol_path):
     input_file = open(input_path, 'r')
-    pts = [eval(line) for line in input_file]
+    #pts = [eval(line) for line in input_file]
+    
+    # Temporary code to continue running algorithm from a break point
+    counter = 1
+    pts = []
+    for line in input_file:
+        if counter <= 82:
+            counter += 1
+            continue
+        pts.append(eval(line))
+    print("Starting line: ", counter)
+    # End of Temporary code
+    
     for i in range(len(pts)):
         pts_new = pts[i]
         
@@ -403,7 +415,7 @@ def generate_vol_cylinder(input_path, output_hilb_path, output_vol_path):
         #Calculate Volume (write to output)
         vol, sol = NSolve(Series)
         if vol == -1:
-            fail_out = open('output/vol/cube/failed/%dx%d_failed.txt' % (SIDE_LENGTH, SIDE_LENGTH), 'w')
+            fail_out = open('output/vol/cylinder/failed/%d_failed.txt' % HEIGHT, 'w')
             fail_out.write("%s\n" % pts_new)
             fail_out.close()
             continue
@@ -478,7 +490,7 @@ def generate_hilbert_vol(input_path, output_hilb_path, output_vol_path):
 #output/series/series_cube_30.txt
 #output/train/train.txt
 
-SIDE_LENGTH = 3
+SIDE_LENGTH = 35
 '''
 input_path = raw_input("Please input the input path (example: output/polygon/poly_out_1024.txt): ")
 input_path = str(input_path)

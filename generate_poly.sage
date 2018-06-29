@@ -174,30 +174,64 @@ def generate_poly(size, num_poly, output_path):
 
 #def tetra():
 
-def cylinder_tri(height):
-    out_path = 'output/polygon/cylinder/cyl_tri_%d.txt' % height
+def cylinder_tri(height, num_height):
+    out_path = 'output/polygon/cylinder/cyl_tri_%d_%d.txt' % (num_height, height)
     out_file = open(out_path, 'w')
-    for N in range(1, height):
-        for h1 in range(1, N+1):
-            for h2 in range(1, h1+1):
-                h3 = N-h1-h2
-                if h3 > 0 and h3 <= h2:
-                    out = [[0,0,0],[1,0,0],[0,1,0],[0,0,h1],[1,0,h2],[0,1,h3]]
+    if num_height <= 1:
+        print('Wrong input')
+        return -1
+    if num_height == 2:
+        for N in range(1, height):
+            for h1 in range(1, N+1):
+                h2 = N-h1
+                if h2 > 0 and h2 <= h1:
+                    out = [[0,0,0],[1,0,0],[0,1,0],[0,0,h1],[1,0,h2],[0,1,0]]
                     out_file.write("%s\n" % out)
+    if num_height == 3:
+        for N in range(1, height):
+            for h1 in range(1, N+1):
+                for h2 in range(1, h1+1):
+                    h3 = N-h1-h2
+                    if h3 > 0 and h3 <= h2:
+                        out = [[0,0,0],[1,0,0],[0,1,0],[0,0,h1],[1,0,h2],[0,1,h3]]
+                        out_file.write("%s\n" % out)
     out_file.close()
     print("Done.")
 
-def cylinder_sq(height):
-    out_path = 'output/polygon/cylinder/cyl_sq_%d.txt' % height
+def cylinder_sq(height, num_height):
+    out_path = 'output/polygon/cylinder/cyl_sq_%d_%d.txt' % (num_height, height)
     out_file = open(out_path, 'w')
-    for N in range(1, height):
-        for h1 in range(1, N+1):
-            for h2 in range(1, h1+1):
-                for h3 in range(1, h2+1):
-                    h4 = N-h1-h2-h3
-                    if h4 > 0 and h4 <= h3:
-                        out = [[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,h1],[1,0,h2],[0,1,h3],[1,1,h4]]
+    if num_height <= 0:
+        print('Wrong input')
+        return -1
+    if num_height == 1:
+        for N in range(1, height):
+            out = [[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,N],[1,0,0],[0,1,0],[1,1,0]]
+            out_file.write("%s\n" % out)
+    if num_height == 2:
+        for N in range(1, height):
+            for h1 in range(1, N+1):
+                h2 = N - h1
+                if h2 > 0 and h2 <= h1:
+                    out = [[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,h1],[1,0,h2],[0,1,0],[1,1,0]]
+                    out_file.write("%s\n" % out)
+    if num_height == 3:
+        for N in range(1, height):
+            for h1 in range(1, N+1):
+                for h2 in range(1, h1+1):
+                    h3 = N-h1-h2
+                    if h3 > 0 and h3 <= h2:
+                        out = [[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,h1],[1,0,h2],[0,1,h3],[1,1,0]]
                         out_file.write("%s\n" % out)
+    if num_height == 4:
+        for N in range(1, height):
+            for h1 in range(1, N+1):
+                for h2 in range(1, h1+1):
+                    for h3 in range(1, h2+1):
+                        h4 = N-h1-h2-h3
+                        if h4 > 0 and h4 <= h3:
+                            out = [[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,h1],[1,0,h2],[0,1,h3],[1,1,h4]]
+                            out_file.write("%s\n" % out)
     out_file.close()
     print("Done.")
 
@@ -227,6 +261,16 @@ output_path = 'output/polygon/cube/5x5.txt'
 #generate_poly(size, num_poly, output_path)
 height = 100
 
-cylinder_tri(height)
-cylinder_sq(height)
-simplex(height)
+cylinder_tri(height, 2)
+print('Done.')
+cylinder_tri(height, 3)
+print('Done.')
+cylinder_sq(height, 1)
+print('Done.')
+cylinder_sq(height, 2)
+print('Done.')
+cylinder_sq(height, 3)
+print('Done.')
+cylinder_sq(height, 4)
+print('Done.')
+#simplex(height)

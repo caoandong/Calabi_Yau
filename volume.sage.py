@@ -388,26 +388,39 @@ MAX_PTS = _sage_const_35
 
 def generate_vol_cylinder(input_path, output_hilb_path, output_vol_path):
     input_file = open(input_path, 'r')
-    pts = [eval(line) for line in input_file]
+    #pts = [eval(line) for line in input_file]
+    
+    # Temporary code to continue running algorithm from a break point
+    counter = _sage_const_1 
+    pts = []
+    for line in input_file:
+        if counter <= _sage_const_82 :
+            counter += _sage_const_1 
+            continue
+        pts.append(eval(line))
+    print("Starting line: ", counter)
+    # End of Temporary code
+    
     for i in range(len(pts)):
         pts_new = pts[i]
+        
+        '''
         print("pts_new: ", pts_new)
-        Series = Triang(pts_new, _sage_const_0 )
+        Series = Triang(pts_new, 0)
         '''
         try:
-            Series = Triang(pts_new, 0)
+            Series = Triang(pts_new, _sage_const_0 )
         except:
             print('Failed.')
             fail_out = open('output/failed/triang/triang_cyl_failed.txt', 'a')
             fail_out.write("%s\n" % pts_new)
             fail_out.close()
             continue
-        '''
         
         #Calculate Volume (write to output)
         vol, sol = NSolve(Series)
         if vol == -_sage_const_1 :
-            fail_out = open('output/vol/cube/failed/%dx%d_failed.txt' % (SIDE_LENGTH, SIDE_LENGTH), 'w')
+            fail_out = open('output/vol/cylinder/failed/%d_failed.txt' % HEIGHT, 'w')
             fail_out.write("%s\n" % pts_new)
             fail_out.close()
             continue
@@ -482,7 +495,7 @@ def generate_hilbert_vol(input_path, output_hilb_path, output_vol_path):
 #output/series/series_cube_30.txt
 #output/train/train.txt
 
-SIDE_LENGTH = _sage_const_3 
+SIDE_LENGTH = _sage_const_35 
 '''
 input_path = raw_input("Please input the input path (example: output/polygon/poly_out_1024.txt): ")
 input_path = str(input_path)
