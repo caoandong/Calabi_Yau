@@ -1,10 +1,165 @@
 import math
 import numpy as np
 import scipy
-#import matplotlib.pyplot as plt
-import csv
-
+import scipy.optimize
+from scipy.spatial.distance import euclidean
+import matplotlib.image as mpimg
 PointConfiguration.set_engine('internal')
+
+def idx_to_pts(triang, pts):
+    # Input a list of lists of indicies
+    # Output a list of lists of points
+    triang_new = []
+    for i in range(len(triang)):
+        triang_new.append([pts[j] for j in triang[i]])
+    return triang_new
+
+def in_list(e, l):
+    # Check if a list e is in a list of lists l
+    for i in range(len(l)):
+        check = 0
+        length = len(l[i])
+        for j in range(length):
+            if e[j] == l[i][j]:
+                # if one element is the same, increment
+                check += 1
+            elif e[j] != l[i][j]:
+                break
+        if check == length:
+            return 1
+    return 0
+
+def find_face(p, pts):
+    # Given a list of vertices of a polytope, find the faces that contain the point p
+    num_pts = len(pts)
+    if num_pts == 1:
+        P1 = Polyhedron(vertices = [tuple(pts)])
+    else:
+        P1 = Polyhedron(pts)
+    faces = []
+    for face in P1.faces(2):
+        # face_list is a list of verticies of a face
+        face_list = [list(face.vertices()[i]) for i in range(len(face.vertices()))]
+        #print 'face_list: ', face_list
+        #print 'p: ', p
+        if in_list(p, face_list):
+            #print 'p in face_list'
+            faces.append(face_list)
+    #print 'faces: ', faces
+    return faces
+
+def find_center(p1, p2, p3):
+    #print 'center around: ', p1, p2, p3
+    p1 = np.array(p1)
+    p2 = np.array(p2)
+    p3 = np.array(p3)
+    c = (p1+p2+p3)/3
+    c = c.tolist()
+    return c
+
+def find_adj(pt, face_pts):
+    # Input: a reference point, pt, and a list of vertices of a face, face_pts
+    # face_pts must have at least 3 elements
+    
+    # Pick a random point, c, on the plane of the face
+    #print 'input face: ', face_pts
+    #print 'input point: ', pt
+    num_face_pts = len(face_pts)
+    if num_face_pts < 3:
+        raise ValueError('Face %s has too little points.' % face_pts)
+    
+    # pick 2 points from the face (arbitrary)
+    c = find_center(face_pts[0], face_pts[1], face_pts[num_face_pts - 1])
+    c = np.array(c)
+    #print 'center: ', c
+    pt = np.array(pt)
+
+    # Find the vector, v, from c to the reference point, pt
+    v = pt - c
+    
+    # Find the two points, pt1 and pt2, on that face that is closest to pt
+    dist = [euclidean(pt, p) for p in face_pts]
+    #print 'dist: ', dist
+    len_dist = len(dist)
+    stop = 0 # Stop sign to stop the while loop
+    
+    while stop == 0:
+        # Sort the distance list
+        dist_sort = sorted(dist)
+        #print 'dist_sort: ', dist_sort
+        sort_1 = dist_sort[1]
+        sort_2 = dist_sort[2]
+        if sort_1 == sort_2:
+            id1 = dist.index(sort_1)
+            dist[id1] = 0
+            id2 = dist.index(sort_2)
+        else:
+            id1 = dist.index(sort_1)
+            id2 = dist.index(sort_2)
+        pt1 = np.array(face_pts[id1])
+        #print 'pt1: ', pt1
+        pt2 = np.array(face_pts[id2])
+        #print 'pt2: ', pt2
+
+        # Find the vector v1 from c to p1 and v2 from c to p2
+        v1 = pt1 - c
+        v2 = pt2 - c
+        # Calculate cross(v1, v) and cross(v2, v)
+        c1 = np.cross(v1, v)
+        c2 = np.cross(v2, v)
+        n1 = np.linalg.norm(c1)
+        n2 = np.linalg.norm(c2)
+        c1 = c1/n1
+        c2 = c2/n2
+        #print 'c1: ', c1
+        #print 'c2: ', c2
+        # If the two cross products are in opposite directions, then return the 2 points
+        diff = np.linalg.norm(c1 + c2)
+        if diff <= 1e-10:
+            # Different sign
+            # If zero, at least one point on the opposite side of pt, still works
+            #print 'Opposite'
+            stop = 1
+            break
+        # Else, the two cross products are in the same direction
+        # then remove the point that is farther from p from face_pts and dist
+        else:
+            # Same sign
+            #print 'Same'
+            #print 'result: ', diff
+            dist.remove(sort_2)
+            face_pts.remove(pt2.tolist())
+            #print 'dist updated: ', dist
+            #print 'face_pt updated: ', face_pts
+            continue
+    pt1 = pt1.tolist()
+    pt2 = pt2.tolist()
+    return pt1, pt2
+
+
+def split_tetra(pts):
+    # Given the vertices of a polyhedron, split it into two polygon, one of which is a tetrahedron (hopefully)
+    for p in pts:
+        pts1 = [point for point in pts if point != p]
+        # Find all faces that contain p
+        #print 'reference point: ', p
+        faces = find_face(p, pts)
+        num_faces = len(faces)
+        if num_faces != 3:
+            # If the point is not contained in a tetrahedron, then find another point
+            continue
+        adj_pts = []
+        adj_pts.append(p)
+        
+        for i in range(num_faces):
+            # For each face, find two points that are adjacent to p
+            p1, p2 = find_adj(p, faces[i])
+            if p1 not in adj_pts:
+                adj_pts.append(p1)
+            if p2 not in adj_pts:
+                adj_pts.append(p2)
+        break
+    return pts1, adj_pts
 
 def exist(pts, latt):
     latt = np.array(latt)
@@ -15,151 +170,102 @@ def exist(pts, latt):
                     return 1
     return 0
 
-#Compute cross product of three 4-vectors
-def four_cross(v1, v2, v3, v4):
-    v = np.zeros((4,))
-    counter = 0
-    #print 'input vector: ', v1, v2, v3
-    for i in range(4):
-        mat = [v1[np.arange(len(v1))!=i].tolist(), v2[np.arange(len(v2))!=i].tolist(), v3[np.arange(len(v3))!=i].tolist()]
-        mat = matrix(ZZ, mat)
-        #print 'matrix: '
-        #print mat
-        if counter == 1:
-            v[i] = -1*mat.det()
-            counter = 0
-            #print 'neg: ', v[i]
-            continue
-        elif counter == 0:
-            v[i] = mat.det()
-            counter = 1
-            #print 'pos: ', v[i]
-    #print v
-    mat = matrix(RR, [v1.tolist(), v2.tolist(), v3.tolist(), v4.tolist()])
-    
-    if mat.det() < 0:
-        #print 'original: ', v
-        v = -1*v
-        #print 'changed: ', v
-    #print 'vector: ', v
-    return v
+def contain(poly, latt):
+    if poly.contains(latt) == 1:
+        return 1
+    else:
+        poly_latt = Polyhedron(vertices = [tuple(latt)])
+        vert = next(poly_latt.vertex_generator())
+        face_eq = poly.Hrepresentation()
+        for eq in face_eq:
+            if eq.contains(vert) != 1:
+                return 0
+        return 1
+    return 0
 
-
-def Hilb(tri, p, output):
-    num_tri = len(tri)
-    len_tri = len(tri[0])
-    triang_list = np.zeros((num_tri, len_tri, 4))
-    #Convert each element of p into a 4-vector
-    #whose last entry equals to 1
-    for i in range(num_tri):
-        for j in range(len_tri):
-            triang_list[i][j] = np.append(np.array(p[tri[i][j]]) , 1)
-            
-    #print 'triang_list: '
-    #print triang_list
-    triang = np.array(triang_list)
-    power = np.zeros(shape = triang.shape)
-    Hilb = 0
-    t = var('t')
-    t1 = var('t1')
-    t2 = var('t2')
-    t3 = var('t3')
-    t4 = var('t4')
-    for tri in range(triang.shape[0]):
-        hilb = 1
-        t_prod = 1
-        for i in range(4):
-            #Multiplying by -1 is optional
-            power[tri][i] = -1*four_cross(triang[tri][i], triang[tri][np.remainder(i+1, 4)], triang[tri][np.remainder(i+2, 4)], triang[tri][np.remainder(i+3, 4)])
-            t_prod = t1^(power[tri][i][0])*t2^(power[tri][i][1])*t3^(power[tri][i][2])*t4^(power[tri][i][3])
-            hilb *= (1-t_prod)^(-1)
-        #print 'Hilbert: ', hilb
-        Hilb += hilb
-    #print 'Hilb: ', Hilb(t1 = t, t2 = t, t3 = t, t4 = t^4).factor()
-    #print Hilb(t1=t, t2=t, t3=t).series(t4, 3)
-    output.write("p-q web: %s\n" % power)
-    
-    m = var('m')
-    b1 = var('b1')
-    b2 = var('b2')
-    b3 = var('b3')
-    b4 = var('b4')
-    Hilb *= m^4
-    
-    Series = Hilb(t1 = (m*b1).exp(), t2 = (m*b2).exp(), t3 = (m*b3).exp(), t4 = (m*4).exp()).series(m==0, 1)
-    Series = Series.truncate()
-    d1 = diff(Series, b1)
-    d2 = diff(Series, b2)
-    d3 = diff(Series, b3)
-    
-    solution = solve([d1 == 0, d2 == 0, d3 == 0], b1, b2, b3)
-    
-    sol_len = len(solution)
-    
-    vol_min_abs = Series(b1 = solution[0][0].rhs(), b2 = solution[0][1].rhs(), b3 = solution[0][2].rhs())
-    
-    if sol_len > 1:
-        #print 'sol_len: ', sol_len
-        for i in range(1, sol_len):
-            vol_min = Series(b1 = solution[i][0].rhs(), b2 = solution[i][1].rhs(), b3 = solution[i][2].rhs())
-            if vol_min < vol_min_abs and vol_min > 0:
-                vol_min_abs = vol_min
-    
-    return vol_min_abs
-    
-def Triang(p, output):
+def check_latt(p):
     pts = np.array(p)
+    pts_max = int(max(np.amax(pts, axis=0)))+1
+    pts_min = int(min(np.amin(pts, axis=0)))-1
+    #print 'pts_max and pts_min: ', pts_max, pts_min
     poly = Polyhedron(p)
-    pts_max = int(max(np.amax(pts, axis=0)))
     pts_new = pts
-    for i in range(0, pts_max):
-        for j in range(0, pts_max):
-            for k in range(0, pts_max):
+    for i in range(pts_min, pts_max):
+        for j in range(pts_min, pts_max):
+            for k in range(pts_min, pts_max):
                 latt = [i,j,k]
-                if exist(pts, latt)==1:
+                if exist(pts, latt) == 1:
                     continue
-                if poly.contains(latt) == 1:
+                if contain(poly, latt) == 1:
                     pts_new = np.append(pts_new, np.array(latt).reshape((1,3)), axis = 0)  
-    #print 'pts_new: ', pts_new
     pts_new = pts_new.tolist()
-    points = PointConfiguration(pts_new)
-    triang = points.triangulate()
-    triang = list(triang)
-    #print 'triangulate: ', triang
+    return pts_new
+
+def split_triang(pts):
+    # Input points is already checked lattice
+    #pts = check_latt(pts)
+    print 'input points: ', pts
+    #print 'num_pts: ', len(pts)
+    pc = PointConfiguration(pts)
+    try:
+        triang = pc.triangulate()
+        triang = idx_to_pts(triang, pts)
+    except:
+        pts1, pts2 = split_tetra(pts)
+        print 'pts1: ', pts1
+        print 'pts2: ', pts2
+        triang_1 = split_triang(pts1)
+        print 'triang1: ', triang_1
+        triang_2 = split_triang(pts2)
+        print 'triang2: ', triang_2
+        triang = triang_1 + triang_2
+    return triang
+
+def Triang(pts):
+    # Input a list of vertices of a polyhedron
+    # Output a complete triangulation containing all lattice points
+    pts = check_latt(pts)
+    triang = split_triang(pts)
+    print 'triangulation: ', triang
+    vol_check = 0
     
-    #Calculate the Hilbert series
-    vol_min = Hilb(triang, pts_new, output)
-    output.write("Vol: %s\n" % vol_min)
-    #print 'vol_min: ', vol_min
-
-input_path = raw_input("Please input the input path: ")
-input_path = str(input_path)
-output_path = raw_input("Please input the output path: ")
-output_path = str(output_path)
-
-#input_path = 'input.csv'
-#output_path = 'output.txt'
-with open(input_path) as f:
-    pts = []
-    pts_tmp = []
+    while vol_check == 0:
+        vol_check = 1
+        triang_ret = []
+        for tetra in triang:
+            print 'tetrahedron: ', tetra
+            tet = Polyhedron(tetra)
+            vol = tet.volume()
+            if vol > 1/6:
+                vol_check = 0
+                print 'volume ', vol, ' is too large'
+                check = 0
+                for p in pts:
+                    if p in tetra:
+                        # If the point is already a corner point
+                        print 'corner point, pass.'
+                        continue
+                    if contain(tet, p) == 1:
+                        # If the point is not a corner point but contained inside the tetrahedron
+                        print 'contained point ', p, ', append.'
+                        check = 1
+                        tetra.append(p)
+                if check == 1:
+                    tetra_triang = split_triang(tetra)
+                    print 'updated triang: ', tetra_triang
+                    for t in tetra_triang:
+                        triang_ret.append(t)
+                elif check == 0:
+                    triang_ret.append(tetra)
+            else:
+                triang_ret.append(tetra)
+        triang = triang_ret
     
-    for line in f:
-        pt = line.split(' ')
-        if line == '\n' or pt == '\n':
-            pts.append(pts_tmp)
-            pts_tmp = []
-            continue
-        for i in range(len(pt)):
-            pt[i] = float(pt[i].strip(','))
-        pts_tmp.append(pt)
-    if line != '\n':
-        pts.append(pts_tmp)
-        
-output = open(output_path, 'w')
+    return triang_ret
 
-for idx in range(len(pts)):
-    output.write("polytope %s\n" % idx)
-    Triang(pts[idx], output)
-    output.write("\n")
-
-output.close()
+out_path = 'output/failed/triang/3x3_test.txt'
+out_file = open(out_path, 'w')
+pts = [[0.0, 0.0, 3.0], [0.0, 3.0, 0.0], [0.0, 3.0, 3.0], [3.0, 0.0, 0.0], [3.0, 3.0, 0.0], [3.0, 3.0, 3.0], [0.0, 0.0, 1.0], [0.0, 1.0, 0.0], [1.0, 0.0, 0.0], [2.0, 0.0, 3.0], [3.0, 0.0, 2.0], [3.0, 1.0, 3.0]]
+triang = Triang(pts)
+out_file.write("%s\n" % triang)
+out_file.close()

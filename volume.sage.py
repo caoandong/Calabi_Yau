@@ -185,6 +185,13 @@ def Hilb(triang_list, output):
 
     return Series
 
+def check_pairwise_distinct(pts):
+    for p in pts:
+        pts.remove(p)
+        if p not in pts:
+            pts.append(p)
+    return pts
+
 def Triang(p, output):
     #Input output = 0 if do not want output
     pts = np.array(p)
@@ -201,11 +208,15 @@ def Triang(p, output):
                     pts_new = np.append(pts_new, np.array(latt).reshape((_sage_const_1 ,_sage_const_3 )), axis = _sage_const_0 )
     #print 'pts_new: ', pts_new
     pts_new = pts_new.tolist()
+    pts_new = check_pairwise_distinct(pts_new)
     points = PointConfiguration(pts_new)
+    triang = points.triangulate()
+    '''
     try:
         triang = points.triangulate()
     except:
         raise ValueError('Cannot Triangulate.')
+    '''
     triang = [list(triang[i]) for i in range(len(triang))]
     triang_new = []
     check_triang(triang, pts_new, triang_new)
@@ -404,19 +415,21 @@ def generate_vol_cylinder(input_path, output_hilb_path, output_vol_path):
     for i in range(len(pts)):
         pts_new = pts[i]
         
+        Series = Triang(pts_new, _sage_const_0 )
+        
         '''
         print("pts_new: ", pts_new)
         Series = Triang(pts_new, 0)
-        '''
+        
         try:
-            Series = Triang(pts_new, _sage_const_0 )
+            
         except:
             print('Failed.')
             fail_out = open('output/failed/triang/triang_cyl_failed.txt', 'a')
             fail_out.write("%s\n" % pts_new)
             fail_out.close()
             continue
-        
+        '''
         #Calculate Volume (write to output)
         vol, sol = NSolve(Series)
         if vol == -_sage_const_1 :
@@ -447,17 +460,20 @@ def generate_hilbert_vol(input_path, output_hilb_path, output_vol_path):
             points = PointConfiguration(pts_new)
 
             #Triangulate
+            triang = points.triangulate()
+            '''
             try:
                 triang = points.triangulate()
             except:
                 print("Cannot Triangulate.")
-                fail_out = open('output/failed/triang/triang_failed.txt', 'a')
+                fail_out = open('output/failed/triang/triang_cyl_failed.txt', 'a')
                 fail_out.write("%s\n" % pts_new)
                 fail_out.close()
                 poly = Polyhedron(pts_new)
                 poly.plot().save("img/failed/triang/plot_2_%d.png" % count)
-                count += _sage_const_1 
+                count += 1
                 continue
+            '''
             triang = [list(triang[i]) for i in range(len(triang))]
             triang_new = []
             check_triang(triang, pts_new, triang_new)
@@ -482,8 +498,8 @@ def generate_hilbert_vol(input_path, output_hilb_path, output_vol_path):
 
             output_list = [pts_new, vol]
             print i,'-th output: ', output_list
-            output_hilb = open(output_hilb_path, 'a')
-            output_vol = open(output_vol_path, 'a')
+            output_hilb = open(output_hilb_path, 'w')
+            output_vol = open(output_vol_path, 'w')
             output_hilb.write("%s\n" % str([Series, sol]))
             output_vol.write("%s\n" % str(output_list))
             output_hilb.close()
@@ -513,15 +529,40 @@ generate_hilbert_vol(input_path, output_hilb_path, output_vol_path)
 output_hilb.close()
 output_vol.close()
 print 'Done.'
+
+HEIGHT = 100
+
+# Volume of the triangle
+for i in range(2,3):
+    input_path = 'output/polygon/cylinder/cyl_tri_%d_100.txt'% i
+    output_hilb_path = 'output/series/cylinder/tri_%d_%d_series.txt'% (i, HEIGHT)
+    output_vol_path = 'output/vol/cylinder/tri_%d_%d_vol.txt'% (i, HEIGHT)
+    output_hilb = open(output_hilb_path, 'w')
+    output_vol = open(output_vol_path, 'w')
+    generate_vol_cylinder(input_path, output_hilb_path, output_vol_path)
+    output_hilb.close()
+    output_vol.close()
+    print 'Done.'
+
+# Volume of the square
+for i in range(1,4):
+    input_path = 'output/polygon/cylinder/cyl_sq_%d_100.txt'% i
+    output_hilb_path = 'output/series/cylinder/sq_%d_%d_series.txt'% (i, HEIGHT)
+    output_vol_path = 'output/vol/cylinder/sq_%d_%d_vol.txt'% (i, HEIGHT)
+    output_hilb = open(output_hilb_path, 'w')
+    output_vol = open(output_vol_path, 'w')
+    generate_vol_cylinder(input_path, output_hilb_path, output_vol_path)
+    output_hilb.close()
+    output_vol.close()
+    print 'Done.'
 '''
-HEIGHT = _sage_const_100 
-input_path = 'output/polygon/cylinder/cyl_tri_100.txt'
-output_hilb_path = 'output/series/cylinder/%d_series.txt'% HEIGHT
-output_vol_path = 'output/vol/cylinder/%d_vol.txt'% HEIGHT
+
+input_path = 'output/polygon/cylinder/cyl_tri_2_100.txt'
+output_hilb_path = 'output/series/cylinder/2_100_series.txt'
+output_vol_path = 'output/vol/cylinder/tri_2_100_vol.txt'
 output_hilb = open(output_hilb_path, 'w')
 output_vol = open(output_vol_path, 'w')
 generate_vol_cylinder(input_path, output_hilb_path, output_vol_path)
 output_hilb.close()
 output_vol.close()
-print 'Done.'
 
