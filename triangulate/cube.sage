@@ -292,7 +292,6 @@ def cut_corner(p, corner, triang, hilb):
     # Find all the tetrahedron points that contain p
     adj_pts = []
     triang_new = []
-    hilb_new = []
    
     for tetra in triang:
         if p in tetra:
@@ -307,6 +306,9 @@ def cut_corner(p, corner, triang, hilb):
             hilb.remove(series)
         else:
             triang_new.append(tetra)
+    if len(hilb) != len(triang_new):
+        print 'len(hilb): ', len(hilb)
+        print 'len(triang_new): ', len(triang_new)
     triang = triang_new
     #print 'adjacent points: ', adj_pts
     if len(adj_pts) > 3:
@@ -321,6 +323,10 @@ def cut_corner(p, corner, triang, hilb):
             series = Hilb([tetra])
             #print 'Patch hilbert: ', series
             hilb.append(series)
+            if len(hilb) != len(triang_new):
+                print 'len(hilb): ', len(hilb)
+                print 'len(triang_new): ', len(triang_new)
+                print 'tetra: ', tetra
     #print 'number of tetrahedron: ', len(triang)
     return corner, triang, hilb
 
@@ -340,6 +346,7 @@ def Triang_cube(size, num_iteration):
         series_sum += series
     hilb_ret = [series_sum]
     count_ret = [count_pts(corner)]
+    print 'Init count_ret: ', count_ret
     pts_ret = [corner]
     for i in range(num_iteration):
         idx = np.random.randint(len(corner))
@@ -347,13 +354,20 @@ def Triang_cube(size, num_iteration):
         print 'i: ', i
         print 'p: ', p
         corner, triang, hilb = cut_corner(p, corner, triang, hilb)
-        assert len(hilb) == len(triang)
+        
+        try:
+            assert len(hilb) == len(triang)
+        except:
+            print('len(hilb)', len(hilb))
+            print('hilb', hilb)
+            print('triang', triang)
+            raise ValueError('Length not equal.')
         
         pts_ret.append(corner)
         
         count = count_pts(corner)
-        print 'count: ', count
         count_ret.append(count)
+        print 'count_ret: ', count_ret
         
         series_sum = 0
         for series in hilb:
@@ -365,7 +379,17 @@ def Triang_cube(size, num_iteration):
         if len(corner) <= 3:
             break
     
-    assert len(pts_ret) == len(count_ret) == len(hilb_ret)
+    try:
+        assert len(pts_ret) == len(count_ret) == len(hilb_ret)
+    except:
+        print('len(hilb_ret)', len(hilb_ret))
+        print('hilb_ret', hilb_ret)
+        print('len(count_ret)', len(count_ret))
+        print('count_ret', count_ret)
+        print('len(pts_ret)', len(pts_ret))
+        print('pts_ret', pts_ret)
+        raise ValueError('Length not equal.')
+        
     return hilb_ret, pts_ret, count_ret
 
 def vol_cube(size, num_iteration, train_path, count_path, pts_path):
@@ -380,20 +404,19 @@ def vol_cube(size, num_iteration, train_path, count_path, pts_path):
         count_set = [count[i], vol]
         print 'count: ', count_set
         pts_set = [pts[i], sol]
-        print 'pts: ', pts_set
+        print 'pts_set: ', pts_set
         
-        train_file = open(train_path, 'w')
-        count_file = open(count_path, 'w')
-        pts_file = open(pts_path, 'w')
-        train_file.write("%s\n" % train_set)
-        count_file.write("%s\n" % count_set)
-        pts_file.write("%s\n" % pts_set)
-        train_file.close()
-        count_file.close()
-        pts_file.close()
+        #train_file = open(train_path, 'w')
+        #count_file = open(count_path, 'w')
+        #pts_file = open(pts_path, 'w')
+        #train_file.write("%s\n" % train_set)
+        #count_file.write("%s\n" % count_set)
+        #pts_file.write("%s\n" % pts_set)
+        #train_file.close()
+        #count_file.close()
+        #pts_file.close()
     
     print 'Done.'
-
 
 size = 3
 num_iteration = 100
