@@ -132,7 +132,7 @@ def func(p, *d):
     f1, f2, f3 = d
     return (f1(b1 = p[0], b2 = p[1], b3 = p[2]), f2(b1 = p[0], b2 = p[1], b3 = p[2]), f3(b1 = p[0], b2 = p[1], b3 = p[2]))
 
-def constraint(Series, sol):
+def constraint(Series, sol, SIDE_LENGTH):
     vol = Series(b1 = sol[0], b2 = sol[1], b3 = sol[2])
     if vol <= 1 and vol >= float(1/((3*SIDE_LENGTH)**3)):
         return 1, vol
@@ -141,7 +141,7 @@ def constraint(Series, sol):
 
     return 0, -1
 
-def NSolve(Series):
+def NSolve(Series, SIDE_LENGTH):
     d1 = diff(Series, b1)
     d2 = diff(Series, b2)
     d3 = diff(Series, b3)
@@ -161,7 +161,7 @@ def NSolve(Series):
         except:
             continue
         
-        const, vol = constraint(Series, sol)
+        const, vol = constraint(Series, sol, SIDE_LENGTH)
 
         count += 1
         if count > 1000:
@@ -336,64 +336,72 @@ def Triang_prism(h1, h2, h3):
 
     return prism, series
 
-def generate_triang_prism(height, num_height, train_path, pts_path):
-    train_file = open(train_path, 'w')
-    pts_file = open(pts_path, 'w')
-    if num_height <= 1:
-        print('Wrong input')
-        return -1
-    if num_height == 2:
-        for N in range(1, height):
-            for h1 in range(1, N+1):
-                h2 = N-h1
-                if h2 > 0 and h2 <= h1:
-                    prism, series = Triang_prism(0, h1, h2)
-                    vol, sol = NSolve(series)
-                    vol = round(vol, 4)
-                    sol = np.around(sol, decimals=4).tolist()
-                    print 'sol: ', sol
-                    print 'vol: ', vol
-                    out = []
-                    pts = [[0,0,0],[1,0,0],[0,1,0],[0,0,h1],[1,0,h2],[0,1,0]]
-                    out.append(pts)
-                    out.append(sol)
-                    pts_file.write("%s\n" % out)
-                    train_set = []
-                    param = [0, h1, h2]
-                    print 'param: ', param
-                    train_set.append(param)
-                    train_set.append(vol)
-                    train_file.write("%s\n" % train_set)
-    if num_height == 3:
-        for N in range(1, height):
-            for h1 in range(1, N+1):
-                for h2 in range(1, h1+1):
-                    h3 = N-h1-h2
-                    if h3 > 0 and h3 <= h2:
-                        prism, series = Triang_prism(h1, h2, h3)
-                        vol, sol = NSolve(series)
-                        vol = round(vol, 4)
-                        sol = np.around(sol, decimals=4).tolist()
+def generate_triang_prism(max_height, num_height, train_path, pts_path):
+    for height in range(1, max_height+1):
+        SIDE_LENGTH = int((height+1)/2)
+        if num_height <= 1:
+            print('Wrong input')
+            return -1
+        if num_height == 2:
+            for N in range(1, height):
+                for h1 in range(1, N+1):
+                    h2 = N-h1
+                    if h2 > 0 and h2 <= h1:
+                        prism, series = Triang_prism(0, h1, h2)
+                        vol, sol = NSolve(series, SIDE_LENGTH)
+                        
+                        
                         print 'sol: ', sol
                         print 'vol: ', vol
-                        out = []
-                        pts = [[0,0,0],[1,0,0],[0,1,0],[0,0,h1],[1,0,h2],[0,1,h3]]
-                        out.append(pts)
-                        out.append(sol)
-                        pts_file.write("%s\n" % out)
+                        pts = [[0,0,0],[1,0,0],[0,1,0],[0,0,h1],[1,0,h2],[0,1,0]]
+                        out = [pts, sol]
+
                         train_set = []
-                        param = [h1, h2, h3]
+                        param = [0, h1, h2]
                         print 'param: ', param
                         train_set.append(param)
                         train_set.append(vol)
+                        train_file = open(train_path, 'a')
+                        pts_file = open(pts_path, 'a')
                         train_file.write("%s\n" % train_set)
-    print 'Done.'
-    train_file.close()
-    pts_file.close()
+                        pts_file.write("%s\n" % out)
+                        train_file.close()
+                        pts_file.close()
+        if num_height == 3:
+            for N in range(1, height):
+                for h1 in range(1, N+1):
+                    for h2 in range(1, h1+1):
+                        h3 = N-h1-h2
+                        if h3 > 0 and h3 <= h2:
+                            prism, series = Triang_prism(h1, h2, h3)
+                            vol, sol = NSolve(series, SIDE_LENGTH)
+                            
+                            
+                            print 'sol: ', sol
+                            print 'vol: ', vol
+                            pts = [[0,0,0],[1,0,0],[0,1,0],[0,0,h1],[1,0,h2],[0,1,h3]]
+                            out = [pts, sol]
 
-height = 100
+                            train_set = []
+                            param = [h1, h2, h3]
+                            print 'param: ', param
+                            train_set.append(param)
+                            train_set.append(vol)
+                            train_file = open(train_path, 'a')
+                            pts_file = open(pts_path, 'a')
+                            train_file.write("%s\n" % train_set)
+                            pts_file.write("%s\n" % out)
+                            train_file.close()
+                            pts_file.close()
+        print 'Height ', height, ' done.'
+    print 'Done.'
+    
+
+max_height = 50
 num_height = 2
-SIDE_LENGTH = int((height+1)/2)
-train_path = '/home/carnd/CYML/output/train/cylinder/tri_%d_%d.txt' % (height, num_height)
-pts_path = '/home/carnd/CYML/output/polygon/cylinder/tri_%d_%d.txt' % (height, num_height)
-generate_triang_prism(height, num_height, train_path, pts_path)
+#SIDE_LENGTH = int((height+1)/2)
+train_path = '/home/carnd/CYML/output/train/cylinder/tri_1_to_50_2.txt'
+pts_path = '/home/carnd/CYML/output/polygon/cylinder/tri_1_to_50_2.txt'
+#train_path = '/home/carnd/CYML/output/train/cylinder/tri_%d_%d.txt' % (height, num_height)
+#pts_path = '/home/carnd/CYML/output/polygon/cylinder/tri_%d_%d.txt' % (height, num_height)
+generate_triang_prism(max_height, num_height, train_path, pts_path)

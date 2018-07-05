@@ -156,9 +156,14 @@ def Hilb(triang_list):
         t_prod = 1
         for i in range(4):
             #Multiplying by -1 is optional
-            power[tri][i] = -1*four_cross(triang[tri][i], triang[tri][np.remainder(i+1, 4)], triang[tri][np.remainder(i+2, 4)], triang[tri][np.remainder(i+3, 4)])
-            t_prod = t1^(int(power[tri][i][0]))*t2^(int(power[tri][i][1]))*t3^(int(power[tri][i][2]))*t4^int((power[tri][i][3]))
-            hilb *= (1-t_prod)^(-1)
+            try:
+                power[tri][i] = -1*four_cross(triang[tri][i], triang[tri][np.remainder(i+1, 4)], triang[tri][np.remainder(i+2, 4)], triang[tri][np.remainder(i+3, 4)])
+                t_prod = t1^(int(power[tri][i][0]))*t2^(int(power[tri][i][1]))*t3^(int(power[tri][i][2]))*t4^int((power[tri][i][3]))
+                hilb *= (1-t_prod)^(-1)
+            except:
+                print 'input: ', triang_list
+                print 'triang: ', triang
+                raise ValueError('Triang too short.')
         #print 'Hilbert: ', hilb
         Hilb += hilb
     
@@ -317,12 +322,12 @@ def cut_corner(p, corner, triang, hilb):
         patch_triang = idx_to_pts(patch_triang, adj_pts)
         #print 'patch: ', patch_triang
         for tetra in patch_triang:
-            if tetra not in triang:
-                triang.append(tetra)
-            # Also find the Hilbert Series for each tetrahedron
-            series = Hilb([tetra])
-            #print 'Patch hilbert: ', series
-            hilb.append(series)
+            if len(tetra) > 3:
+                if tetra not in triang:
+                    triang.append(tetra)
+                    # Also find the Hilbert Series for each tetrahedron
+                    series = Hilb([tetra])
+                    hilb.append(series)
             if len(hilb) != len(triang_new):
                 print 'len(hilb): ', len(hilb)
                 print 'len(triang_new): ', len(triang_new)
@@ -338,8 +343,9 @@ def plot_poly(pts):
     plt.imshow(img1)
     plt.show()
 
-def Triang_cube(size, num_iteration):
+def Triang_cube(size):
     corner, triang, hilb = init_cube(size)
+    points = []
     # Cut a random corner of the cube
     series_sum = 0
     for series in hilb:
@@ -348,16 +354,22 @@ def Triang_cube(size, num_iteration):
     count_ret = [count_pts(corner)]
     print 'Init count_ret: ', count_ret
     pts_ret = [corner]
-    for i in range(num_iteration):
+    stop = 0
+    while stop == 0:
         idx = np.random.randint(len(corner))
         p = corner[idx]
-        print 'i: ', i
         print 'p: ', p
-        corner, triang, hilb = cut_corner(p, corner, triang, hilb)
+        points.append(p)
+        try:
+            corner, triang, hilb = cut_corner(p, corner, triang, hilb)
+        except:
+            print 'points: ', points
+            raise ValueError('Cutting corner failed.')
         
         try:
             assert len(hilb) == len(triang)
         except:
+            print 'points: ', points
             print('len(hilb)', len(hilb))
             print('hilb', hilb)
             print('triang', triang)
@@ -367,16 +379,20 @@ def Triang_cube(size, num_iteration):
         
         count = count_pts(corner)
         count_ret.append(count)
-        print 'count_ret: ', count_ret
+        print 'count: ', count
         
         series_sum = 0
         for series in hilb:
             series_sum += series
         hilb_ret.append(series_sum)
         
-        #plot_poly(corner)
         print ''
-        if len(corner) <= 3:
+        
+        # So the problem is not the algorithm
+        # But the issue is something with the data, and probably some elements has some errors
+        
+        if len(corner) <= 4:
+            stop = 1
             break
     
     try:
@@ -392,36 +408,46 @@ def Triang_cube(size, num_iteration):
         
     return hilb_ret, pts_ret, count_ret
 
-def vol_cube(size, num_iteration, train_path, count_path, pts_path):
-    hilb, pts, count = Triang_cube(size, num_iteration)
+def vol_cube(size, train_path, count_path, pts_path):
+    hilb, pts, count = Triang_cube(size)
+    #train_file = open(train_path, 'a')
+    #count_file = open(count_path, 'a')
+    #pts_file = open(pts_path, 'a')
     for i in range(len(hilb)):
-        vol, sol = NSolve(hilb[i])
-        sol = np.around(sol, decimals=4).tolist()
-        print 'vol: ', vol
-        print 'sol: ', sol
-        train_set = [pts[i], vol]
-        print 'train: ', train_set
-        count_set = [count[i], vol]
-        print 'count: ', count_set
-        pts_set = [pts[i], sol]
-        print 'pts_set: ', pts_set
-        
-        #train_file = open(train_path, 'w')
-        #count_file = open(count_path, 'w')
-        #pts_file = open(pts_path, 'w')
-        #train_file.write("%s\n" % train_set)
-        #count_file.write("%s\n" % count_set)
-        #pts_file.write("%s\n" % pts_set)
-        #train_file.close()
-        #count_file.close()
-        #pts_file.close()
+        try:
+            vol, sol = NSolve(hilb[i])
+            sol = np.around(sol, decimals=4).tolist()
+            print 'vol: ', vol
+            print 'sol: ', sol
+            train_set = [pts[i], vol]
+            print 'train: ', train_set
+            count_set = [count[i], vol]
+            print 'count: ', count_set
+            pts_set = [pts[i], sol]
+            print 'pts_set: ', pts_set
+            
+            train_file = open(train_path, 'a')
+            count_file = open(count_path, 'a')
+            pts_file = open(pts_path, 'a')
+            train_file.write("%s\n" % train_set)
+            count_file.write("%s\n" % count_set)
+            pts_file.write("%s\n" % pts_set)
+            train_file.close()
+            count_file.close()
+            pts_file.close()
+            
+        except:
+            continue
+    #train_file.close()
+    #count_file.close()
+    #pts_file.close()
     
     print 'Done.'
 
 size = 3
-num_iteration = 100
+#num_iteration = 100
 SIDE_LENGTH = size
-train_path = '/home/carnd/CYML/output/train/cube/cube_%dx%d_%d.txt' % (size, size, num_iteration)
-count_path = '/home/carnd/CYML/output/train/cube/count_%dx%d_%d.txt' % (size, size, num_iteration)
-pts_path = '/home/carnd/CYML/output/polygon/cube/pts_%dx%d_%d.txt' % (size, size, num_iteration)
-vol_cube(size, num_iteration, train_path, count_path, pts_path)
+train_path = '/home/carnd/CYML/output/train/cube/cube_%dx%d.txt' % (size, size)
+count_path = '/home/carnd/CYML/output/train/cube/count_%dx%d.txt' % (size, size)
+pts_path = '/home/carnd/CYML/output/polygon/cube/pts_%dx%d.txt' % (size, size)
+vol_cube(size, train_path, count_path, pts_path)

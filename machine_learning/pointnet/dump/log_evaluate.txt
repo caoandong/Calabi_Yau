@@ -1,0 +1,6 @@
+Namespace(batch_size=4, dump_dir='dump', gpu=0, model='pointnet_cls', model_path='log/model.ckpt', num_point=128, visu=True)
+Model restored.
+----0----
+----1----
+eval mean loss: 0.052199
+eval accuracy: 0.357143
