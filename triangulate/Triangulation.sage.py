@@ -401,13 +401,111 @@ def generate_triang_prism(max_height, num_height, train_path, pts_path):
         print 'Height ', height, ' done.'
     print 'Done.'
     
+def lift_prism(h1, h2, h3):
+    # h1 >= h2 >= h3
+    h_list = [h1, h2, h3]
+    h_min = min(h_list)
+    h_list.remove(h_min)
+    h_max = max(h_list)
+    h_list.remove(h_max)
+    h_mid = h_list[_sage_const_0 ]
+    
+    
+    if h_min == _sage_const_0 :
+        prism = []
+        series = _sage_const_0 
+        if h_mid > _sage_const_0 :
+            for i in range(h_mid):
+                prism_1 = [[[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,i],[_sage_const_0 ,_sage_const_0 ,i+_sage_const_1 ]]]
+                prism_2 = [[[_sage_const_0 ,_sage_const_0 ,i],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,i],[_sage_const_0 ,_sage_const_0 ,i+_sage_const_1 ]]]
+                prism_3 = [[[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,i],[_sage_const_0 ,_sage_const_1 ,i+_sage_const_1 ],[_sage_const_0 ,_sage_const_0 ,i+_sage_const_1 ]]]
+                prism += prism_1 + prism_2 + prism_3
+
+                series_1 = Hilb(prism_1)
+                series_2 = Hilb(prism_2)
+                series_3 = Hilb(prism_3)
+                series += series_1 + series_2 + series_3
+        
+            for i in range(h_mid, h_max):
+                prism_1 = [[[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h_mid+i],[_sage_const_0 ,_sage_const_0 ,h_mid+i+_sage_const_1 ]]]
+                prism_2 = [[[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,h_mid+i],[_sage_const_0 ,_sage_const_0 ,h_mid+i],[_sage_const_0 ,_sage_const_0 ,h_mid+i+_sage_const_1 ]]]
+                prism += prism_1 + prism_2
+
+                series_1 = Hilb(prism_1)
+                series_2 = Hilb(prism_2)
+                series += series_1 + series_2
+        elif h_mid == _sage_const_0 :
+            for i in range(h_max):
+                prism_1 = [[[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,i],[_sage_const_0 ,_sage_const_0 ,i+_sage_const_1 ]]]
+                prism_2 = [[[_sage_const_0 ,_sage_const_0 ,i],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,i+_sage_const_1 ]]]
+                prism += prism_1 + prism_2
+                
+                series_1 = Hilb(prism_1)
+                series_2 = Hilb(prism_2)
+                series += series_1 + series_2
+            
+        return prism, series
+    
+    if h_min > _sage_const_0 :
+        # Stage 0: base
+        prism = [[[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,h_min]]]
+        series = Hilb(prism)
+        # Stage 1: h1 = h2
+        for i in range(h_mid):
+            prism_1 = [[[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,i],[_sage_const_0 ,_sage_const_0 ,i+_sage_const_1 ],[_sage_const_1 ,_sage_const_1 ,h_min]]]
+            prism_2 = [[[_sage_const_0 ,_sage_const_0 ,i],[_sage_const_0 ,_sage_const_1 ,i],[_sage_const_1 ,_sage_const_1 ,h_min],[_sage_const_0 ,_sage_const_0 ,i+_sage_const_1 ]]]
+            prism_3 = [[[_sage_const_0 ,_sage_const_1 ,i],[_sage_const_0 ,_sage_const_1 ,i+_sage_const_1 ],[_sage_const_0 ,_sage_const_0 ,i+_sage_const_1 ],[_sage_const_1 ,_sage_const_1 ,h_min]]]
+            prism += prism_1 + prism_2 + prism_3
+            
+            series_1 = Hilb(prism_1)
+            series_2 = Hilb(prism_2)
+            series_3 = Hilb(prism_3)
+            series += series_1 + series_2 + series_3
+            
+        for i in range(h_mid, h_max):
+            prism_1 = [[[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,h_min],[_sage_const_0 ,_sage_const_0 ,i],[_sage_const_0 ,_sage_const_0 ,i+_sage_const_1 ]]]
+            prism_2 = [[[_sage_const_1 ,_sage_const_1 ,h_min],[_sage_const_0 ,_sage_const_0 ,i],[_sage_const_0 ,_sage_const_1 ,i],[_sage_const_0 ,_sage_const_0 ,i+_sage_const_1 ]]]
+            prism += prism_1 + prism_2
+            
+            series_1 = Hilb(prism_1)
+            series_2 = Hilb(prism_2)
+            series += series_1 + series_2
+    
+    return prism, series
+
+def generate_lift_prism(max_height, train_path, pts_path):
+    train_file = open(train_path, 'w')
+    pts_file = open(pts_path, 'w')
+    for height in range(max_height):
+        SIDE_LENGTH = int((height+_sage_const_1 )/_sage_const_2 )
+        for h1 in range(_sage_const_1 , height+_sage_const_1 ):
+            for h2 in range(_sage_const_0 , h1+_sage_const_1 ):
+                h3 = height - h1 - h2
+                if h3 >= _sage_const_0  and h3 <= h2:
+                    print 'heights: ', h1, h2 ,h3
+                    prism, series = lift_prism(h1,h2,h3)
+                    vol, sol = NSolve(series, SIDE_LENGTH)
+                    pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,h3],[_sage_const_0 ,_sage_const_1 ,h2],[_sage_const_0 ,_sage_const_0 ,h1]]
+                    out = [pts, sol]
+                    
+                    param = [h1,h2,h3]
+                    train_set = [param, vol]
+                    
+                    train_file.write("%s\n" % train_set)
+                    pts_file.write("%s\n" % out)
+                    
+        print 'height: ', height
+    train_file.close()
+    pts_file.close()
+    print 'Done.'
 
 max_height = _sage_const_50 
-num_height = _sage_const_2 
+#num_height = 2
 #SIDE_LENGTH = int((height+1)/2)
-train_path = '/home/carnd/CYML/output/train/cylinder/tri_1_to_50_2.txt'
-pts_path = '/home/carnd/CYML/output/polygon/cylinder/tri_1_to_50_2.txt'
+train_path = '/home/carnd/CYML/output/train/cylinder/lift_1_to_50.txt'
+pts_path = '/home/carnd/CYML/output/polygon/cylinder/lift_1_to_50.txt'
 #train_path = '/home/carnd/CYML/output/train/cylinder/tri_%d_%d.txt' % (height, num_height)
 #pts_path = '/home/carnd/CYML/output/polygon/cylinder/tri_%d_%d.txt' % (height, num_height)
-generate_triang_prism(max_height, num_height, train_path, pts_path)
+#generate_triang_prism(max_height, num_height, train_path, pts_path)
+generate_lift_prism(max_height, train_path, pts_path)
 

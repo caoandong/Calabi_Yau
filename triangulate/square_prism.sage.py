@@ -137,7 +137,7 @@ def func(p, *d):
     f1, f2, f3 = d
     return (f1(b1 = p[_sage_const_0 ], b2 = p[_sage_const_1 ], b3 = p[_sage_const_2 ]), f2(b1 = p[_sage_const_0 ], b2 = p[_sage_const_1 ], b3 = p[_sage_const_2 ]), f3(b1 = p[_sage_const_0 ], b2 = p[_sage_const_1 ], b3 = p[_sage_const_2 ]))
 
-def constraint(Series, sol):
+def constraint(Series, sol, SIDE_LENGTH):
     vol = Series(b1 = sol[_sage_const_0 ], b2 = sol[_sage_const_1 ], b3 = sol[_sage_const_2 ])
     if vol <= _sage_const_1  and vol >= float(_sage_const_1 /((_sage_const_3 *SIDE_LENGTH)**_sage_const_3 )):
         return _sage_const_1 , vol
@@ -146,7 +146,7 @@ def constraint(Series, sol):
 
     return _sage_const_0 , -_sage_const_1 
 
-def NSolve(Series):
+def NSolve(Series, SIDE_LENGTH):
     d1 = diff(Series, b1)
     d2 = diff(Series, b2)
     d3 = diff(Series, b3)
@@ -166,7 +166,7 @@ def NSolve(Series):
         except:
             continue
         
-        const, vol = constraint(Series, sol)
+        const, vol = constraint(Series, sol, SIDE_LENGTH)
 
         count += _sage_const_1 
         if count > _sage_const_1000 :
@@ -483,108 +483,48 @@ def Triang_square(h1,h2,h3,h4, orient):
             
     return cube, hilb
 
-def generate_sq_prism(height, num_height, train_path, pts_path):
+def generate_sq_prism(max_height, num_height, train_path, pts_path):
     train_file = open(train_path, 'w')
     pts_file = open(pts_path, 'w')
-    if num_height <= _sage_const_0 :
-        print('Wrong input')
-        return -_sage_const_1 
-    if num_height == _sage_const_1 :
-        for N in range(_sage_const_1 , height):
-            orient = _sage_const_0 
-            cube, series = Triang_square(N,_sage_const_0 ,_sage_const_0 ,_sage_const_0 , orient)
-            vol, sol = NSolve(series)
-            sol = np.around(sol, decimals=_sage_const_4 ).tolist()
-            print 'sol: ', sol
-            print 'vol: ', vol
-            out = []
-            pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,N],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ]]
-            out.append(pts)
-            out.append(sol)
-            pts_file.write("%s\n" % out)
-            train_set = []
-            param = [N, _sage_const_0 , _sage_const_0 , _sage_const_0 ]
-            print 'param: ', param
-            train_set.append(param)
-            train_set.append(vol)
-            train_file.write("%s\n" % train_set)
-            
-    if num_height == _sage_const_2 :
-        for N in range(_sage_const_1 , height):
-            for h1 in range(_sage_const_1 , N+_sage_const_1 ):
-                h2 = N - h1
-                if h2 > _sage_const_0  and h2 <= h1:
-                    param = [h1,h2,_sage_const_0 ,_sage_const_0 ]
-                    print 'param: ', param
-                    
-                    orient = _sage_const_0 
-                    cube, series = Triang_square(h1,h2,_sage_const_0 ,_sage_const_0 , orient)
-                    vol, sol = NSolve(series)
-                    sol = np.around(sol, decimals=_sage_const_4 ).tolist()
-                    print 'sol 0: ', sol
-                    print 'vol 0: ', vol
-                    out = []
-                    pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,h2],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ]]
-                    out.append(pts)
-                    out.append(sol)
-                    pts_file.write("%s\n" % out)
-                    train_set = []
-                    train_set.append(param)
-                    train_set.append(vol)
-                    train_file.write("%s\n" % train_set)
-                    
-                    orient = _sage_const_2 
-                    cube, series = Triang_square(h1,h2,_sage_const_0 ,_sage_const_0 , orient)
-                    vol, sol = NSolve(series)
-                    sol = np.around(sol, decimals=_sage_const_4 ).tolist()
-                    print 'sol 2: ', sol
-                    print 'vol 2: ', vol
-                    out = []
-                    pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,h2]]
-                    out.append(pts)
-                    out.append(sol)
-                    pts_file.write("%s\n" % out)
-                    train_set = []
-                    print 'param: ', param
-                    train_set.append(param)
-                    train_set.append(vol)
-                    train_file.write("%s\n" % train_set)
-                    
-    if num_height == _sage_const_3 :
-        for N in range(_sage_const_1 , height):
-            for h1 in range(_sage_const_1 , N+_sage_const_1 ):
-                for h2 in range(_sage_const_1 , h1+_sage_const_1 ):
-                    h3 = N-h1-h2
-                    if h3 > _sage_const_0  and h3 <= h2:
-                        param = [h1,h2,h3,_sage_const_0 ]
+    for height in range(_sage_const_1 , max_height+_sage_const_1 ):
+        SIDE_LENGTH = int((height+_sage_const_1 )/_sage_const_2 )
+        if num_height <= _sage_const_0 :
+            print('Wrong input')
+            return -_sage_const_1 
+        if num_height == _sage_const_1 :
+            for N in range(_sage_const_1 , height):
+                orient = _sage_const_0 
+                cube, series = Triang_square(N,_sage_const_0 ,_sage_const_0 ,_sage_const_0 , orient)
+                vol, sol = NSolve(series, SIDE_LENGTH)
+                print 'sol: ', sol
+                print 'vol: ', vol
+                out = []
+                pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,N],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ]]
+                out.append(pts)
+                out.append(sol)
+                pts_file.write("%s\n" % out)
+                train_set = []
+                param = [N, _sage_const_0 , _sage_const_0 , _sage_const_0 ]
+                print 'param: ', param
+                train_set.append(param)
+                train_set.append(vol)
+                train_file.write("%s\n" % train_set)
+
+        if num_height == _sage_const_2 :
+            for N in range(_sage_const_1 , height):
+                for h1 in range(_sage_const_1 , N+_sage_const_1 ):
+                    h2 = N - h1
+                    if h2 > _sage_const_0  and h2 <= h1:
+                        param = [h1,h2,_sage_const_0 ,_sage_const_0 ]
                         print 'param: ', param
 
                         orient = _sage_const_0 
-                        cube, series = Triang_square(h1,h2,h3,_sage_const_0 , orient)
-                        vol, sol = NSolve(series)
-                        sol = np.around(sol, decimals=_sage_const_4 ).tolist()
+                        cube, series = Triang_square(h1,h2,_sage_const_0 ,_sage_const_0 , orient)
+                        vol, sol = NSolve(series, SIDE_LENGTH)
                         print 'sol 0: ', sol
                         print 'vol 0: ', vol
-                        out = []
-                        pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h3],[_sage_const_0 ,_sage_const_1 ,h2],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ]]
-                        out.append(pts)
-                        out.append(sol)
-                        pts_file.write("%s\n" % out)
-                        train_set = []
-                        train_set.append(param)
-                        train_set.append(vol)
-                        train_file.write("%s\n" % train_set)
-                        
-                        orient = _sage_const_1 
-                        cube, series = Triang_square(h1,h2,h3,_sage_const_0 , orient)
-                        vol, sol = NSolve(series)
-                        sol = np.around(sol, decimals=_sage_const_4 ).tolist()
-                        print 'sol 1: ', sol
-                        print 'vol 1: ', vol
-                        out = []
-                        pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,h2],[_sage_const_1 ,_sage_const_1 ,h3]]
-                        out.append(pts)
-                        out.append(sol)
+                        pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,h2],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ]]
+                        out = [pts, sol]
                         pts_file.write("%s\n" % out)
                         train_set = []
                         train_set.append(param)
@@ -592,40 +532,37 @@ def generate_sq_prism(height, num_height, train_path, pts_path):
                         train_file.write("%s\n" % train_set)
 
                         orient = _sage_const_2 
-                        cube, series = Triang_square(h1,h2,h3,_sage_const_0 , orient)
-                        vol, sol = NSolve(series)
+                        cube, series = Triang_square(h1,h2,_sage_const_0 ,_sage_const_0 , orient)
+                        vol, sol = NSolve(series, SIDE_LENGTH)
                         sol = np.around(sol, decimals=_sage_const_4 ).tolist()
                         print 'sol 2: ', sol
                         print 'vol 2: ', vol
-                        out = []
-                        pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h3],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,h2]]
-                        out.append(pts)
-                        out.append(sol)
+                        pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,h2]]
+                        out = [pts, sol]
                         pts_file.write("%s\n" % out)
                         train_set = []
                         print 'param: ', param
                         train_set.append(param)
                         train_set.append(vol)
                         train_file.write("%s\n" % train_set)
-                        
-    if num_height == _sage_const_4 :
-        for N in range(_sage_const_1 , height):
-            for h1 in range(_sage_const_1 , N+_sage_const_1 ):
-                for h2 in range(_sage_const_1 , h1+_sage_const_1 ):
-                    for h3 in range(_sage_const_1 , h2+_sage_const_1 ):
-                        h4 = N-h1-h2-h3
-                        if h4 > _sage_const_0  and h4 <= h3:
-                            param = [h1,h2,h3,h4]
+
+        if num_height == _sage_const_3 :
+            for N in range(_sage_const_1 , height):
+                for h1 in range(_sage_const_1 , N+_sage_const_1 ):
+                    for h2 in range(_sage_const_1 , h1+_sage_const_1 ):
+                        h3 = N-h1-h2
+                        if h3 > _sage_const_0  and h3 <= h2:
+                            param = [h1,h2,h3,_sage_const_0 ]
                             print 'param: ', param
 
                             orient = _sage_const_0 
-                            cube, series = Triang_square(h1,h2,h3,h4, orient)
-                            vol, sol = NSolve(series)
+                            cube, series = Triang_square(h1,h2,h3,_sage_const_0 , orient)
+                            vol, sol = NSolve(series, SIDE_LENGTH)
                             sol = np.around(sol, decimals=_sage_const_4 ).tolist()
                             print 'sol 0: ', sol
                             print 'vol 0: ', vol
                             out = []
-                            pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h3],[_sage_const_0 ,_sage_const_1 ,h2],[_sage_const_1 ,_sage_const_1 ,h4]]
+                            pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h3],[_sage_const_0 ,_sage_const_1 ,h2],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ]]
                             out.append(pts)
                             out.append(sol)
                             pts_file.write("%s\n" % out)
@@ -635,13 +572,13 @@ def generate_sq_prism(height, num_height, train_path, pts_path):
                             train_file.write("%s\n" % train_set)
 
                             orient = _sage_const_1 
-                            cube, series = Triang_square(h1,h2,h3,h4, orient)
-                            vol, sol = NSolve(series)
+                            cube, series = Triang_square(h1,h2,h3,_sage_const_0 , orient)
+                            vol, sol = NSolve(series, SIDE_LENGTH)
                             sol = np.around(sol, decimals=_sage_const_4 ).tolist()
                             print 'sol 1: ', sol
                             print 'vol 1: ', vol
                             out = []
-                            pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h4],[_sage_const_0 ,_sage_const_1 ,h2],[_sage_const_1 ,_sage_const_1 ,h3]]
+                            pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,h2],[_sage_const_1 ,_sage_const_1 ,h3]]
                             out.append(pts)
                             out.append(sol)
                             pts_file.write("%s\n" % out)
@@ -651,13 +588,13 @@ def generate_sq_prism(height, num_height, train_path, pts_path):
                             train_file.write("%s\n" % train_set)
 
                             orient = _sage_const_2 
-                            cube, series = Triang_square(h1,h2,h3,h4, orient)
-                            vol, sol = NSolve(series)
+                            cube, series = Triang_square(h1,h2,h3,_sage_const_0 , orient)
+                            vol, sol = NSolve(series, SIDE_LENGTH)
                             sol = np.around(sol, decimals=_sage_const_4 ).tolist()
                             print 'sol 2: ', sol
                             print 'vol 2: ', vol
                             out = []
-                            pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h3],[_sage_const_0 ,_sage_const_1 ,h4],[_sage_const_1 ,_sage_const_1 ,h2]]
+                            pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h3],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,h2]]
                             out.append(pts)
                             out.append(sol)
                             pts_file.write("%s\n" % out)
@@ -666,14 +603,72 @@ def generate_sq_prism(height, num_height, train_path, pts_path):
                             train_set.append(param)
                             train_set.append(vol)
                             train_file.write("%s\n" % train_set)
+
+        if num_height == _sage_const_4 :
+            for N in range(_sage_const_1 , height):
+                for h1 in range(_sage_const_1 , N+_sage_const_1 ):
+                    for h2 in range(_sage_const_1 , h1+_sage_const_1 ):
+                        for h3 in range(_sage_const_1 , h2+_sage_const_1 ):
+                            h4 = N-h1-h2-h3
+                            if h4 > _sage_const_0  and h4 <= h3:
+                                param = [h1,h2,h3,h4]
+                                print 'param: ', param
+
+                                orient = _sage_const_0 
+                                cube, series = Triang_square(h1,h2,h3,h4, orient)
+                                vol, sol = NSolve(series, SIDE_LENGTH)
+                                sol = np.around(sol, decimals=_sage_const_4 ).tolist()
+                                print 'sol 0: ', sol
+                                print 'vol 0: ', vol
+                                out = []
+                                pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h3],[_sage_const_0 ,_sage_const_1 ,h2],[_sage_const_1 ,_sage_const_1 ,h4]]
+                                out.append(pts)
+                                out.append(sol)
+                                pts_file.write("%s\n" % out)
+                                train_set = []
+                                train_set.append(param)
+                                train_set.append(vol)
+                                train_file.write("%s\n" % train_set)
+
+                                orient = _sage_const_1 
+                                cube, series = Triang_square(h1,h2,h3,h4, orient)
+                                vol, sol = NSolve(series, SIDE_LENGTH)
+                                sol = np.around(sol, decimals=_sage_const_4 ).tolist()
+                                print 'sol 1: ', sol
+                                print 'vol 1: ', vol
+                                out = []
+                                pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h4],[_sage_const_0 ,_sage_const_1 ,h2],[_sage_const_1 ,_sage_const_1 ,h3]]
+                                out.append(pts)
+                                out.append(sol)
+                                pts_file.write("%s\n" % out)
+                                train_set = []
+                                train_set.append(param)
+                                train_set.append(vol)
+                                train_file.write("%s\n" % train_set)
+
+                                orient = _sage_const_2 
+                                cube, series = Triang_square(h1,h2,h3,h4, orient)
+                                vol, sol = NSolve(series, SIDE_LENGTH)
+                                sol = np.around(sol, decimals=_sage_const_4 ).tolist()
+                                print 'sol 2: ', sol
+                                print 'vol 2: ', vol
+                                out = []
+                                pts = [[_sage_const_0 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_0 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_1 ,_sage_const_1 ,_sage_const_0 ],[_sage_const_0 ,_sage_const_0 ,h1],[_sage_const_1 ,_sage_const_0 ,h3],[_sage_const_0 ,_sage_const_1 ,h4],[_sage_const_1 ,_sage_const_1 ,h2]]
+                                out.append(pts)
+                                out.append(sol)
+                                pts_file.write("%s\n" % out)
+                                train_set = []
+                                print 'param: ', param
+                                train_set.append(param)
+                                train_set.append(vol)
+                                train_file.write("%s\n" % train_set)
     train_file.close()
     pts_file.close()
     print("Done.")
 
-height = _sage_const_50 
+max_height = _sage_const_50 
 num_height = _sage_const_2 
-SIDE_LENGTH = int((height+_sage_const_1 )/_sage_const_2 )
-train_path = '/home/carnd/CYML/output/train/cylinder/sq_%d_%d.txt' % (height, num_height)
-pts_path = '/home/carnd/CYML/output/polygon/cylinder/sq_%d_%d.txt' % (height, num_height)
-generate_sq_prism(height, num_height, train_path, pts_path)
+train_path = '/home/carnd/CYML/output/train/cylinder/sq_1_to_%d_%d.txt' % (max_height, num_height)
+pts_path = '/home/carnd/CYML/output/polygon/cylinder/sq_1_to_%d_%d.txt' % (max_height, num_height)
+generate_sq_prism(max_height, num_height, train_path, pts_path)
 
