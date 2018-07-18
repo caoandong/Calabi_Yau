@@ -45,7 +45,83 @@ def expand_2(input_param_1, batch_size, num_param):
             input_parameter = param_tmp
             input_parameter = tf.reshape(input_parameter, [row+1, -1])
     
-    return input_parameter
+    num_param = int(num_param + num_param*(num_param+1)/2)
+    
+    return input_parameter, num_param
+
+def expand_3(input_param_1, batch_size, num_param):
+    # TODO: make this more general
+    num_param = 3
+    input_param = 10
+    for row in range(batch_size):
+        param_tmp = input_param_1[row,:]
+        param_tmp = tf.reshape(param_tmp, [1, -1])
+        p1 = param_tmp[0,0]
+        p2 = param_tmp[0,1]
+        p3 = param_tmp[0,2]
+        
+        p = tf.pow(p1,2)
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        p = tf.pow(p2,2)
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        p = tf.pow(p3,2)
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        
+        p = tf.multiply(p1, p2)
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        p = tf.multiply(p1, p3)
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        p = tf.multiply(p2, p3)
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        
+        p = tf.pow(p1,3)
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        p = tf.pow(p2,3)
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        p = tf.pow(p3,3)
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        
+        p = tf.multiply(tf.pow(p1,2), p2)
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        p = tf.multiply(tf.pow(p1,2), p3)
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        p = tf.multiply(p1, tf.pow(p2,2))
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        p = tf.multiply(p1, tf.pow(p3,2))
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        
+        p = tf.multiply(tf.pow(p2,2), p3)
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        p = tf.multiply(tf.pow(p3,2), p2)
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        
+        p = tf.multiply(tf.multiply(p1, p2),p3)
+        p = tf.reshape(p, [-1])
+        param_tmp = tf.concat([param_tmp, p[None,:]], 1)
+        
+        try:
+            param_tmp = tf.reshape(param_tmp, [-1])
+            input_param = tf.concat([input_param, param_tmp[None,:]], 0)
+        except:
+            input_param = tf.reshape(param_tmp, [1, -1])
+    
+    num_param = num_param + 6+ 10
+    return input_param, num_param
 
 def fl_linear(param, batch_size, num_param):
     with tf.variable_scope("fl_linear", reuse=True):
@@ -61,9 +137,9 @@ def mat_mul(param, batch_size, num_param):
         input_param_1 = tf.placeholder(name="input_param_1", dtype=tf.float32, shape=(batch_size, num_param))
         input_volume = tf.placeholder(name="input_volume", dtype=tf.float32, shape=(batch_size))
         
-        input_parameter = expand_2(input_param_1, batch_size, num_param)
-        num_param = int(num_param + num_param*(num_param+1)/2)
-
+        #input_parameter, num_param = expand_2(input_param_1, batch_size, num_param)
+        input_parameter, num_param = expand_3(input_param_1, batch_size, num_param)
+        
         # Layer 1:
         # Input: (batch_size, num_param*2)
         # W1: (num_param*2, 1), b: (batch_size, 1)
@@ -97,7 +173,7 @@ def mat_mul_2(param, batch_size, num_param):
         b2 = tf.Variable(tf.zeros([batch_size, 1], dtype=tf.float32), name="b2")
         y = tf.add(tf.matmul(y, W2), b2)
         
-        cost_op = tf.reduce_mean(tf.pow(y-input_volume, 2))
+        cost_op = tf.reduce_mean(tf.multiply(tf.pow(tf.pow(y,-1)-tf.pow(input_volume,-1), 2), y))
 
     return y, cost_op, input_parameter, input_volume
 
@@ -146,10 +222,8 @@ def train(data, vol):
             train_one_epoch(sess, cost_op, train_op, num_batches, input_parameter, input_param, input_volume, input_vol, input_param_concat, y)
             eval_one_epoch(sess, cost_op, test_batches, input_parameter, test_param, input_volume, test_vol)
             
-            
-            
             if epoch % 10 == 0:
-                path = "log/model.ckpt"
+                path = "log/model_2.ckpt"
                 save_path = saver.save(sess, path)
                 print("Saved.")
             
@@ -205,7 +279,7 @@ max_epochs = 10000
 tolerance = 1e-3
 
     
-train_path = '/home/carnd/CYML/output/train/cylinder/tri_1_to_50_2.txt'
+train_path = '/home/carnd/CYML/output/train/cylinder/lift_1_to_50.txt'
 train_data, train_vol = load_input(train_path)
 print ('sample data: ', train_data[0])
 train(train_data, train_vol)
