@@ -41,17 +41,6 @@
     "mincutoff" : 20
   },
   
-  "algo"   : {                  
-    "type" : "eaMuCommaLambda",
-    "initialPopulationSize" : 1000,
-    "stopFrequency"  : 50,     
-    "numGenerations" : 10000,     
-    "populationSize" : 500,     
-    "children" : 1000,           
-    "cxpb"     : 0.7,           
-    "mutpb"    : 0.3            
-  },
-
   "mate"     : "cxOnePoint",
   "mutator" : { 
         "type" : "multiMutOr",
