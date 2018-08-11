@@ -1,8 +1,8 @@
 {
-  "infile"            : "../test_modifydata/tri_1_to_50_2",
+  "infile"            : "/home/carnd/CYML/machine_learning/symbolic_regression/SoRa-master/test_modifydata/lift_1_to_50/train_1",
   "infileExtension"   : "csv",
-  "inVars"   : [ "x", "y" ],
-  "targetVar" : "z",
+  "inVars"   : [ "x", "y", "z"],
+  "targetVar" : "v",
   "seed"   : 314,
   "HallOfFame" : {
         "type" : "hof",

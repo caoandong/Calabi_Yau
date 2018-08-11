@@ -123,7 +123,7 @@ def Hilb(triang_list):
     #print 'Hilb: ', str(Hilb(t1 = (m*b1).exp(), t2 = (m*b2).exp(), t3 = (m*b3).exp(), t4 = (m*(2-b1-b2-b3)).exp())).replace('e', 'E')
     
     
-    Series = Hilb(t1 = (m*b1).exp(), t2 = (m*b2).exp(), t3 = (m*b3).exp(), t4 = (m*4).exp()).series(m==0, 1)
+    Series = Hilb(t1 = (m*b1).exp(), t2 = (m*b2).exp(), t3 = (m*b3).exp(), t4 = (m*(2-b1-b2-b3)).exp()).series(m==0, 1)
     Series = Series.truncate()
     
     return Series
@@ -133,7 +133,7 @@ def func(p, *d):
     return (f1(b1 = p[0], b2 = p[1], b3 = p[2]), f2(b1 = p[0], b2 = p[1], b3 = p[2]), f3(b1 = p[0], b2 = p[1], b3 = p[2]))
 
 def constraint(Series, sol, SIDE_LENGTH):
-    vol = Series(b1 = sol[0], b2 = sol[1], b3 = sol[2])
+    vol = -1*Series(b1 = sol[0], b2 = sol[1], b3 = sol[2])
     if vol <= 1 and vol >= float(1/((3*SIDE_LENGTH)**3)):
         return 1, vol
 
@@ -150,14 +150,17 @@ def NSolve(Series, SIDE_LENGTH):
     count = 0
 
     while const == 0:
-        d1_0 = np.random.uniform(low=0, high=5)
-        d2_0 = np.random.uniform(low=0, high=5)
-        d3_0 = np.random.uniform(low=0, high=5)
+        d1_0 = np.random.uniform(low=0, high=1/5.0)
+        d2_0 = np.random.uniform(low=0, high=1/5.0)
+        d3_0 = np.random.uniform(low=0, high=1/5.0)
         print 'reset starting point: ', d1_0, d2_0, d3_0
 
         try:
             sol = fsolve(func, x0 = np.array([d1_0, d2_0, d3_0]), args = d)
             print 'solution: ', sol
+            if abs(sol[0]) > 1 or abs(sol[1]) > 1 or abs(sol[2]) > 1:
+                print 'solution ', sol, ' is out of bounds.'
+                continue
         except:
             continue
         
@@ -500,10 +503,8 @@ pts_path = '/home/carnd/CYML/output/polygon/cylinder/tri_1_to_50_new.txt'
 #pts_path = '/home/carnd/CYML/output/polygon/cylinder/tri_%d_%d.txt' % (height, num_height)
 #generate_triang_prism(max_height, num_height, train_path, pts_path)
 #generate_lift_prism(max_height, train_path, pts_path)
-prism, series = Triang_prism(0, 2, 0)
-
-print 'series: '
-print series
-vol, sol = NSolve(series, 3)
+prism, series = lift_prism(5, 5, 2)
+#prism, series = Triang_prism(0,0,2)
+SIDE_LENGTH = int((12+1)/2)
+vol, sol = NSolve(series, SIDE_LENGTH)
 print 'vol: ', vol
-print 'sol: ', sol
