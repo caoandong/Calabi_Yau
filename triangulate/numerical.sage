@@ -228,10 +228,10 @@ def constraint_tmp(Series, sol, SIDE_LENGTH, out_file):
 
     return 0, -1
 
-def NSolve(Series, d, SIDE_LENGTH, bound, out_file):
+def NSolve(Series, d, SIDE_LENGTH, bound):
     const = 0
     count = 0
-    MAX_COUNT = 2
+    MAX_COUNT = 5
     
     d1_min = bound[0][0]
     d1_max = bound[0][1]
@@ -291,7 +291,7 @@ def grid_NSolve(Series, d, num_sec, SIDE_LENGTH, out_file):
                 print 'bounds: '
                 print bound
                 out_file.write('grid bound: %s\n' % (str(bound)))
-                vol,sol = NSolve(Series, d, SIDE_LENGTH, bound, out_file)
+                vol,sol = NSolve(Series, d, SIDE_LENGTH, bound)
                 try:
                     if sol == -1:
                         print 'grid ', counter, ' dose not work.'
@@ -350,13 +350,16 @@ series = 1/((8*b1 + 5*b2 + 6*b3 - 10)*(7*b1 + 6*b2 + 6*b3 - 10)*(b1 + 2*b2 + b3 
 '''
 series = -1/2/((4*b1 + 4*b2 + 3*b3 - 4)*(b1 + b2 + b3 - 1)*b1*b2) - 1/2/((b1 + b2 + b3 - 1)*b1*b2*b3)
 
-h1 = 5
-h2 = 5
-h3 = 2
-prism, series = Triang_prism(h1,h2,h3)
+h1 = 1
+h2 = 0
+h3 = 0
+prism, series = lift_prism(h1,h2,h3)
 print 'series for: ', h1, h2, h3
 print series
-out_path = '%d_%d_%d_test.txt' % (h1,h2,h3)
-out_file = open(out_path, 'w')
-vol, sol = iter_grid_NSolve(series, 4, SIDE_LENGTH, out_file)
-out_file.close()
+#out_path = '%d_%d_%d_test.txt' % (h1,h2,h3)
+#out_file = open(out_path, 'w')
+vol, sol = NSolve(Series, d, SIDE_LENGTH, bound)
+print vol
+print sol
+#vol, sol = iter_grid_NSolve(series, 4, SIDE_LENGTH, out_file)
+#out_file.close()

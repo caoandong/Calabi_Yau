@@ -120,9 +120,7 @@ def Hilb(triang_list):
     b4 = var('b4')
     Hilb *= m^4
     
-    #print 'Hilb: ', str(Hilb(t1 = (m*b1).exp(), t2 = (m*b2).exp(), t3 = (m*b3).exp(), t4 = (m*4).exp())).replace('e', 'E')
-    
-    Series = Hilb(t1 = (m*b1).exp(), t2 = (m*b2).exp(), t3 = (m*b3).exp(), t4 = (m*4).exp()).series(m==0, 1)
+    Series = Hilb(t1 = (m*b1).exp(), t2 = (m*b2).exp(), t3 = (m*b3).exp(), t4 = (m*(2-b1-b2-b3)).exp()).series(m==0, 1)
     
     Series = Series.truncate()
     
@@ -646,42 +644,45 @@ def constraint(Series, sol, vol_range):
 '''
 
 def constraint(Series, sol):
-    global vol_min_global
     vol = Series(b1 = sol[0], b2 = sol[1], b3 = sol[2])
     vol = abs(vol)
-    if vol <= 1 and vol >= vol_min_global:
+    if vol > 1:
         return 1, vol
     
     print 'volume: ', vol, ' is out of bounds.'
     
     return 0, -1
     
-def NSolve(Series, d, bound, out_file):
+def NSolve(Series, d, bound):
     vol = -1
     sol = -1
     const = 0
     count = 0
     MAX_COUNT = 3
     
-    b1_max = bound[0]
-    b2_max = bound[1]
-    b3_max = bound[2]
+    d1_min = bound[0][0]
+    d1_max = bound[0][1]
+    d2_min = bound[1][0]
+    d2_max = bound[1][1]
+    d3_min = bound[2][0]
+    d3_max = bound[2][1]
 
     while const == 0:
         if count >= MAX_COUNT:
             return vol,sol
             
         count += 1
-        d1_0 = np.random.uniform(low=0, high=b1_max)
-        d2_0 = np.random.uniform(low=0, high=b2_max)
-        d3_0 = np.random.uniform(low=0, high=b3_max)
+        d1_0 = np.random.uniform(low=d1_min, high=d1_max)
+        d2_0 = np.random.uniform(low=d2_min, high=d2_max)
+        d3_0 = np.random.uniform(low=d3_min, high=d3_max)
         print 'reset starting point: ', d1_0, d2_0, d3_0
 
-        try:
-            sol = fsolve(func, x0 = np.array([d1_0, d2_0, d3_0]), args = d)
-            print 'solution: ', sol
-            print 'guessed vol: ', Series(b1 = sol[0], b2 = sol[1], b3 = sol[2])
-        except:
+        sol = fsolve(func, x0 = np.array([d1_0, d2_0, d3_0]), args = d)
+        print 'solution: ', sol
+        b4 = 2 - (sol[0] + sol[1] + sol[2]) 
+        if sol[0] > 1 or sol[1] > 1 or sol[2] > 1 or b4 > 1 or sol[0] < 0 or sol[1] < 0 or sol[2] < 0 or b4 < 0:
+            print 'solution ', [sol, b4], ' is out of bounds.'
+            print 'wrong vol: ', Series(b1 = sol[0], b2 = sol[1], b3 = sol[2])
             continue
         
         const, vol = constraint(Series, sol)
@@ -711,7 +712,7 @@ def grid_NSolve(Series, d, num_sec, vol_range, out_file):
                 print 'bounds: '
                 print bound
                 #out_file.write('grid bound: %s\n' % (str(bound)))
-                vol,sol = NSolve(Series, d, vol_range, bound, out_file)
+                vol,sol = NSolve(Series, d, bound)
                 try:
                     if sol == -1:
                         print 'grid ', counter, ' dose not work.'
@@ -729,7 +730,7 @@ def grid_NSolve(Series, d, num_sec, vol_range, out_file):
     
     return vol_list, sol_list
 
-def expand_NSolve(Series, max_range, vol_range, out_file):
+def expand_NSolve(Series, max_range, out_file):
     d1 = diff(Series, b1)
     d2 = diff(Series, b2)
     d3 = diff(Series, b3)
@@ -737,8 +738,8 @@ def expand_NSolve(Series, max_range, vol_range, out_file):
     MAX_NUM_VOL = 10
     vol_list = []
     sol_list = []
-    target_vol = vol_range[0]
-    max_diff = vol_range[1]
+    vol = -1
+    sol = -1
     
     for i in range(1, max_range+1):
         if len(vol_list) > MAX_NUM_VOL:
@@ -750,11 +751,6 @@ def expand_NSolve(Series, max_range, vol_range, out_file):
 
                 vol, sol = NSolve(Series, d, bound, out_file)
                 try:
-                    dist = target_vol - vol
-                    if abs(dist) < 1e-6:
-                        if type(sol) == np.ndarray:
-                            sol = sol.tolist()
-                        return vol, sol
                     if sol == -1:
                         print 'range ', i,j,k,' does not work'
                     continue
@@ -768,104 +764,8 @@ def expand_NSolve(Series, max_range, vol_range, out_file):
                         vol_list.append(vol)
                         sol_list.append(sol)
     print 'Done.'
-    print 'vol_list: ', vol_list
-    print 'sol_list: ', sol_list
-    vol = -1
-    sol = -1
-    vol_list_pos = [-1, -1]
-    vol_list_neg = [-1, -1]
-    vol_list_out = [-1, -1]
-    if len(vol_list) != 0 and len(sol_list) != 0:
-        for i in range(len(vol_list)):
-            vol_tmp = vol_list[i]
-            sol_tmp = sol_list[i]
-            dist = target_vol - vol_tmp
-            if abs(dist) < 1e-6:
-                return vol_tmp, sol_tmp
-            if abs(dist) > max_diff:
-                print 'distance ', dist, ' is too far from target'
-                if abs(dist) < abs(target_vol - vol_list_out[0]):
-                    vol_list_out = [vol_tmp, sol_tmp]
-                continue
-            if dist > 0:
-                print 'vol is smaller than target'
-                if abs(dist) < abs(target_vol - vol_list_pos[0]):
-                    vol_list_pos = [vol_tmp, sol_tmp]
-                continue
-            if dist < 0:
-                print 'vol is greater than target'
-                if abs(dist) < abs(target_vol - vol_list_neg[0]):
-                    vol_list_neg = [vol_tmp, sol_tmp]
-                continue
-    if vol_list_pos[0] != -1 and type(vol_list_pos[1]) != int:
-        print 'good'
-        return vol_list_pos[0], vol_list_pos[1]
-    if vol_list_neg[0] != -1 and type(vol_list_neg[1]) != int:
-        print 'meh'
-        return vol_list_neg[0], vol_list_neg[1]
-    if vol_list_out[0] != -1 and type(vol_list_out[1]) != int:
-        print 'nah'
-        return vol_list_out[0], vol_list_out[1]
-    return -1, -1
-
-def generate_vol(min_height, max_height, max_range, out_file):
-    global vol_min_global
-    vol_dict = {}
-    vol_list = []
-    num_vol = 0
-    for h1 in range(min_height, max_height+1):
-        print h1, 0, 0
-        num_vol_prev = (h1+1)*h1/2
-        num_vol_prev = - num_vol_prev
-        print 'num_vol_prev: ', num_vol_prev
-        
-        vol_min_global = 1.0/(h1+1)**3
-
-        # we assume that vol(h1,0,0) is going to be
-        # smaller than vol(h1-1,0,0), and that it is
-        # probably close to 16/27/h1
-        try:
-            max_vol = vol_list[num_vol_prev]
-            print 'max_vol: ', max_vol
-        except:
-            max_vol = 16.0/27/h1
-        min_vol_tmp = 16.0/27/(h1+1.0)
-        min_vol = min_vol_tmp
-        target_vol = max_vol
-        max_range = abs(max_vol - min_vol)
-
-        print 'target: ', target_vol, ', range: ', max_range
-        prism, series = lift_prism(h1,0,0)
-        vol, sol = expand_NSolve(series, 5, [target_vol, max_range], out_file)
-        print 'vol: ', vol
-        vol_dict['%d_%d_%d' % (h1,0,0)] = [vol, sol]
-        vol_list.append(vol)
-        num_vol += 1
-        target_vol = vol
-        max_range = abs(target_vol - min_vol)
-
-        for h2 in range(0, h1+1):
-            h2 = h1 - h2
-            for h3 in range(0, h2+1):
-                h3 = h2 - h3
-                try:
-                    data_tmp = vol_dict['%d_%d_%d' % (h1,h2,h3)]
-                    continue
-                except:
-                    pass
-                print h1,h2,h3
-                print 'target: ', target_vol, ', range: ', max_range
-                prism, series = lift_prism(h1,h2,h3)
-                vol, sol = expand_NSolve(series, 5, [target_vol, max_range], out_file)
-                vol_dict['%d_%d_%d' % (h1,h2,h3)] = [vol, sol]
-                vol_list.append(vol)
-                num_vol += 1
-                print 'vol: ', vol
-    print vol_list
-
-    for key, data in vol_dict.items():
-        out_file.write(str(key) + ' >>> ' + str(data) + '\n')
-    return vol_list
+    
+    return vol, sol
 
 def iter_grid_NSolve(Series, max_sec, SIDE_LENGTH, out_file):
     d1 = diff(Series, b1)
@@ -896,45 +796,17 @@ def iter_grid_NSolve(Series, max_sec, SIDE_LENGTH, out_file):
     else:
         return -1, -1
 
-'''
-max_height = 50
-#num_height = 2
-#SIDE_LENGTH = int((height+1)/2)
-train_path = '/home/carnd/CYML/output/train/cylinder/tri_1_to_50_new.txt'
-pts_path = '/home/carnd/CYML/output/polygon/cylinder/tri_1_to_50_new.txt'
-#train_path = '/home/carnd/CYML/output/train/cylinder/tri_%d_%d.txt' % (height, num_height)
-#pts_path = '/home/carnd/CYML/output/polygon/cylinder/tri_%d_%d.txt' % (height, num_height)
-#generate_triang_prism(max_height, num_height, train_path, pts_path)
-#generate_lift_prism(max_height, train_path, pts_path)
-prism, series = Triang_prism(0, 2, 0)
-print 'series: '
-print series
-vol, sol = NSolve(series, 3)
-print 'vol: ', vol
-print 'sol: ', sol
 
-h1 = 2
-h2 = 1
+h1 = 1
+h2 = 0
 h3 = 0
-max_height = max([h1,h2,h3])
-SIDE_LENGTH = max_height
-#SIDE_LENGTH = (max_height+1)/2
 prism, series = lift_prism(h1,h2,h3)
+print prism
+#triang_list = [[[0,0,0],[1,0,0],[0,1,0],[0,0,1]],[[1,0,0],[1,1,0],[0,1,0],[0,0,1]]]
+#series = Hilb(triang_list)
 print 'series for: ', h1, h2, h3
 print series
-'''
-
-vol_min_global = 1/27.0
-input_min_height = 1
-input_max_height = 1
-print input_min_height, input_max_height
-out_path = '3_1_0_test.txt'
-out_file = open(out_path, 'w')
-prism, series = lift_prism(1,0,0)
-vol, sol = expand_NSolve(series, 5, [16.0/27/3, abs(16.0/27/3 - 16.0/27/4)], out_file)
+#bound = [[0,1],[0,1],[0,1]]
+vol, sol = NSolve(series, d, bound)
 print vol
 print sol
-#vol, sol = iter_grid_NSolve(series, 5, SIDE_LENGTH, out_file)
-#vol_list = generate_vol(input_min_height, input_max_height, 5, out_file)
-out_file.close()
-print 'completed.'
