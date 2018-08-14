@@ -656,25 +656,28 @@ def constraint(Series, sol):
     
     return 0, -1
     
-def NSolve(Series, d, bound, out_file):
+def NSolve(Series, d, bound):
     vol = -1
     sol = -1
     const = 0
     count = 0
     MAX_COUNT = 3
     
-    b1_max = bound[0]
-    b2_max = bound[1]
-    b3_max = bound[2]
+    b1_min = bound[0][0]
+    b1_max = bound[0][1]
+    b2_min = bound[1][0]
+    b2_max = bound[1][1]
+    b3_min = bound[2][0]
+    b3_max = bound[2][1]
 
     while const == 0:
         if count >= MAX_COUNT:
             return vol,sol
             
         count += 1
-        d1_0 = np.random.uniform(low=0, high=b1_max)
-        d2_0 = np.random.uniform(low=0, high=b2_max)
-        d3_0 = np.random.uniform(low=0, high=b3_max)
+        d1_0 = np.random.uniform(low=b1_min, high=b1_max)
+        d2_0 = np.random.uniform(low=b2_min, high=b2_max)
+        d3_0 = np.random.uniform(low=b3_min, high=b3_max)
         print 'reset starting point: ', d1_0, d2_0, d3_0
 
         try:
@@ -729,86 +732,141 @@ def grid_NSolve(Series, d, num_sec, vol_range, out_file):
     
     return vol_list, sol_list
 
-def expand_NSolve(Series, max_range, vol_range, out_file):
+def expand_NSolve(Series, max_range_start, height, vol_range):
     d1 = diff(Series, b1)
     d2 = diff(Series, b2)
     d3 = diff(Series, b3)
     d = (d1, d2, d3)
     MAX_NUM_VOL = 10
-    vol_list = []
-    sol_list = []
     target_vol = vol_range[0]
     max_diff = vol_range[1]
+    range_dict = {}
+    dist_min_pos = 99999
+    dist_min_neg = 99999
+    dist_min_out = 99999
+    vol_list_pos = []
+    sol_list_pos = []
+    vol_list_neg = []
+    sol_list_neg = []
+    vol_list_out = []
+    sol_list_out = []
     
-    for i in range(1, max_range+1):
-        if len(vol_list) > MAX_NUM_VOL:
-            break
-        for j in range(1, max_range+1):
-            for k in range(1, max_range+1):
-                print 'try range ', i,j,k
-                bound = [i,j,k]
+    for max_range in range(max_range_start, max_range_start + height):
+        vol_list = []
+        sol_list = []
+        for i in range(1, max_range+1):
+            if len(vol_list) > MAX_NUM_VOL:
+                break
+            for j in range(1, max_range+1):
+                for k in range(1, max_range+1):
+                    try:
+                        bound = range_dict['%d_%d_%d' % (i,j,k)]
+                        continue
+                    except:
+                        pass
+                    bound = [[i-1,i],[j-1,j],[k-1,k]]
+                    print 'try bound: ', bound
+                    range_dict['%d_%d_%d' % (i,j,k)] = bound
+                    vol, sol = NSolve(Series, d, bound)
+                    try:
+                        dist = target_vol - vol
+                        if abs(dist) < 1e-6:
+                            if type(sol) == np.ndarray:
+                                sol = sol.tolist()
+                            return vol, sol
+                        if sol == -1:
+                            print 'range ', i,j,k,' does not work'
+                        continue
+                    except:
+                        if vol != -1:
+                            print 'result vol: ', vol
+                            print 'result sol: ', sol
 
-                vol, sol = NSolve(Series, d, bound, out_file)
-                try:
-                    dist = target_vol - vol
-                    if abs(dist) < 1e-6:
-                        if type(sol) == np.ndarray:
-                            sol = sol.tolist()
-                        return vol, sol
-                    if sol == -1:
-                        print 'range ', i,j,k,' does not work'
+                            if type(sol) == np.ndarray:
+                                sol = sol.tolist()
+                            vol_list.append(vol)
+                            sol_list.append(sol)
+        print 'Done.'
+        print 'vol_list: ', vol_list
+        print 'sol_list: ', sol_list
+        vol = -1
+        sol = -1
+        
+        if len(vol_list) != 0 and len(sol_list) != 0:
+            for i in range(len(vol_list)):
+                vol_tmp = vol_list[i]
+                sol_tmp = sol_list[i]
+                dist = target_vol - vol_tmp
+                if abs(dist) < 1e-6:
+                    return vol_tmp, sol_tmp
+                if abs(dist) > max_diff:
+                    if abs(dist) < dist_min_out:
+                        print 'distance ', dist, ' is too far from target'
+                        dist_min_out = abs(dist)
+                        vol_list_out = vol_tmp
+                        sol_list_out = sol_tmp
                     continue
-                except:
-                    if vol != -1:
-                        print 'result vol: ', vol
-                        print 'result sol: ', sol
-                        
-                        if type(sol) == np.ndarray:
-                            sol = sol.tolist()
-                        vol_list.append(vol)
-                        sol_list.append(sol)
-    print 'Done.'
-    print 'vol_list: ', vol_list
-    print 'sol_list: ', sol_list
-    vol = -1
-    sol = -1
-    vol_list_pos = [-1, -1]
-    vol_list_neg = [-1, -1]
-    vol_list_out = [-1, -1]
-    if len(vol_list) != 0 and len(sol_list) != 0:
-        for i in range(len(vol_list)):
-            vol_tmp = vol_list[i]
-            sol_tmp = sol_list[i]
-            dist = target_vol - vol_tmp
-            if abs(dist) < 1e-6:
-                return vol_tmp, sol_tmp
-            if abs(dist) > max_diff:
-                print 'distance ', dist, ' is too far from target'
-                if abs(dist) < abs(target_vol - vol_list_out[0]):
-                    vol_list_out = [vol_tmp, sol_tmp]
-                continue
-            if dist > 0:
-                print 'vol is smaller than target'
-                if abs(dist) < abs(target_vol - vol_list_pos[0]):
-                    vol_list_pos = [vol_tmp, sol_tmp]
-                continue
-            if dist < 0:
-                print 'vol is greater than target'
-                if abs(dist) < abs(target_vol - vol_list_neg[0]):
-                    vol_list_neg = [vol_tmp, sol_tmp]
-                continue
-    if vol_list_pos[0] != -1 and type(vol_list_pos[1]) != int:
-        print 'good'
-        return vol_list_pos[0], vol_list_pos[1]
-    if vol_list_neg[0] != -1 and type(vol_list_neg[1]) != int:
-        print 'meh'
-        return vol_list_neg[0], vol_list_neg[1]
-    if vol_list_out[0] != -1 and type(vol_list_out[1]) != int:
-        print 'nah'
-        return vol_list_out[0], vol_list_out[1]
+                if dist > 0:
+                    if abs(dist) < dist_min_pos:
+                        print 'vol is smaller than target'
+                        dist_min_pos = abs(dist)
+                        vol_list_pos = vol_tmp
+                        sol_list_pos = sol_tmp
+                    continue
+                if dist < 0:
+                    if abs(dist) < dist_min_neg:
+                        print 'vol is greater than target'
+                        dist_min_neg = abs(dist)
+                        vol_list_neg = vol_tmp
+                        sol_list_neg = sol_tmp
+                    continue
+        print 'vol_list_pos: ', vol_list_pos
+        print 'sol_list_pos: ', sol_list_pos
+        print 'vol_list_neg: ', vol_list_neg
+        print 'sol_list_neg: ', sol_list_neg
+        print 'vol_list_out: ', vol_list_out
+        print 'sol_list_out: ', sol_list_out
+        print 'max_range: ', max_range
+        if len(sol_list_pos) != 0:
+            print 'good'
+            return vol_list_pos, sol_list_pos
+        if len(sol_list_neg) != 0:
+            print 'meh'
+            if max_range >= max_range_start + height - 1:
+                return vol_list_neg, vol_list_neg
+            continue
+        if len(sol_list_out) != 0:
+            print 'nah'
+            if max_range >= max_range_start + height - 1:
+                return vol_list_out, vol_list_out
+            continue
     return -1, -1
 
-def generate_vol(min_height, max_height, max_range, out_file):
+def generate_vol_2(min_height, max_height, max_range, out_file):
+    global vol_min_global
+    vol_dict = {}
+    vol_list = []
+    num_vol = 0
+    for h1 in range(min_height, max_height+1):
+        target_vol = 16.0/27/h1
+        for h2 in range(0, h1+1):
+            h2 = h1 - h2
+            for h3 in range(0, h2+1):
+                h3 = h2 - h3
+                try:
+                    data_tmp = vol_dict['%d_%d_%d' % (h1,h2,h3)]
+                    continue
+                except:
+                    pass
+                print h1,h2,h3
+                prism, series = lift_prism(h1,h2,h3)
+                vol, sol = expand_NSolve(series, 5, h1, [target_vol, max_range], out_file)
+                vol_dict['%d_%d_%d' % (h1,h2,h3)] = [vol, sol]
+                vol_list.append(vol)
+                num_vol += 1
+                print 'vol: ', vol
+
+def generate_vol(min_height, max_height, max_range, out_path):
     global vol_min_global
     vol_dict = {}
     vol_list = []
@@ -816,7 +874,6 @@ def generate_vol(min_height, max_height, max_range, out_file):
     for h1 in range(min_height, max_height+1):
         print h1, 0, 0
         num_vol_prev = (h1+1)*h1/2
-        num_vol_prev = - num_vol_prev
         print 'num_vol_prev: ', num_vol_prev
         
         vol_min_global = 1.0/(h1+1)**3
@@ -833,10 +890,10 @@ def generate_vol(min_height, max_height, max_range, out_file):
         min_vol = min_vol_tmp
         target_vol = max_vol
         max_range = abs(max_vol - min_vol)
-
+        
         print 'target: ', target_vol, ', range: ', max_range
         prism, series = lift_prism(h1,0,0)
-        vol, sol = expand_NSolve(series, 5, [target_vol, max_range], out_file)
+        vol, sol = expand_NSolve(series, 5, h1, [target_vol, max_range])
         print 'vol: ', vol
         vol_dict['%d_%d_%d' % (h1,0,0)] = [vol, sol]
         vol_list.append(vol)
@@ -856,7 +913,7 @@ def generate_vol(min_height, max_height, max_range, out_file):
                 print h1,h2,h3
                 print 'target: ', target_vol, ', range: ', max_range
                 prism, series = lift_prism(h1,h2,h3)
-                vol, sol = expand_NSolve(series, 5, [target_vol, max_range], out_file)
+                vol, sol = expand_NSolve(series, 5, h1, [target_vol, max_range], out_file)
                 vol_dict['%d_%d_%d' % (h1,h2,h3)] = [vol, sol]
                 vol_list.append(vol)
                 num_vol += 1
@@ -924,17 +981,18 @@ print 'series for: ', h1, h2, h3
 print series
 '''
 
-vol_min_global = 1/27.0
+vol_min_global = 1/(10**3)
 input_min_height = 1
 input_max_height = 1
 print input_min_height, input_max_height
-out_path = '3_1_0_test.txt'
-out_file = open(out_path, 'w')
-prism, series = lift_prism(1,0,0)
-vol, sol = expand_NSolve(series, 5, [16.0/27/3, abs(16.0/27/3 - 16.0/27/4)], out_file)
-print vol
-print sol
+#out_path = '12_1_0_test.txt'
+#out_file = open(out_path, 'w')
+prism, series = lift_prism(10,2,1)
+#vol, sol = expand_NSolve(series, 5, 12, [16.0/27/12, abs(16.0/27/12 - 16.0/27/13)], out_file)
 #vol, sol = iter_grid_NSolve(series, 5, SIDE_LENGTH, out_file)
 #vol_list = generate_vol(input_min_height, input_max_height, 5, out_file)
-out_file.close()
+vol, sol = expand_NSolve(series, 3, 10, [16.0/27/10, abs(16.0/27/10 - 16.0/27/11)])
+#out_file.close()
+print vol
+print sol
 print 'completed.'
