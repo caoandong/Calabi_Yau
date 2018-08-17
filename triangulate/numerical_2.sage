@@ -639,6 +639,7 @@ def test_func(x):
     return test_func_1((x+10), 4.62386348)+0.03
 def test_func_inv(y):
     return 4.62386348/(y-0.03)-10
+'''
 def dist_to_func(pt):
     x0 = float(pt[0])
     y0 = 500*float(pt[1])
@@ -647,6 +648,7 @@ def dist_to_func(pt):
     res = minimize(dist, [1], bounds=bnds)
     print res
     return res
+
 def dist_to_func(pt):
     x0 = float(pt[0])
     y0 = float(pt[1])
@@ -654,6 +656,12 @@ def dist_to_func(pt):
         return abs(x0 - test_func_inv(y0))
     else:
         return abs(y0 - test_func(x0))
+'''
+def dist_to_func(pt):
+    x0 = float(pt[0])
+    y0 = float(pt[1])
+    return abs(y0 - test_func(x0))
+    
 def get_vol_idx(heights):
     h1 = heights[0]
     h2 = heights[1]
@@ -815,13 +823,21 @@ def fit_NSolve(Series, max_range_start, heights, vol_range):
                     print 'dist to fit function: ', fit_dist
                     if abs(fit_dist) < 1e-6:
                         return vol, sol
-                    if fit_dist < max_diff:
+                    if idx < 100:
                         if vol <= target_dist:
                             return vol, sol
                         else:
                             vol_list.append(vol)
                             sol_list.append(sol)
                             dist_list.append(fit_dist)
+                    else:
+                        if fit_dist < max_diff:
+                            if vol <= target_dist:
+                                return vol, sol
+                            else:
+                                vol_list.append(vol)
+                                sol_list.append(sol)
+                                dist_list.append(fit_dist)
         print 'Done.'
         vol_list = list(vol_list)
         sol_list = list(sol_list)
@@ -963,12 +979,11 @@ def expand_NSolve(Series, max_range_start, height, vol_range):
             continue
     return -1, -1
 
-def generate_vol_2(min_height, max_height, max_range, out_path):
+def generate_vol_2(min_height, max_height, out_path, max_range=0.02):
     global vol_min_global
     vol_dict = {}
     vol_list = []
     num_vol = 0
-    max_range = 0.02
     for h1 in range(min_height, max_height+1):
         target_vol = 16.0/27/h1
         vol_min_global = 1.0/(h1+1)**3
@@ -1138,7 +1153,6 @@ generate_vol_2(10, 11, 0.02, out_path)
 #vol, sol = fit_NSolve(series, 3, [10,2,1], [16.0/27/10, 0.02])
 #out_file.close()
 '''
-err_path = '/home/carnd/CYML/triangulate/error_1_11.txt'
-out_path = '/home/carnd/CYML/triangulate/fixed_error_1_11.txt'
-clean_err_vol(err_path, out_path)
+out_path = '/home/carnd/CYML/triangulate/test_fit_9_10.txt'
+generate_vol_2(9, 10, out_path=out_path)
 print 'completed.'
