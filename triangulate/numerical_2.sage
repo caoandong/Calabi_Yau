@@ -631,6 +631,43 @@ def func(p, *d):
     f1, f2, f3 = d
     return (f1(b1 = p[0], b2 = p[1], b3 = p[2]), f2(b1 = p[0], b2 = p[1], b3 = p[2]), f3(b1 = p[0], b2 = p[1], b3 = p[2]))
 
+def test_func_1(x, a):
+    return a * float(1.0)/(x)
+def test_func_2(x, a, b, c):
+    return -1*a * np.log(x-b) + c
+def test_func(x):
+    return test_func_1((x+10), 4.62386348)+0.03
+def test_func_inv(y):
+    return 4.62386348/(y-0.03)-10
+def dist_to_func(pt):
+    x0 = float(pt[0])
+    y0 = 500*float(pt[1])
+    bnds = np.array([(0,None)])
+    dist =  lambda x: np.sqrt((x-x0)**2 + (500*test_func(x)-y0)**2)
+    res = minimize(dist, [1], bounds=bnds)
+    print res
+    return res
+def dist_to_func(pt):
+    x0 = float(pt[0])
+    y0 = float(pt[1])
+    if x0 <= 100:
+        return abs(x0 - test_func_inv(y0))
+    else:
+        return abs(y0 - test_func(x0))
+def get_vol_idx(heights):
+    h1 = heights[0]
+    h2 = heights[1]
+    h3 = heights[2]
+    idx_1 = 0
+    idx_2 = 0
+    idx_3 = 0
+    for i in range(1,h1+1):
+        idx_1 += i*(i+1)/2
+    idx_1 -= 1
+    idx_2 = (h2)*(h2+1)/2
+    idx_3 = h3
+    idx = idx_1 + idx_2 + idx_3
+    return idx
 '''
 def constraint(Series, sol, vol_range):
     vol = Series(b1 = sol[0], b2 = sol[1], b3 = sol[2])
@@ -731,6 +768,90 @@ def grid_NSolve(Series, d, num_sec, vol_range, out_file):
                         #return vol, sol
     
     return vol_list, sol_list
+
+def fit_NSolve(Series, max_range_start, heights, vol_range):
+    d1 = diff(Series, b1)
+    d2 = diff(Series, b2)
+    d3 = diff(Series, b3)
+    d = (d1, d2, d3)
+    MAX_NUM_VOL = 10
+    target_vol = vol_range[0]
+    max_diff = vol_range[1]
+    range_dict = {}
+    height = max(heights)
+    idx = get_vol_idx(heights)
+    print 'vol idx: ', idx
+    
+    fit_dist_min = 999
+    vol_ret = -1
+    sol_ret = -1
+    
+    for max_range in range(max_range_start, max_range_start + height):
+        vol_list = []
+        sol_list = []
+        dist_list = []
+        for i in range(1, max_range+1):
+            if len(vol_list) > MAX_NUM_VOL:
+                break
+            for j in range(1, max_range+1):
+                for k in range(1, max_range+1):
+                    try:
+                        bound = range_dict['%d_%d_%d' % (i,j,k)]
+                        continue
+                    except:
+                        pass
+                    bound = [[i-1,i],[j-1,j],[k-1,k]]
+                    range_dict['%d_%d_%d' % (i,j,k)] = bound
+                    print 'try bound: ', bound
+                    range_dict['%d_%d_%d' % (i,j,k)] = bound
+                    vol, sol = NSolve(Series, d, bound)
+                    if type(sol) == int or type(vol) == int:
+                        print 'range ', i,j,k,' does not work'
+                        continue
+                    if type(sol) == np.ndarray:
+                        sol = sol.tolist()
+                    target_dist = target_vol - vol
+                    fit_dist = dist_to_func([idx, vol])
+                    print 'dist to fit function: ', fit_dist
+                    if abs(fit_dist) < 1e-6:
+                        return vol, sol
+                    if fit_dist < max_diff:
+                        if vol <= target_dist:
+                            return vol, sol
+                        else:
+                            vol_list.append(vol)
+                            sol_list.append(sol)
+                            dist_list.append(fit_dist)
+        print 'Done.'
+        vol_list = list(vol_list)
+        sol_list = list(sol_list)
+        print 'vol_list: ', vol_list
+        print 'sol_list: ', sol_list
+        print 'dist_list: ', dist_list
+        if len(vol_list) != 0 and len(sol_list) != 0:
+            for i in range(len(vol_list)):
+                vol_tmp = vol_list[i]
+                sol_tmp = sol_list[i]
+                dist = dist_list[i]
+                if abs(dist) < 1e-6:
+                    return vol_tmp, sol_tmp
+                if abs(dist) < max_diff:
+                    if abs(dist) < fit_dist_min:
+                        fit_dist_min = abs(dist)
+                        vol_ret = vol_tmp
+                        sol_ret = sol_tmp
+                    continue
+                else:
+                    print 'distance ', dist, ' is too far from target'
+                    continue
+        try:
+            if type(sol_ret) != int and len(sol_ret) != 0:
+                print 'good'
+                return vol_ret, sol_ret
+        except:
+            continue
+    print 'no valid solution'
+    return vol_ret, sol_ret
 
 def expand_NSolve(Series, max_range_start, height, vol_range):
     d1 = diff(Series, b1)
@@ -842,13 +963,15 @@ def expand_NSolve(Series, max_range_start, height, vol_range):
             continue
     return -1, -1
 
-def generate_vol_2(min_height, max_height, max_range, out_file):
+def generate_vol_2(min_height, max_height, max_range, out_path):
     global vol_min_global
     vol_dict = {}
     vol_list = []
     num_vol = 0
+    max_range = 0.02
     for h1 in range(min_height, max_height+1):
         target_vol = 16.0/27/h1
+        vol_min_global = 1.0/(h1+1)**3
         for h2 in range(0, h1+1):
             h2 = h1 - h2
             for h3 in range(0, h2+1):
@@ -860,9 +983,12 @@ def generate_vol_2(min_height, max_height, max_range, out_file):
                     pass
                 print h1,h2,h3
                 prism, series = lift_prism(h1,h2,h3)
-                vol, sol = expand_NSolve(series, 5, h1, [target_vol, max_range], out_file)
+                vol, sol = fit_NSolve(series, 3, [h1,h2,h3], [target_vol, max_range])
                 vol_dict['%d_%d_%d' % (h1,h2,h3)] = [vol, sol]
                 vol_list.append(vol)
+                out_file = open(out_path, 'a')
+                out_file.write('[%s,%s]\n' % (str(vol), str(sol)))
+                out_file.close()
                 num_vol += 1
                 print 'vol: ', vol
 
@@ -953,6 +1079,22 @@ def iter_grid_NSolve(Series, max_sec, SIDE_LENGTH, out_file):
     else:
         return -1, -1
 
+def clean_err_vol(err_path, out_path):
+    global vol_min_global
+    err_file = open(err_path, 'r')
+    for line in err_file:
+        data = eval(line)
+        h = data[0]
+        vol_err = data[1]
+        vol_min_global = 1/(max(h)**3)
+        prism, series = lift_prism(h[0],h[1],h[2])
+        vol, sol = fit_NSolve(series, 3, h, [16.0/27/max(h), 0.02])
+        print vol
+        out_file = open(out_path, 'a')
+        out_file.write("[%s, %f, %s]\n" % (str(h), vol, sol))
+        out_file.close()
+    err_file.close()
+
 '''
 max_height = 50
 #num_height = 2
@@ -979,20 +1121,24 @@ SIDE_LENGTH = max_height
 prism, series = lift_prism(h1,h2,h3)
 print 'series for: ', h1, h2, h3
 print series
-'''
+
 
 vol_min_global = 1/(10**3)
-input_min_height = 1
-input_max_height = 1
-print input_min_height, input_max_height
-#out_path = '12_1_0_test.txt'
+#input_min_height = 1
+#input_max_height = 1
+#print input_min_height, input_max_height
+out_path = '12_1_0_test.txt'
+generate_vol_2(10, 11, 0.02, out_path)
 #out_file = open(out_path, 'w')
-prism, series = lift_prism(10,2,1)
+#prism, series = lift_prism(10,2,1)
 #vol, sol = expand_NSolve(series, 5, 12, [16.0/27/12, abs(16.0/27/12 - 16.0/27/13)], out_file)
 #vol, sol = iter_grid_NSolve(series, 5, SIDE_LENGTH, out_file)
 #vol_list = generate_vol(input_min_height, input_max_height, 5, out_file)
-vol, sol = expand_NSolve(series, 3, 10, [16.0/27/10, abs(16.0/27/10 - 16.0/27/11)])
+#vol, sol = expand_NSolve(series, 3, 10, [16.0/27/10, abs(16.0/27/10 - 16.0/27/11)])
+#vol, sol = fit_NSolve(series, 3, [10,2,1], [16.0/27/10, 0.02])
 #out_file.close()
-print vol
-print sol
+'''
+err_path = '/home/carnd/CYML/triangulate/error_1_11.txt'
+out_path = '/home/carnd/CYML/triangulate/fixed_error_1_11.txt'
+clean_err_vol(err_path, out_path)
 print 'completed.'
