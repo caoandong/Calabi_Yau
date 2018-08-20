@@ -181,7 +181,10 @@ def fit_NSolve(Series, max_range_start, heights, vol_range):
 
 h_min = 35
 h_max = 36
-input_path = '/home/ubuntu/Calabi_Yau/triangulate/series_%d_%d.txt'%(h_min, h_max)
+input_path = 'series_%d_%d.txt'%(h_min, h_max)
+out_path = 'fit_vol_%d_%d.txt'%(h_min, h_max)
+out_file = open(out_path, 'w')
+out_file.close()
 vol_min_global = 1/2.0**3
 b1 = sp.symbols('b1')
 b2 = sp.symbols('b2')
@@ -196,3 +199,5 @@ for line in input_file:
     vol, sol = fit_NSolve(series, 3, h, [16.0/27/h_max, 0.02])
     print (vol)
     print (sol)
+    out_file = open(out_path, 'a')
+    out_file.write('[%s, %f, %s]\n'%(str(h), vol, str(sol)))
