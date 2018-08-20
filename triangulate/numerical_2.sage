@@ -1003,9 +1003,7 @@ def generate_series(min_height, max_height, out_path):
                 out_file.write('[%s,%s]\n' % (str([h1,h2,h3]), str(series)))
                 out_file.close()
                 num_vol += 1
-                if num_vol > 10:
-                    print 'Done.'
-                    return
+                
                 
 def generate_vol_2(min_height, max_height, out_path, max_range=0.02):
     global vol_min_global
@@ -1189,8 +1187,8 @@ out_file.close()
 generate_vol_2(h_min, h_max, out_path=out_path)
 print 'completed.'
 '''
-h_min = 35
-h_max = 36
+h_min = 29
+h_max = 29
 out_path = '/home/ubuntu/Calabi_Yau/triangulate/series_%d_%d.txt'%(h_min, h_max)
 out_file = open(out_path, 'w')
 out_file.close()
