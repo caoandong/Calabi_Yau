@@ -108,7 +108,7 @@ def Hilb(triang_list):
             hilb *= (1-t_prod)^(-1)
         #print 'Hilbert: ', hilb
         Hilb += hilb
-    print 'Hilb: ', Hilb()
+    #print 'Hilb: ', Hilb()
     #print Hilb(t1=t, t2=t, t3=t).series(t4, 3)
     #print "p-q web: ", power 
     
@@ -979,6 +979,34 @@ def expand_NSolve(Series, max_range_start, height, vol_range):
             continue
     return -1, -1
 
+def generate_series(min_height, max_height, out_path):
+    global vol_min_global
+    vol_dict = {}
+    vol_list = []
+    num_vol = 0
+    for h1 in range(min_height, max_height+1):
+        target_vol = 16.0/27/h1
+        vol_min_global = 1.0/(h1+1)**3
+        for h2 in range(0, h1+1):
+            h2 = h1 - h2
+            for h3 in range(0, h2+1):
+                h3 = h2 - h3
+                try:
+                    data_tmp = vol_dict['%d_%d_%d' % (h1,h2,h3)]
+                    continue
+                except:
+                    pass
+                print h1,h2,h3
+                prism, series = lift_prism(h1,h2,h3)
+                print 'series: ', series
+                out_file = open(out_path, 'a')
+                out_file.write('[%s,%s]\n' % (str([h1,h2,h3]), str(series)))
+                out_file.close()
+                num_vol += 1
+                if num_vol > 10:
+                    print 'Done.'
+                    return
+                
 def generate_vol_2(min_height, max_height, out_path, max_range=0.02):
     global vol_min_global
     vol_dict = {}
@@ -1002,7 +1030,7 @@ def generate_vol_2(min_height, max_height, out_path, max_range=0.02):
                 vol_dict['%d_%d_%d' % (h1,h2,h3)] = [vol, sol]
                 vol_list.append(vol)
                 out_file = open(out_path, 'a')
-                out_file.write('[%s,%s]\n' % (str(vol), str(sol)))
+                out_file.write('[%s,%s,%s]\n' % (str([h1,h2,h3]), str(vol), str(sol)))
                 out_file.close()
                 num_vol += 1
                 print 'vol: ', vol
@@ -1152,7 +1180,18 @@ generate_vol_2(10, 11, 0.02, out_path)
 #vol, sol = expand_NSolve(series, 3, 10, [16.0/27/10, abs(16.0/27/10 - 16.0/27/11)])
 #vol, sol = fit_NSolve(series, 3, [10,2,1], [16.0/27/10, 0.02])
 #out_file.close()
-'''
-out_path = '/home/carnd/CYML/triangulate/test_fit_9_10.txt'
-generate_vol_2(9, 10, out_path=out_path)
+
+h_min = 35
+h_max = 36
+out_path = '/home/ubuntu/Calabi_Yau/triangulate/lift_vol_%d_%d.txt'%(h_min, h_max)
+out_file = open(out_path, 'w')
+out_file.close()
+generate_vol_2(h_min, h_max, out_path=out_path)
 print 'completed.'
+'''
+h_min = 35
+h_max = 36
+out_path = '/home/ubuntu/Calabi_Yau/triangulate/series_%d_%d.txt'%(h_min, h_max)
+out_file = open(out_path, 'w')
+out_file.close()
+generate_series(h_min, h_max, out_path)
