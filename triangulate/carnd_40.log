@@ -1,0 +1,488 @@
+/home/carnd/anaconda3/lib/python3.5/site-packages/scipy/optimize/minpack.py:161: RuntimeWarning: The iteration is not making good progress, as measured by the 
+  improvement from the last ten iterations.
+  warnings.warn(msg, RuntimeWarning)
+solution:  [ 3.16001260e+14  2.59037988e+00 -2.32756370e+16]
+guessed vol:  -3.04818436111614e-46
+volume:  3.04818436111614e-46  is out of bounds.
+reset starting point:  0.3061828738703948 0.6748132805083064 0.7468883309966898
+solution:  [ 4.53542919e+15  2.32529506e+00 -5.72453880e+17]
+guessed vol:  -2.91465676793303e-50
+volume:  2.91465676793303e-50  is out of bounds.
+reset starting point:  0.8207248419310685 0.8171731589135102 0.3897611852680688
+solution:  [ 2.28616046e+15  2.40444609e+00 -2.35349149e+17]
+guessed vol:  -3.57438654765436e-49
+volume:  3.57438654765436e-49  is out of bounds.
+range  1 1 1  does not work
+try bound:  [[0, 1], [0, 1], [1, 2]]
+reset starting point:  0.779313532519715 0.8568174953947291 1.9794191870249662
+solution:  [ 5.56051403e+15  2.36019278e+00 -6.37532789e+17]
+guessed vol:  -1.95183020651044e-50
+volume:  1.95183020651044e-50  is out of bounds.
+reset starting point:  0.17094190981656066 0.32419941990229384 1.400830032113519
+solution:  [ 2.78341915e+15  2.41724455e+00 -2.78451817e+17]
+guessed vol:  -2.11414401036774e-49
+volume:  2.11414401036774e-49  is out of bounds.
+reset starting point:  0.29286366115568374 0.8249986336599548 1.298697174752327
+solution:  [ 1.03369195e+15  2.13895065e+00 -2.99007285e+17]
+guessed vol:  -4.39136171587050e-49
+volume:  4.39136171587050e-49  is out of bounds.
+range  1 1 2  does not work
+try bound:  [[0, 1], [0, 1], [2, 3]]
+reset starting point:  0.7392588475515686 0.753016071481896 2.655270216213331
+solution:  [ 4.64409156e+15  2.38099835e+00 -5.05264688e+17]
+guessed vol:  -3.76452178092877e-50
+volume:  3.76452178092877e-50  is out of bounds.
+reset starting point:  0.5570147385903774 0.8814830564419158 2.8671513954740675
+solution:  [ 3.10465551e+15  2.35993375e+00 -3.56199919e+17]
+guessed vol:  -1.11969437595551e-49
+volume:  1.11969437595551e-49  is out of bounds.
+reset starting point:  0.8930100514209359 0.9605209864901001 2.317991262346502
+solution:  [ 3.31422838e+15  2.46869247e+00 -2.98382410e+17]
+guessed vol:  -1.60107270008534e-49
+volume:  1.60107270008534e-49  is out of bounds.
+range  1 1 3  does not work
+try bound:  [[0, 1], [1, 2], [0, 1]]
+reset starting point:  0.4606029274230167 1.4894261757440177 0.9234900426774322
+solution:  [ 1.11374697e+15  2.30166980e+00 -1.51037462e+17]
+guessed vol:  -1.68602403704719e-48
+volume:  1.68602403704719e-48  is out of bounds.
+reset starting point:  0.4573329287201927 1.4711988436458725 0.7441123740337309
+solution:  [ 5.34066791e+15  2.31749887e+00 -6.89799003e+17]
+guessed vol:  -1.69823844356942e-50
+volume:  1.69823844356942e-50  is out of bounds.
+reset starting point:  0.7254436489409373 1.7216101576239784 0.24826116621983363
+solution:  [ 2.89600286e+15  2.50530946e+00 -2.43879664e+17]
+guessed vol:  -2.81889252492051e-49
+volume:  2.81889252492051e-49  is out of bounds.
+range  1 2 1  does not work
+try bound:  [[0, 1], [1, 2], [1, 2]]
+reset starting point:  0.382009832730153 1.7945569622912716 1.7431364757700112
+solution:  [ 4.49387629e+15  2.15759595e+00 -1.14768919e+18]
+guessed vol:  -6.88475566230621e-51
+volume:  6.88475566230621e-51  is out of bounds.
+reset starting point:  0.28227726351192617 1.8172089167676115 1.7519619849074137
+solution:  [ 3.20180314e+15  2.25568259e+00 -5.09089250e+17]
+guessed vol:  -5.06326851578244e-50
+volume:  5.06326851578244e-50  is out of bounds.
+reset starting point:  0.9250153378229294 1.010144874479806 1.6928113518398509
+solution:  [ 7.97577105e+15  2.39365799e+00 -8.41823706e+17]
+guessed vol:  -7.95558843619607e-51
+volume:  7.95558843619607e-51  is out of bounds.
+range  1 2 2  does not work
+try bound:  [[0, 1], [1, 2], [2, 3]]
+reset starting point:  0.778766295319119 1.0868340779151295 2.255743384561894
+solution:  [ 1.29058513e+15  2.37104797e+00 -1.43917344e+17]
+guessed vol:  -1.66022263408548e-48
+volume:  1.66022263408548e-48  is out of bounds.
+reset starting point:  0.8729109379437059 1.5758073433907884 2.482170831570207
+solution:  [ 2.98693785e+15  2.36737954e+00 -3.36188878e+17]
+guessed vol:  -1.31187660621487e-49
+volume:  1.31187660621487e-49  is out of bounds.
+reset starting point:  0.04867945395952722 1.2900359735455218 2.2259259629675423
+solution:  [2.00000347e+00 1.16609547e+29 1.19999931e+02]
+guessed vol:  -1.83852495804439e-60
+volume:  1.83852495804439e-60  is out of bounds.
+range  1 2 3  does not work
+try bound:  [[0, 1], [2, 3], [0, 1]]
+reset starting point:  0.6968629041924027 2.5060760610412913 0.9244865205631951
+solution:  [ 6.41048370e+15  2.34844099e+00 -7.58241411e+17]
+guessed vol:  -1.18935808122573e-50
+volume:  1.18935808122573e-50  is out of bounds.
+reset starting point:  0.4800947567547126 2.494814270595418 0.31559842907549296
+solution:  [ 1.61439844e+15  2.61601881e+00 -1.14772864e+17]
+guessed vol:  -2.51368688752079e-48
+volume:  2.51368688752079e-48  is out of bounds.
+reset starting point:  0.8162499633348306 2.541417639841109 0.6220849871268906
+solution:  [ 1.54048128e+15  2.74286088e+00 -9.43922081e+16]
+guessed vol:  -4.46276713888334e-48
+volume:  4.46276713888334e-48  is out of bounds.
+range  1 3 1  does not work
+try bound:  [[0, 1], [2, 3], [1, 2]]
+reset starting point:  0.10653151010470197 2.871832655091257 1.563418317195931
+solution:  [ 5.88321455e+15  2.21214600e+00 -1.12175757e+18]
+guessed vol:  -5.58900848471988e-51
+volume:  5.58900848471988e-51  is out of bounds.
+reset starting point:  0.2046536878448334 2.7721214240167975 1.3587619682594212
+solution:  [  1.51020128   1.32665737 -46.29694549]
+guessed vol:  -0.00221306563447030
+volume:  0.00221306563447030  is out of bounds.
+reset starting point:  0.0885511058301125 2.071043996237796 1.962007957675005
+/home/carnd/anaconda3/lib/python3.5/site-packages/scipy/optimize/minpack.py:161: RuntimeWarning: The number of calls to function has reached maxfev = 800.
+  warnings.warn(msg, RuntimeWarning)
+solution:  [ 1.28003329e+35 -5.89476731e+38 -1.55719890e+37]
+guessed vol:  -3.57171000406498e-151
+volume:  3.57171000406498e-151  is out of bounds.
+range  1 3 2  does not work
+try bound:  [[0, 1], [2, 3], [2, 3]]
+reset starting point:  0.32677314269732793 2.946510660090979 2.954928867656167
+solution:  [ 2.20621944e+15  2.47320111e+00 -1.96933029e+17]
+guessed vol:  -5.53945743132008e-49
+volume:  5.53945743132008e-49  is out of bounds.
+reset starting point:  0.35911890776777744 2.1551155188387887 2.703391577658223
+solution:  [ 2.10857156  1.86664635 -2.30997977]
+guessed vol:  -0.00254680120621811
+volume:  0.00254680120621811  is out of bounds.
+reset starting point:  0.1825159369801671 2.579050014376069 2.2346923359667623
+solution:  [ 6.32985570e+15  2.29473492e+00 -8.77713746e+17]
+guessed vol:  -8.75713830949497e-51
+volume:  8.75713830949497e-51  is out of bounds.
+range  1 3 3  does not work
+try bound:  [[1, 2], [0, 1], [0, 1]]
+reset starting point:  1.3702841557899181 0.24201487095168672 0.12649749170626956
+solution:  [ 3.40541449e+15  2.85115557e+00 -1.89022604e+17]
+guessed vol:  -5.79043184257466e-49
+volume:  5.79043184257466e-49  is out of bounds.
+reset starting point:  1.970782178360135 0.4031486422791992 0.7738165481034333
+solution:  [ 1.25979704e+16  3.43968355e+00 -5.31391450e+17]
+guessed vol:  -7.35305075975010e-50
+volume:  7.35305075975010e-50  is out of bounds.
+reset starting point:  1.8294795754229767 0.8511907872475631 0.8889786032723582
+solution:  [ 1.11575958e+15  2.45270113e+00 -1.03637917e+17]
+guessed vol:  -3.89792927384883e-48
+volume:  3.89792927384883e-48  is out of bounds.
+range  2 1 1  does not work
+try bound:  [[1, 2], [0, 1], [1, 2]]
+reset starting point:  1.5200757905252527 0.9028061488627366 1.489792442544594
+solution:  [ 1.55403416e+15  2.52568769e+00 -1.26417077e+17]
+guessed vol:  -1.98693037197223e-48
+volume:  1.98693037197223e-48  is out of bounds.
+reset starting point:  1.6380852595474718 0.16145152694470366 1.5363443778558197
+solution:  [ 1.62247610e+15  2.22485497e+00 -2.92274459e+17]
+guessed vol:  -2.99780853307679e-49
+volume:  2.99780853307679e-49  is out of bounds.
+reset starting point:  1.4386444609569602 0.6049167433291801 1.4624621120568837
+solution:  [ 7.70417621e+14  2.62221504e+00 -5.43210734e+16]
+guessed vol:  -2.36559414949292e-47
+volume:  2.36559414949292e-47  is out of bounds.
+range  2 1 2  does not work
+try bound:  [[1, 2], [0, 1], [2, 3]]
+reset starting point:  1.1723073871111853 0.5444417402528177 2.66028379077445
+solution:  [ 1.72900235e+15  2.56888841e+00 -1.31406674e+17]
+guessed vol:  -1.71435595758372e-48
+volume:  1.71435595758372e-48  is out of bounds.
+reset starting point:  1.7425986421207202 0.8205156459594184 2.8577724646086287
+solution:  [ 7.04092137e+14  2.63029187e+00 -4.91213967e+16]
+guessed vol:  -3.19056827786795e-47
+volume:  3.19056827786795e-47  is out of bounds.
+reset starting point:  1.8453459356553399 0.062090759789182215 2.655443711324229
+solution:  [ 2.32231369  0.94158301 68.10224636]
+guessed vol:  0.0305692448264988
+volume:  0.0305692448264988  is out of bounds.
+range  2 1 3  does not work
+try bound:  [[1, 2], [1, 2], [0, 1]]
+reset starting point:  1.4621089181905738 1.564267435036238 0.4479769401361242
+solution:  [ 3.29274422e+15  2.75029374e+00 -2.00249527e+17]
+guessed vol:  -4.68047319570022e-49
+volume:  4.68047319570022e-49  is out of bounds.
+reset starting point:  1.003465512586434 1.836312919335759 0.9567941102564793
+solution:  [ 5.64221568e+14  2.71257948e+00 -3.56925908e+16]
+guessed vol:  -8.22754107262046e-47
+volume:  8.22754107262046e-47  is out of bounds.
+reset starting point:  1.1978601814048826 1.522589176694035 0.7252719937983445
+solution:  [ 2.40139407e+15  2.44691196e+00 -2.25664299e+17]
+guessed vol:  -3.80472608674951e-49
+volume:  3.80472608674951e-49  is out of bounds.
+range  2 2 1  does not work
+try bound:  [[1, 2], [1, 2], [1, 2]]
+reset starting point:  1.1843843433089014 1.8445906244050807 1.145825240564951
+solution:  [ 3.92480226e+15  2.45472493e+00 -3.63093334e+17]
+guessed vol:  -9.04060816443324e-50
+volume:  9.04060816443324e-50  is out of bounds.
+reset starting point:  1.1624804577166519 1.8544262441933634 1.2025165546887928
+solution:  [ 5.02619422e+15  2.48769187e+00 -4.36755770e+17]
+guessed vol:  -4.99659979466668e-50
+volume:  4.99659979466668e-50  is out of bounds.
+reset starting point:  1.3435829915498512 1.4850649384054577 1.9754166924355383
+solution:  [ 2.66757544e+15  2.29933970e+00 -3.64446412e+17]
+guessed vol:  -1.20774646245524e-49
+volume:  1.20774646245524e-49  is out of bounds.
+range  2 2 2  does not work
+try bound:  [[1, 2], [1, 2], [2, 3]]
+reset starting point:  1.440460382291619 1.4513448129179278 2.927363364127241
+solution:  [ 7.52506271e+14  2.42824742e+00 -7.35096450e+16]
+guessed vol:  -1.13004551383211e-47
+volume:  1.13004551383211e-47  is out of bounds.
+reset starting point:  1.6694434879284152 1.8604546097960375 2.470718418148935
+solution:  [ 1.32396853e+15  2.34308333e+00 -1.58903477e+17]
+guessed vol:  -1.30753725736676e-48
+volume:  1.30753725736676e-48  is out of bounds.
+reset starting point:  1.1159087513641404 1.4473556000585461 2.3032769805139313
+solution:  [ 6.21843221e+15  2.34257748e+00 -7.47378954e+17]
+guessed vol:  -1.25811900069383e-50
+volume:  1.25811900069383e-50  is out of bounds.
+range  2 2 3  does not work
+try bound:  [[1, 2], [2, 3], [0, 1]]
+reset starting point:  1.9469456928233289 2.5236015974951242 0.326488590193285
+solution:  [5.37684463 3.28973419 0.11547521]
+guessed vol:  -0.000782675943166733
+volume:  0.000782675943166733  is out of bounds.
+reset starting point:  1.768929961237389 2.658418918337156 0.38923179524388785
+solution:  [5.37684463 3.28973419 0.11547521]
+guessed vol:  -0.000782675943166733
+volume:  0.000782675943166733  is out of bounds.
+reset starting point:  1.658760074977205 2.1253342690919435 0.08369396868492529
+solution:  [5.37684463 3.28973419 0.11547521]
+guessed vol:  -0.000782675943166733
+volume:  0.000782675943166733  is out of bounds.
+range  2 3 1  does not work
+try bound:  [[1, 2], [2, 3], [1, 2]]
+reset starting point:  1.1204784566752397 2.351717870627314 1.0096237254761105
+solution:  [ 1.92996942e+15  2.55958988e+00 -1.48755906e+17]
+guessed vol:  -1.18878046328829e-48
+volume:  1.18878046328829e-48  is out of bounds.
+reset starting point:  1.8240644697013593 2.5000139630467104 1.6249718767902201
+solution:  [ 2.91575143e+14  2.68631050e+00 -1.89948851e+16]
+guessed vol:  -5.46015637394752e-46
+volume:  5.46015637394752e-46  is out of bounds.
+reset starting point:  1.8590459014092588 2.096060301710275 1.0886460735905152
+/home/carnd/anaconda3/lib/python3.5/site-packages/scipy/optimize/minpack.py:161: RuntimeWarning: The iteration is not making good progress, as measured by the 
+  improvement from the last five Jacobian evaluations.
+  warnings.warn(msg, RuntimeWarning)
+solution:  [2.06269211 1.95431986 4.41474587]
+guessed vol:  -0.00297158589624657
+volume:  0.00297158589624657  is out of bounds.
+range  2 3 2  does not work
+try bound:  [[1, 2], [2, 3], [2, 3]]
+reset starting point:  1.1403535072958593 2.2510276750402243 2.7768869712683073
+solution:  [ 3.19118063e+15  2.36868600e+00 -3.57987496e+17]
+guessed vol:  -1.08371698250038e-49
+volume:  1.08371698250038e-49  is out of bounds.
+reset starting point:  1.5330160452679156 2.186393220506715 2.2404918744201536
+solution:  [ 2.29545644e+15  2.32097189e+00 -2.93431008e+17]
+guessed vol:  -2.18719330338010e-49
+volume:  2.18719330338010e-49  is out of bounds.
+reset starting point:  1.8755942370373517 2.111146033499288 2.2058549627854562
+solution:  [ 2.10857156  1.86664635 -2.30997975]
+guessed vol:  -0.00254680120621811
+volume:  0.00254680120621811  is out of bounds.
+range  2 3 3  does not work
+try bound:  [[2, 3], [0, 1], [0, 1]]
+reset starting point:  2.7011891088885873 0.8063779494313775 0.6247143290966909
+solution:  [ 3.55219929e+14  2.68593854e+00 -2.31509784e+16]
+guessed vol:  -3.01590527329724e-46
+volume:  3.01590527329724e-46  is out of bounds.
+reset starting point:  2.7662984005739033 0.15474866631862705 0.6012034617491432
+solution:  [ 2.49139798e+15  2.47684351e+00 -2.20870894e+17]
+guessed vol:  -3.91007395010117e-49
+volume:  3.91007395010117e-49  is out of bounds.
+reset starting point:  2.7617973026918397 0.8852129371010771 0.5218538212827875
+solution:  [ 8.28612589e+14  2.36931482e+00 -9.28061230e+16]
+guessed vol:  -6.21228318935430e-48
+volume:  6.21228318935430e-48  is out of bounds.
+range  3 1 1  does not work
+try bound:  [[2, 3], [0, 1], [1, 2]]
+reset starting point:  2.620295210960387 0.12575730798239837 1.1290093139708732
+solution:  [ 4.23237622e+15  2.39672201e+00 -4.43525469e+17]
+guessed vol:  -5.41085871931234e-50
+volume:  5.41085871931234e-50  is out of bounds.
+reset starting point:  2.288757518719385 0.9624422063184026 1.4461732362816946
+solution:  [ 7.05646232e+14  2.58355468e+00 -5.24866478e+16]
+guessed vol:  -2.66774129357676e-47
+volume:  2.66774129357676e-47  is out of bounds.
+reset starting point:  2.3786684722475084 0.5916474500070595 1.3290951030498723
+solution:  [ 1.77744688e+15  2.74410257e+00 -1.08774515e+17]
+guessed vol:  -2.91691215545448e-48
+volume:  2.91691215545448e-48  is out of bounds.
+range  3 1 2  does not work
+try bound:  [[2, 3], [0, 1], [2, 3]]
+reset starting point:  2.0233885975420094 0.10782530305159288 2.4586103988212447
+solution:  [-1.73036826e+05  2.14074232e+00 -1.39772847e+03]
+guessed vol:  -1.01922353600815e-15
+volume:  1.01922353600815e-15  is out of bounds.
+reset starting point:  2.193368512214891 0.8534598883294104 2.5961060672132685
+solution:  [ 4.01480314e+15  2.88532667e+00 -2.16937196e+17]
+guessed vol:  -3.91629861497028e-49
+volume:  3.91629861497028e-49  is out of bounds.
+reset starting point:  2.8138625404254203 0.0030347943754106543 2.1401886719814205
+solution:  [-4.88248861e+20  1.20678656e+00  1.15687353e+02]
+guessed vol:  -8.54521766047216e-44
+volume:  8.54521766047216e-44  is out of bounds.
+range  3 1 3  does not work
+try bound:  [[2, 3], [1, 2], [0, 1]]
+reset starting point:  2.33020313536117 1.9445751689785775 0.7181392644877767
+solution:  [ 3.56898906e+15  2.77636987e+00 -2.11589420e+17]
+guessed vol:  -3.99345968397134e-49
+volume:  3.99345968397134e-49  is out of bounds.
+reset starting point:  2.5633812170612527 1.3177302968722708 0.4659574821495541
+solution:  [ 1.05450817e+15  2.60149415e+00 -7.64687179e+16]
+guessed vol:  -8.55053734349593e-48
+volume:  8.55053734349593e-48  is out of bounds.
+reset starting point:  2.6108411063393624 1.1803756021254739 0.2556800932503259
+solution:  [5.37684463 3.28973419 0.11547521]
+guessed vol:  -0.000782675943166733
+volume:  0.000782675943166733  is out of bounds.
+range  3 2 1  does not work
+try bound:  [[2, 3], [1, 2], [1, 2]]
+reset starting point:  2.0545621843186472 1.13214325198711 1.335266122294128
+solution:  [ 1.33850355e+15  2.53502725e+00 -1.07231293e+17]
+guessed vol:  -3.23080637638816e-48
+volume:  3.23080637638816e-48  is out of bounds.
+reset starting point:  2.1243592405459824 1.771591433337795 1.8443188304144003
+solution:  [ 7.31771858e+14  2.65590408e+00 -4.94264820e+16]
+guessed vol:  -3.11145777070627e-47
+volume:  3.11145777070627e-47  is out of bounds.
+reset starting point:  2.193172681867606 1.869540820158286 1.7422690423034004
+solution:  [ 5.62935736e+14  2.72498374e+00 -3.51404124e+16]
+guessed vol:  -8.62907975476652e-47
+volume:  8.62907975476652e-47  is out of bounds.
+range  3 2 2  does not work
+try bound:  [[2, 3], [1, 2], [2, 3]]
+reset starting point:  2.8670232523129746 1.6883936279266454 2.3052014261595444
+solution:  [ 2.01646456e+15  2.85123551e+00 -1.11919582e+17]
+guessed vol:  -2.78967917866902e-48
+volume:  2.78967917866902e-48  is out of bounds.
+reset starting point:  2.6581382631457595 1.5239551959610047 2.753550940360949
+solution:  [ 1.12650440e+15  2.67881453e+00 -7.40275644e+16]
+guessed vol:  -9.22994249852743e-48
+volume:  9.22994249852743e-48  is out of bounds.
+reset starting point:  2.5126259275742733 1.3344053690816504 2.581077497440794
+solution:  [ 9.42186460e+14  2.46036321e+00 -8.62020972e+16]
+guessed vol:  -6.70801521388163e-48
+volume:  6.70801521388163e-48  is out of bounds.
+range  3 2 3  does not work
+try bound:  [[2, 3], [2, 3], [0, 1]]
+reset starting point:  2.760000801642601 2.632584786516481 0.8527154488410281
+solution:  [ 1.28529069e+15  2.73958663e+00 -7.90198413e+16]
+guessed vol:  -7.60280904049176e-48
+volume:  7.60280904049176e-48  is out of bounds.
+reset starting point:  2.0406873326545187 2.494607002043778 0.6134813895352136
+solution:  [ 1.56809520e+15  2.50890495e+00 -1.31232615e+17]
+guessed vol:  -1.80298016450359e-48
+volume:  1.80298016450359e-48  is out of bounds.
+reset starting point:  2.1123018326788703 2.919865877941072 0.5972997021045063
+solution:  [ 2.49448989e+14  2.70106506e+00 -1.59813725e+16]
+guessed vol:  -9.16338322486352e-46
+volume:  9.16338322486352e-46  is out of bounds.
+range  3 3 1  does not work
+try bound:  [[2, 3], [2, 3], [1, 2]]
+reset starting point:  2.274879306557231 2.9228131599043654 1.870835053006513
+solution:  [ 1.68894274e+15  2.57950946e+00 -1.26364989e+17]
+guessed vol:  -1.91590052520974e-48
+volume:  1.91590052520974e-48  is out of bounds.
+reset starting point:  2.498182502900841 2.673331344786931 1.3647406849291515
+solution:  [ 3.16363854e+14  2.69217856e+00 -2.04720134e+16]
+guessed vol:  -4.36012780242311e-46
+volume:  4.36012780242311e-46  is out of bounds.
+reset starting point:  2.319596106458983 2.6390188593271295 1.471459931737837
+solution:  [ 1.46549039e+14  2.68085682e+00 -9.60747240e+15]
+guessed vol:  -4.22152693471918e-45
+volume:  4.22152693471918e-45  is out of bounds.
+range  3 3 2  does not work
+try bound:  [[2, 3], [2, 3], [2, 3]]
+reset starting point:  2.4585456670145236 2.5423586195820613 2.2323979407317154
+solution:  [ 1.15446769e+15  2.66004563e+00 -7.75829156e+16]
+guessed vol:  -8.03907509257901e-48
+volume:  8.03907509257901e-48  is out of bounds.
+reset starting point:  2.712160529661782 2.206154504091871 2.1665768555295384
+solution:  [ 2.26685534e+14  2.70877705e+00 -1.43997466e+16]
+guessed vol:  -1.25278970822906e-45
+volume:  1.25278970822906e-45  is out of bounds.
+reset starting point:  2.3420736823968387 2.7111938158564675 2.1836840481738324
+solution:  [ 1.21234399e+15  2.62164702e+00 -8.55450132e+16]
+guessed vol:  -6.05826239585793e-48
+volume:  6.05826239585793e-48  is out of bounds.
+range  3 3 3  does not work
+Done.
+vol_list:  []
+sol_list:  []
+dist_list:  []
+try bound:  [[0, 1], [0, 1], [3, 4]]
+reset starting point:  0.7010185340615664 0.9743676041303377 3.4211364832902325
+solution:  [ 1.60710802e+15  2.33840977e+00 -1.95398615e+17]
+guessed vol:  -7.10660472752602e-49
+volume:  7.10660472752602e-49  is out of bounds.
+reset starting point:  0.7833298957003458 0.38970391070166466 3.192460847967599
+solution:  [ 3.07027585e+14  2.70440441e+00 -1.95974496e+16]
+guessed vol:  -4.96941776193369e-46
+volume:  4.96941776193369e-46  is out of bounds.
+reset starting point:  0.05367732593810659 0.31153978973865737 3.1653308999148706
+solution:  [ 0.9268656   2.83405409 88.15216694]
+guessed vol:  0.0182336437446640
+volume:  0.0182336437446640  is out of bounds.
+range  1 1 4  does not work
+try bound:  [[0, 1], [1, 2], [3, 4]]
+reset starting point:  0.8942524767989328 1.3094153949329317 3.8139301848538176
+solution:  [ 5.00897579e+15  2.38602754e+00 -5.38363849e+17]
+guessed vol:  -3.08333965805896e-50
+volume:  3.08333965805896e-50  is out of bounds.
+reset starting point:  0.40834353451202654 1.5227819687093196 3.905158220157303
+solution:  [ 1.42207896e+15  2.76210493e+00 -8.54772697e+16]
+guessed vol:  -6.03376901905250e-48
+volume:  6.03376901905250e-48  is out of bounds.
+reset starting point:  0.6724778113906624 1.676185110997063 3.6762922878492104
+solution:  [ 3.26411223e+15  2.37453708e+00 -3.60827613e+17]
+guessed vol:  -1.04634000617310e-49
+volume:  1.04634000617310e-49  is out of bounds.
+range  1 2 4  does not work
+try bound:  [[0, 1], [2, 3], [3, 4]]
+reset starting point:  0.46659296274318907 2.7111672712542947 3.404108795844554
+solution:  [ 9.59122790e+14  2.66414875e+00 -6.41355426e+16]
+guessed vol:  -1.42201771468192e-47
+volume:  1.42201771468192e-47  is out of bounds.
+reset starting point:  0.02816006856106601 2.469296024625772 3.980951481770945
+solution:  [ 0.9268656   2.83405409 88.15216694]
+guessed vol:  0.0182336437446640
+volume:  0.0182336437446640  is out of bounds.
+reset starting point:  0.19548228339661056 2.846634603623843 3.0311116652144605
+solution:  [ 2.10857156  1.86664635 -2.30997977]
+guessed vol:  -0.00254680120621811
+volume:  0.00254680120621811  is out of bounds.
+range  1 3 4  does not work
+try bound:  [[0, 1], [3, 4], [0, 1]]
+reset starting point:  0.8318137931122899 3.997959241573169 0.32062734195189024
+solution:  [ 8.15234068e+14  2.60842741e+00 -5.85562506e+16]
+guessed vol:  -1.89854814119205e-47
+volume:  1.89854814119205e-47  is out of bounds.
+reset starting point:  0.5464754790810741 3.9843183904303054 0.18922743725295765
+sc  ^CTraceback (most recent call last):
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/assumptions.py", line 241, in getit
+    return self._assumptions[fact]
+KeyError: 'infinite'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "numerical_test.py", line 199, in <module>
+    series = data[1]
+  File "numerical_test.py", line 125, in fit_NSolve
+    vol, sol = NSolve(Series, d, bound)
+  File "numerical_test.py", line 78, in NSolve
+    sol = fsolve(func, x0 = np.array([d1_0, d2_0, d3_0]), args = d)
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/scipy/optimize/minpack.py", line 146, in fsolve
+    res = _root_hybr(func, x0, args, jac=fprime, **options)
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/scipy/optimize/minpack.py", line 224, in _root_hybr
+    ml, mu, epsfcn, factor, diag)
+  File "numerical_test.py", line 27, in func
+    return (f1.evalf(subs={b1 : p[0], b2 : p[1], b3 : p[2]}), f2.evalf(subs={b1 : p[0], b2 : p[1], b3 : p[2]}), f3.evalf(subs={b1 : p[0], b2 : p[1], b3 : p[2]}))
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/evalf.py", line 1385, in evalf
+    result = evalf(self, prec + 4, options)
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/evalf.py", line 1278, in evalf
+    r = rf(x, prec, options)
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/evalf.py", line 490, in evalf_add
+    terms = [evalf(arg, prec + 10, options) for arg in v.args]
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/evalf.py", line 490, in <listcomp>
+    terms = [evalf(arg, prec + 10, options) for arg in v.args]
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/evalf.py", line 1278, in evalf
+    r = rf(x, prec, options)
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/evalf.py", line 568, in evalf_mul
+    re, im, re_acc, im_acc = evalf(arg, working_prec, options)
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/evalf.py", line 1278, in evalf
+    r = rf(x, prec, options)
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/evalf.py", line 647, in evalf_pow
+    re, im, re_acc, im_acc = evalf(base, prec + 5, options)
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/evalf.py", line 1278, in evalf
+    r = rf(x, prec, options)
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/evalf.py", line 490, in evalf_add
+    terms = [evalf(arg, prec + 10, options) for arg in v.args]
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/evalf.py", line 490, in <listcomp>
+    terms = [evalf(arg, prec + 10, options) for arg in v.args]
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/evalf.py", line 1278, in evalf
+    r = rf(x, prec, options)
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/evalf.py", line 534, in evalf_mul
+    if arg is S.NaN or arg.is_infinite:
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/assumptions.py", line 245, in getit
+    return _ask(fact, self)
+  File "/home/carnd/anaconda3/lib/python3.5/site-packages/sympy/core/assumptions.py", line 251, in _ask
+    def _ask(fact, obj):
+KeyboardInterrupt
+carnd@ip-172-31-27-200:~/CYML/triangulate$ 
