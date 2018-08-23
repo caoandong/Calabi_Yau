@@ -183,18 +183,14 @@ def fit_NSolve(Series, max_range_start, heights, vol_range):
     print ('no valid solution')
     return vol_ret, sol_ret
 
-def parse_series(height_file, input_path_list):
+def parse_series(h_start, h_end, input_path_list):
     b1 = sp.symbols('b1')
     b2 = sp.symbols('b2')
     b3 = sp.symbols('b3')
     start = 1j
     end = 1j
     path_idx = 0
-    for line in height_file:
-        h = eval(line)
-        h_start = h[0]
-        h_end = h[1]
-    print (h_start, h_end)
+    
     for input_path in input_path_list:
         counter = 0
         try:
@@ -258,9 +254,17 @@ def find_vol(input_path_list, start, end, out_path):
         input_file.close()
         print ('Finished.')
 
-h_min = 32
-h_max = 32
 h_idx = 1
+height_path = 'series/height_%d.txt' % h_idx
+height_file = open(height_path, 'r')
+for line in height_file:
+    h = eval(line)
+    h_start = h[0]
+    h_end = h[1]
+print (h_start, h_end)
+height_file.close()
+h_min = max(h_start)
+h_max = max(h_start)
 input_path_0 = 'series_%d_%d.txt'%(h_min, h_max)
 input_path_1 = 'series_%d_%d.txt'%(h_min+1, h_max+1)
 input_path_2 = 'series_%d_%d.txt'%(h_min+2, h_max+2)
@@ -272,8 +276,7 @@ vol_min_global = 1/2.0**3
 b1 = sp.symbols('b1')
 b2 = sp.symbols('b2')
 b3 = sp.symbols('b3')
-height_path = 'series/height_%d.txt' % h_idx
-height_file = open(height_path, 'r')
-start, end = parse_series(height_file, input_path_list)
+
+start, end = parse_series(h_start, h_end, input_path_list)
 print (start, end)
 find_vol(input_path_list, start, end, out_path)
