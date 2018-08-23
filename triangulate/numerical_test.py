@@ -179,8 +179,8 @@ def fit_NSolve(Series, max_range_start, heights, vol_range):
     print ('no valid solution')
     return vol_ret, sol_ret
 
-h_min = 40
-h_max = 40
+h_min = 29
+h_max = 29
 input_path = 'series_%d_%d.txt'%(h_min, h_max)
 out_path = 'fit_vol_%d_%d.txt'%(h_min, h_max)
 out_file = open(out_path, 'w')

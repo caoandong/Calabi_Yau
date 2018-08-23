@@ -1003,7 +1003,39 @@ def generate_series(min_height, max_height, out_path):
                 out_file.write('[%s,%s]\n' % (str([h1,h2,h3]), str(series)))
                 out_file.close()
                 num_vol += 1
-                
+
+def generate_vol_3(h_list, out_path, vol_dict, max_range=0.02):
+    global vol_min_global
+    vol_list = []
+    num_vol = 0
+    min_height = h_list[0]
+    if min_height%2 == 0:
+        max_height = min_height + 1
+    else:
+        max_height = h_list[0]
+    print 'min_height: ', min_height, ' max_height: ', max_height
+    for h1 in range(min_height, max_height+1):
+        target_vol = 16.0/27/h1
+        vol_min_global = 1.0/(h1+1)**3
+        for h2 in range(0, h1+1):
+            h2 = h1 - h2
+            for h3 in range(0, h2+1):
+                h3 = h2 - h3
+                try:
+                    data_tmp = vol_dict['%d_%d_%d' % (h1,h2,h3)]
+                    continue
+                except:
+                    pass
+                print h1,h2,h3
+                prism, series = lift_prism(h1,h2,h3)
+                vol, sol = fit_NSolve(series, 3, [h1,h2,h3], [target_vol, max_range])
+                vol_dict['%d_%d_%d' % (h1,h2,h3)] = [vol, sol]
+                vol_list.append(vol)
+                out_file = open(out_path, 'a')
+                out_file.write('[%s,%s,%s]\n' % (str([h1,h2,h3]), str(vol), str(sol)))
+                out_file.close()
+                num_vol += 1
+                print 'vol: ', vol
                 
 def generate_vol_2(min_height, max_height, out_path, max_range=0.02):
     global vol_min_global
@@ -1136,6 +1168,17 @@ def clean_err_vol(err_path, out_path):
         out_file.close()
     err_file.close()
 
+def parse_data(data_path):
+    vol_dict = {}
+    for path in data_path:
+        data_file = open(path, 'r')
+        for line in data_file:
+            data = eval(line)
+            h = data[0]
+            vol = data[1]
+            vol_dict['%d_%d_%d' % (h[0],h[1],h[2])] = vol
+    return vol_dict
+
 '''
 max_height = 50
 #num_height = 2
@@ -1178,18 +1221,14 @@ generate_vol_2(10, 11, 0.02, out_path)
 #vol, sol = expand_NSolve(series, 3, 10, [16.0/27/10, abs(16.0/27/10 - 16.0/27/11)])
 #vol, sol = fit_NSolve(series, 3, [10,2,1], [16.0/27/10, 0.02])
 #out_file.close()
-
-h_min = 35
-h_max = 36
-out_path = '/home/ubuntu/Calabi_Yau/triangulate/lift_vol_%d_%d.txt'%(h_min, h_max)
-out_file = open(out_path, 'w')
-out_file.close()
-generate_vol_2(h_min, h_max, out_path=out_path)
-print 'completed.'
 '''
-h_min = 41
-h_max = 41
-out_path = 'series_%d_%d.txt'%(h_min, h_max)
+h_start = [29,29,24]
+out_path = 'lift_vol_%d_%d_%d.txt'%(h_start[0], h_start[1], h_start[2])
 out_file = open(out_path, 'w')
 out_file.close()
-generate_series(h_min, h_max, out_path)
+data_path_1 = '../output/train/cylinder/lift_1_to_20.txt'
+data_path_2 = '../output/train/cylinder/lift_21_to_42.txt'
+data_path = [data_path_1, data_path_2]
+vol_dict = parse_data(data_path)
+generate_vol_3(h_start, out_path, vol_dict)
+print 'completed.'
