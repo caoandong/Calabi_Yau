@@ -23,8 +23,9 @@ def get_vol_idx(heights):
 
 def func(p, *d):
     f1, f2, f3 = d
+    return(eval(f1), eval(f2), eval(f3))
     #return (f1.evalf(b1 = p[0], b2 = p[1], b3 = p[2]), f2.evalf(b1 = p[0], b2 = p[1], b3 = p[2]), f3.evalf(b1 = p[0], b2 = p[1], b3 = p[2]))
-    return (f1.evalf(subs={b1 : p[0], b2 : p[1], b3 : p[2]}), f2.evalf(subs={b1 : p[0], b2 : p[1], b3 : p[2]}), f3.evalf(subs={b1 : p[0], b2 : p[1], b3 : p[2]}))
+    #return (f1.evalf(subs={b1 : p[0], b2 : p[1], b3 : p[2]}), f2.evalf(subs={b1 : p[0], b2 : p[1], b3 : p[2]}), f3.evalf(subs={b1 : p[0], b2 : p[1], b3 : p[2]}))
     
 def constraint(Series, sol):
     global vol_min_global
@@ -91,6 +92,9 @@ def fit_NSolve(Series, max_range_start, heights, vol_range):
     d1 = sp.diff(Series, b1)
     d2 = sp.diff(Series, b2)
     d3 = sp.diff(Series, b3)
+    d1 = str(d1).replace('b1', 'p[0]').replace('b2', 'p[1]').replace('b3', 'p[2]')
+    d2 = str(d2).replace('b1', 'p[0]').replace('b2', 'p[1]').replace('b3', 'p[2]')
+    d3 = str(d3).replace('b1', 'p[0]').replace('b2', 'p[1]').replace('b3', 'p[2]')
     d = (d1, d2, d3)
     MAX_NUM_VOL = 10
     target_vol = vol_range[0]
@@ -179,26 +183,97 @@ def fit_NSolve(Series, max_range_start, heights, vol_range):
     print ('no valid solution')
     return vol_ret, sol_ret
 
-h_min = 29
-h_max = 29
-input_path = 'series_%d_%d.txt'%(h_min, h_max)
-out_path = 'fit_vol_%d_%d.txt'%(h_min, h_max)
+def parse_series(height_file, input_path_list):
+    b1 = sp.symbols('b1')
+    b2 = sp.symbols('b2')
+    b3 = sp.symbols('b3')
+    start = 1j
+    end = 1j
+    path_idx = 0
+    for line in height_file:
+        h = eval(line)
+        h_start = h[0]
+        h_end = h[1]
+    print (h_start, h_end)
+    for input_path in input_path_list:
+        counter = 0
+        try:
+            input_file = open(input_path, 'r')
+        except:
+            continue
+        for line in input_file:
+            data_idx = line.find(']', 2)
+            h_list = list(eval(line[2:data_idx]))
+            #print (h_list, ' idx: ', counter)
+            if h_list == h_start:
+                start = [counter, path_idx]
+                print ('start: ', start)
+            elif h_list == h_end:
+                end = [counter, path_idx]
+                print ('end: ', end)
+                input_file.close()
+                return start, end
+            counter += 1
+        path_idx += 1
+        input_file.close()
+    print ('end for real')
+    return start, end
+
+def find_vol(input_path_list, start, end, out_path):
+    global vol_min_global
+    toggle = 0
+    path_idx = 0
+    for input_path in input_path_list:
+        counter = 0
+        try:
+            input_file = open(input_path, 'r')
+        except:
+            continue
+        for line in input_file:
+            data_idx = line.find(']', 2)
+            h_list = list(eval(line[2:data_idx]))
+            if counter == start[0]:
+                print ('Start')
+                toggle = 1
+            if toggle == 1:
+                print ('counter: ', counter)
+                data = eval(line)
+                h = data[0]
+                series = data[1]
+                h_max = max(h)
+                print (h, 16.0/27/h_max)
+                vol_min_global = 1.0/(h_max**3)
+                vol, sol = fit_NSolve(series, 3, h, [16.0/27/h_max, 0.02])
+                print ('vol: ', vol, ' sol: ', sol)
+                out_file = open(out_path, 'a')
+                out_file.write('[%s, %f, %s]\n'%(str(data[0]), vol, str(sol)))
+                out_file.close()
+                print (vol, sol)
+                if counter == end[0] and path_idx == end[1]:
+                    input_file.close()
+                    print ('Done.')
+                    return
+            counter += 1
+        path_idx += 1
+        input_file.close()
+        print ('Finished.')
+
+h_min = 32
+h_max = 32
+h_idx = 1
+input_path_0 = 'series_%d_%d.txt'%(h_min, h_max)
+input_path_1 = 'series_%d_%d.txt'%(h_min+1, h_max+1)
+input_path_2 = 'series_%d_%d.txt'%(h_min+2, h_max+2)
+input_path_list = [input_path_0, input_path_1, input_path_2]
+out_path = 'test/vol_%d_%d.txt'%(h_min, h_max)
 out_file = open(out_path, 'w')
 out_file.close()
 vol_min_global = 1/2.0**3
 b1 = sp.symbols('b1')
 b2 = sp.symbols('b2')
 b3 = sp.symbols('b3')
-input_file = open(input_path, 'r')
-for line in input_file:
-    data = eval(line)
-    h = data[0]
-    h_max = max(h)
-    print (h, h_max)
-    vol_min_global = 1.0/(h_max**3)
-    series = data[1]
-    vol, sol = fit_NSolve(series, 3, h, [16.0/27/h_max, 0.02])
-    print (vol)
-    print (sol)
-    out_file = open(out_path, 'a')
-    out_file.write('[%s, %f, %s]\n'%(str(h), vol, str(sol)))
+height_path = 'series/height_%d.txt' % h_idx
+height_file = open(height_path, 'r')
+start, end = parse_series(height_file, input_path_list)
+print (start, end)
+find_vol(input_path_list, start, end, out_path)
