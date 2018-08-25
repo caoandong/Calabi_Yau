@@ -254,7 +254,7 @@ def find_vol(input_path_list, start, end, out_path):
         input_file.close()
         print ('Finished.')
 
-h_idx = 1
+h_idx = 24
 height_path = 'series/height_%d.txt' % h_idx
 height_file = open(height_path, 'r')
 for line in height_file:
@@ -269,7 +269,7 @@ input_path_0 = 'series_%d_%d.txt'%(h_min, h_max)
 input_path_1 = 'series_%d_%d.txt'%(h_min+1, h_max+1)
 input_path_2 = 'series_%d_%d.txt'%(h_min+2, h_max+2)
 input_path_list = [input_path_0, input_path_1, input_path_2]
-out_path = 'test/vol_%d_%d.txt'%(h_min, h_max)
+out_path = 'test/vol_%d.txt'%(h_idx)
 out_file = open(out_path, 'w')
 out_file.close()
 vol_min_global = 1/2.0**3
