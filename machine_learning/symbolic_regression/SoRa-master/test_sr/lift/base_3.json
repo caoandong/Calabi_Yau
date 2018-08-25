@@ -21,7 +21,7 @@
   },
   "algo"   : {
     "type" : "eaMuPlusLambda",
-    "numGenerations" : 70,
+    "numGenerations" : 100,
     "populationSize" : 2000,
     "children" : 2000,
     "cxpb"     : 0.7,
