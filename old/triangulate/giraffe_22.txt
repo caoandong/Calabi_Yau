@@ -1,0 +1,95 @@
+('solution: ', array([  1.38893368,   1.65843733,  26.17295921]))
+('guessed vol: ', 0.0206907543952707)
+Done.
+('dist to fit function: ', 0.009848975204355782)
+('try bound: ', [[0, 1], [2, 3], [2, 3]])
+('reset starting point: ', 0.7415529413165693, 2.9055681282596053, 2.765593264080189)
+('solution: ', array([ 0.87117626,  3.10480091,  5.25361622]))
+('guessed vol: ', 0.211461145557293)
+Done.
+('dist to fit function: ', 0.18092141595766686)
+('try bound: ', [[1, 2], [0, 1], [0, 1]])
+('reset starting point: ', 1.4086853806993969, 0.2146948617184654, 0.4395709856806602)
+('solution: ', array([ 3.02241602,  0.86507134,  5.07628689]))
+('guessed vol: ', 0.222129824338666)
+Done.
+('dist to fit function: ', 0.1915900947390395)
+('try bound: ', [[1, 2], [0, 1], [1, 2]])
+('reset starting point: ', 1.5603016362251747, 0.28440703473987305, 1.9832972553576385)
+('solution: ', array([ 3.02241603,  0.86507134,  5.07628689]))
+('guessed vol: ', 0.222129824338666)
+Done.
+('dist to fit function: ', 0.19159009473903954)
+('try bound: ', [[1, 2], [0, 1], [2, 3]])
+('reset starting point: ', 1.0899995220460021, 0.6108522832310036, 2.9056466181467577)
+('solution: ', array([ 1.87593834,  1.95746686,  7.67232522]))
+('guessed vol: ', 0.0386167099811892)
+Done.
+('dist to fit function: ', 0.008076980381562755)
+('try bound: ', [[1, 2], [1, 2], [0, 1]])
+('reset starting point: ', 1.499021490637654, 1.976836232089137, 0.8602946169904039)
+/usr/lib64/python2.7/site-packages/scipy/optimize/minpack.py:161: RuntimeWarning: The number of calls to function has reached maxfev = 800.
+  warnings.warn(msg, RuntimeWarning)
+('solution: ', array([  2.25054596e+38,   7.70556678e+38,   8.01533634e+37]))
+('guessed vol: ', 4.62293875936354e-156)
+('volume: ', 4.62293875936354e-156, ' is out of bounds.')
+('reset starting point: ', 1.8448183032775112, 1.6051548348089748, 0.5867757691252664)
+/usr/lib64/python2.7/site-packages/scipy/optimize/minpack.py:161: RuntimeWarning: The iteration is not making good progress, as measured by the 
+  improvement from the last five Jacobian evaluations.
+  warnings.warn(msg, RuntimeWarning)
+('solution: ', array([ 1.81373564,  1.82740244,  1.0223796 ]))
+('guessed vol: ', -0.0835921287918562)
+Done.
+('dist to fit function: ', 0.05305239919222972)
+('try bound: ', [[1, 2], [1, 2], [1, 2]])
+('reset starting point: ', 1.0596827374523499, 1.9455794727926108, 1.7128688386084843)
+/usr/lib64/python2.7/site-packages/scipy/optimize/minpack.py:161: RuntimeWarning: The iteration is not making good progress, as measured by the 
+  improvement from the last ten iterations.
+  warnings.warn(msg, RuntimeWarning)
+('solution: ', array([ 1.36229525,  1.89724629,  1.05733596]))
+('guessed vol: ', -0.168580334085352)
+Done.
+('dist to fit function: ', 0.13804060448572517)
+('try bound: ', [[1, 2], [1, 2], [2, 3]])
+('reset starting point: ', 1.616499189596342, 1.6855172094397088, 2.8459553473638697)
+('solution: ', array([ 1.98666625,  1.96385871,  1.47171079]))
+('guessed vol: ', -0.106439502154249)
+Done.
+('dist to fit function: ', 0.07589977255462281)
+('try bound: ', [[1, 2], [2, 3], [0, 1]])
+('reset starting point: ', 1.8535566567688586, 2.9994952893335647, 0.4866135706399064)
+('solution: ', array([ 3.04412594,  2.94791219,  0.5334999 ]))
+('guessed vol: ', -0.102394146567902)
+Done.
+('dist to fit function: ', 0.0718544169682756)
+('try bound: ', [[1, 2], [2, 3], [1, 2]])
+('reset starting point: ', 1.1676725045942078, 2.357107039046915, 1.0233444214941605)
+('solution: ', array([  2.03552043, -25.87691587,   0.88503729]))
+('guessed vol: ', 9.16399614273092e-5)
+Done.
+('dist to fit function: ', 0.03044808963819916)
+('try bound: ', [[1, 2], [2, 3], [2, 3]])
+('reset starting point: ', 1.1603329504402549, 2.29472981675704, 2.3337969490818766)
+('solution: ', array([ 1.29885546,  2.6870943 ,  2.98295682]))
+('guessed vol: ', 1.02359256397681)
+('volume: ', 1.02359256397681, ' is out of bounds.')
+('reset starting point: ', 1.8320577853038187, 2.771360783573998, 2.7666055220952375)
+('solution: ', array([ 1.95455858,  1.89055586,  1.33549768]))
+('guessed vol: ', -0.102043210762363)
+Done.
+('dist to fit function: ', 0.07150348116273679)
+('try bound: ', [[2, 3], [0, 1], [0, 1]])
+('reset starting point: ', 2.527518696810369, 0.9019902510213825, 0.28602314924938255)
+('solution: ', array([ 1.5904693 ,  1.57486012,  0.58106682]))
+('guessed vol: ', -0.0648965959455075)
+Done.
+('dist to fit function: ', 0.034356866345880976)
+('try bound: ', [[2, 3], [0, 1], [1, 2]])
+('reset starting point: ', 2.6192701644465353, 0.5808418728114622, 1.8346798910214874)
+('solution: ', array([ 3.02241602,  0.86507134,  5.07628689]))
+('guessed vol: ', 0.222129824338666)
+Done.
+('dist to fit function: ', 0.1915900947390395)
+('try bound: ', [[2, 3], [0, 1], [2, 3]])
+('reset starting point: ', 2.2442226359351585, 0.6129555881028163, 2.065642768654514)
+('solution: ', array([ 3.02241602,  0.86507134,  5.07628689]))

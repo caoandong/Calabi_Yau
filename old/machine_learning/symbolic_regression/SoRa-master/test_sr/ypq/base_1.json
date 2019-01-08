@@ -1,0 +1,47 @@
+{
+  "infile"            : "/home/carnd/CYML/machine_learning/symbolic_regression/SoRa-master/test_modifydata/ypq/test_data",
+  "infileExtension"   : "csv",
+  "inVars"   : [ "x", "y"],
+  "targetVar" : "z",
+  "seed"   : 0,
+  "HallOfFame" : {
+        "type" : "hof",
+        "size" : 10
+  }, 
+  "select" : [ { 
+        "type" : "SPEA2" }
+        ],
+  "islands" : {
+    "migrationFreq" : 50,
+    "numMigrants" : 10000,
+    "emmigrantSelect"     : [ { 
+        "type" : "selBest"
+        } ],
+    "NOreplacementSelect" : [ { "type" : "selWorst" } ]
+  },
+  "algo"   : {
+    "type" : "eaMuPlusLambda",
+    "numGenerations" : 100,
+    "populationSize" : 2000,
+    "children" : 2000,
+    "cxpb"     : 0.7,
+    "mutpb"    : 0.2
+  },
+  "mate"     : "cxOnePoint",
+  "mutators" : [ 
+        { 
+        "type" : "mutUniform",
+        "prob" : 0.2
+        } ],
+  "constants"  : [ {
+        "type" : "randint",
+        "min"  : 0,
+        "max"  : 5
+        } ,
+	{
+	"type" : "constant",
+	"value" : 3.141592653589793
+	}
+	],
+  "errorfunc": "avgAbsErrorSquared"
+}
