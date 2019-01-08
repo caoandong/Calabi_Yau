@@ -1,0 +1,21 @@
+Namespace(batch_size=6, decay_rate=0.7, decay_step=200000, gpu=0, learning_rate=0.001, log_dir='log', max_epoch=250, model='pointnet_cls_grid', momentum=0.9, num_point=1024, optimizer='adam')
+**** EPOCH 000 ****
+----0-----
+mean loss: 0.000004
+accuracy: 1.000000
+----1-----
+mean loss: 0.000010
+accuracy: 1.000000
+----2-----
+mean loss: 0.406037
+accuracy: 0.212963
+----3-----
+mean loss: 0.018846
+accuracy: 0.041667
+----4-----
+mean loss: 0.001217
+accuracy: 0.208333
+----5-----
+mean loss: 0.000002
+accuracy: 1.000000
+----0-----
