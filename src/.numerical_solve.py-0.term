@@ -2401,4 +2401,1017 @@ Hilbert.ipynb        count_lattice.sage    generate_poly.sage.py  [01;34mimg[0
 ]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ mkd[K[K[Kmv * [K[K-a * old
 mv: invalid option -- 'a'
 Try 'mv --help' for more information.
-]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ mv 
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ mv ]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ numer[K[K[K[K[Kls
+Triangulation.sage  Triangulation.sage.py  download_google_drive.py  [0m[01;34mjulia[0m  [01;34mnotebook[0m  numerical_solve.py  saveTest.sage  saveTest.sage.py
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ python numerical_solve.py 
+(1, 0, 0)
+Traceback (most recent call last):
+  File "numerical_solve.py", line 203, in <module>
+    generate_vol(3)
+  File "numerical_solve.py", line 154, in generate_vol
+    prism, series, triang, power, euler = lift_prism(h1,h2,h3)
+NameError: global name 'lift_prism' is not defined
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ python numerical_solve.py solver(series, h_max, num_triang, euler, sol_max=100)[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K
+[1, 0, 0]
+Traceback (most recent call last):
+  File "numerical_solve.py", line 203, in <module>
+    find_vol_from_series('series_0_2.npy')
+  File "numerical_solve.py", line 198, in find_vol_from_series
+    vol, sol = solver(series, b_max, h1*coeff, [b1,b2,b3])
+  File "numerical_solve.py", line 107, in solver
+    d1 = diff(series, b1)
+NameError: global name 'b1' is not defined
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ python numerical_solve.py
+[1, 0, 0]
+Traceback (most recent call last):
+  File "numerical_solve.py", line 204, in <module>
+    find_vol_from_series('series_0_2.npy')
+  File "numerical_solve.py", line 199, in find_vol_from_series
+    vol, sol = solver(series, b_max, h1*coeff, [b1,b2,b3])
+  File "numerical_solve.py", line 114, in solver
+    bounds = generate_grid(h_max)
+  File "numerical_solve.py", line 44, in generate_grid
+    l3 = np.linspace(0, b3_max, b3_max+1).tolist()
+TypeError: can only concatenate tuple (not "int") to tuple
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ o[Kth[K[Kpython
+Python 2.7.15rc1 (default, Nov 12 2018, 14:31:15) 
+[GCC 7.3.0] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import numy [K[Kpy as np
+>>> b3_am[K[Kmax = 3[K
+  File "<stdin>", line 1
+    b3_max = 
+            ^
+SyntaxError: invalid syntax
+>>> b3_max = 3
+>>> l3 = np.linspace(0, b3_max, b3_max+1).tolist()
+>>> print l3
+[0.0, 1.0, 2.0, 3.0]
+>>> exit()
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ python numerical_solve.py
+[1, 0, 0]
+<type 'tuple'>
+Traceback (most recent call last):
+  File "numerical_solve.py", line 205, in <module>
+    find_vol_from_series('series_0_2.npy')
+  File "numerical_solve.py", line 200, in find_vol_from_series
+    vol, sol = solver(series, b_max, h1*coeff, [b1,b2,b3])
+  File "numerical_solve.py", line 115, in solver
+    bounds = generate_grid(h_max)
+  File "numerical_solve.py", line 45, in generate_grid
+    l3 = np.linspace(0, b3_max, b3_max+1).tolist()
+TypeError: can only concatenate tuple (not "int") to tuple
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ python numerical_solve.py
+  File "numerical_solve.py", line 182
+    def find_vol_from_series(file_name, coeff=2, home=expanduser("~/Calabi_Yau"), coeff=1):
+SyntaxError: duplicate argument 'coeff' in function definition
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ python numerical_solve.py
+[1, 0, 0]
+reset starting point:  0.548793183202 0.505120377921 0.83201844103
+reset starting point:  0.757322259413 0.672121356562 0.842327892985
+reset starting point:  0.458288514401 0.305197662287 0.0403319393196
+('range ', [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.946933476542 0.44173756802 1.67908797705
+reset starting point:  0.19941823582 0.303232467909 1.6499346888
+reset starting point:  0.755865127232 0.48820260376 1.96615387637
+('range ', [[0.0, 1.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.830911352207 1.51670817355 0.0242091426143
+reset starting point:  0.534020296445 1.79044200734 0.821764612907
+reset starting point:  0.868421729902 1.01539465597 0.0435181228613
+('range ', [[0.0, 1.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.00702903744012 1.82920266561 1.68409284303
+reset starting point:  0.338291907908 1.10375210772 1.21598777667
+reset starting point:  0.99332424124 1.38936976853 1.46763467875
+('range ', [[0.0, 1.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.278629007167 2.98866178644 0.999885343966
+reset starting point:  0.120189743283 2.10773504627 0.482811721503
+reset starting point:  0.690210424156 2.25126564739 0.423972697726
+('range ', [[0.0, 1.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.994378169921 2.34723604465 1.09727726133
+reset starting point:  0.646498165018 2.92437114617 1.14193180115
+reset starting point:  0.455469126623 2.96926949868 1.19571859942
+('range ', [[0.0, 1.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.62060751279 0.0128598800016 0.246773960907
+reset starting point:  1.88448703764 0.568171844057 0.108397447913
+reset starting point:  1.84097726286 0.97683221752 0.376404990745
+('range ', [[1.0, 2.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.62315506879 0.420211678403 1.31021899445
+reset starting point:  1.25801636481 0.838407927609 1.77993064372
+reset starting point:  1.46496981237 0.829898707818 1.94601663129
+('range ', [[1.0, 2.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.53212950817 1.16201394421 0.367963678968
+reset starting point:  1.05086923299 1.26221063207 0.105886811859
+reset starting point:  1.85038859948 1.59960586161 0.226665181096
+('range ', [[1.0, 2.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.90891307467 1.0073716851 1.93061789969
+reset starting point:  1.9810036143 1.30245413514 1.07831888005
+reset starting point:  1.48102664093 1.57048529627 1.14846127328
+('range ', [[1.0, 2.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.94187273011 2.08582959686 0.407230451069
+reset starting point:  1.58492953546 2.06681834866 0.00474972399489
+reset starting point:  1.17199050973 2.956068048 0.0909845827046
+('range ', [[1.0, 2.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.92806289861 2.64259195873 1.13751007785
+reset starting point:  1.88864647068 2.56749992764 1.81731041264
+reset starting point:  1.5501406535 2.58223793452 1.93344779023
+('range ', [[1.0, 2.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.61425571956 0.732624543316 0.595179859983
+reset starting point:  2.56120061794 0.480252729333 0.644893603104
+reset starting point:  2.17668656286 0.0907324208865 0.0124326652476
+('range ', [[2.0, 3.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.13963669513 0.135102297189 1.04218610059
+reset starting point:  2.83996929483 0.614885539618 1.07004922493
+reset starting point:  2.83454601634 0.646172599863 1.0172624873
+('range ', [[2.0, 3.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.07403724418 1.91384490026 0.685036072243
+reset starting point:  2.42565356848 1.32806485788 0.833068466816
+reset starting point:  2.06185692992 1.28742156243 0.558171647463
+('range ', [[2.0, 3.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.99809709107 1.2599055806 1.79072332418
+reset starting point:  2.34318654645 1.11512925552 1.59606632007
+reset starting point:  2.45506480104 1.86327607143 1.2163947601
+('range ', [[2.0, 3.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.11963802048 2.91662616569 0.360677529631
+reset starting point:  2.35698331685 2.01766469081 0.567857565971
+reset starting point:  2.09124287972 2.85763716013 0.0445847141558
+('range ', [[2.0, 3.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.19649204853 2.75745254068 1.96178133954
+reset starting point:  2.53979852534 2.80129601506 1.88036955973
+reset starting point:  2.55049292372 2.86383021553 1.87787308519
+('range ', [[2.0, 3.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+cannot find solution.
+===========
+[1, 1, 0]
+reset starting point:  0.832474681688 0.473249163892 0.276599502128
+reset starting point:  0.125397238276 0.738244985744 0.212449446165
+reset starting point:  0.541225752675 0.18235831299 0.36146116637
+('range ', [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.542544616457 0.323155420672 1.38108825682
+reset starting point:  0.433291411345 0.492225674055 1.32097178517
+reset starting point:  0.887431193586 0.792292484751 1.2354774429
+('range ', [[0.0, 1.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.503590194238 1.16238679276 0.569304535397
+reset starting point:  0.532332363458 1.54857421079 0.265801153764
+reset starting point:  0.893421752713 1.17484277663 0.636742748984
+('range ', [[0.0, 1.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.678260325025 1.0540796767 1.69805216254
+reset starting point:  0.138065090926 1.6843023889 1.03544190489
+reset starting point:  0.975203485617 1.45645289134 1.57342506868
+('range ', [[0.0, 1.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.355276653013 2.47190174515 0.237258356568
+reset starting point:  0.817289969487 2.70766339815 0.0071831275638
+reset starting point:  0.557862113693 2.97177094233 0.731379660816
+('range ', [[0.0, 1.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.419151540465 2.64279215838 1.52538885655
+reset starting point:  0.616243407595 2.68411797269 1.58222889459
+reset starting point:  0.665573940439 2.57957698387 1.54649985729
+('range ', [[0.0, 1.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.14719322863 0.774891173688 0.309490195429
+reset starting point:  1.0120429314 0.988946822423 0.325810556245
+reset starting point:  1.11591465427 0.0691963965911 0.214548692696
+('range ', [[1.0, 2.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.13305030962 0.190524579755 1.27944375238
+reset starting point:  1.60977733155 0.220124796327 1.78534333453
+reset starting point:  1.25028023103 0.535451213496 1.74853293069
+('range ', [[1.0, 2.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.12419481176 1.88735253405 0.200811538183
+reset starting point:  1.22317654222 1.70033965965 0.621559164307
+reset starting point:  1.03126558691 1.90963787485 0.0457517571231
+('range ', [[1.0, 2.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.44340863554 1.36451885892 1.51317559966
+reset starting point:  1.29137711509 1.16836613443 1.30146766177
+reset starting point:  1.38323576618 1.7879303828 1.01057264084
+('range ', [[1.0, 2.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.58767865354 2.54045622734 0.144149784595
+reset starting point:  1.80969541933 2.72115956584 0.651197214674
+reset starting point:  1.03708284738 2.74388652768 0.10903615716
+('range ', [[1.0, 2.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.31217090116 2.86038076895 1.48491689681
+reset starting point:  1.23456945904 2.81992628457 1.28796012965
+reset starting point:  1.25457864436 2.25487950339 1.50945641406
+('range ', [[1.0, 2.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.15747297029 0.165714792469 0.982023774177
+reset starting point:  2.72628422869 0.11915400505 0.454920575495
+reset starting point:  2.80972993495 0.0657140513028 0.575144717506
+('range ', [[2.0, 3.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.81724530585 0.723873640292 1.83906106209
+reset starting point:  2.34073350075 0.503299736867 1.67340877724
+reset starting point:  2.27063733591 0.435987397288 1.59114012107
+('range ', [[2.0, 3.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.75930713203 1.56323524295 0.537676391376
+reset starting point:  2.73842696597 1.9569827299 0.482283090327
+reset starting point:  2.14600508709 1.8451819087 0.625047322045
+('range ', [[2.0, 3.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.26816573363 1.58161013957 1.03997687743
+reset starting point:  2.62500329806 1.29816243341 1.35234573145
+reset starting point:  2.59450537909 1.83318355693 1.08993962985
+('range ', [[2.0, 3.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.28063414677 2.60747119079 0.472006803831
+reset starting point:  2.60133060501 2.44365543442 0.957751498881
+reset starting point:  2.42603538468 2.57931165189 0.994903099982
+('range ', [[2.0, 3.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.52342156989 2.40590074146 1.031519972
+reset starting point:  2.34222065535 2.60167131022 1.82284101269
+reset starting point:  2.87277523272 2.17069649799 1.98994679951
+('range ', [[2.0, 3.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+cannot find solution.
+===========
+[1, 1, 1]
+reset starting point:  0.0407339484514 0.8234667462 0.712544917947
+reset starting point:  0.866699236514 0.772115101682 0.330934109065
+reset starting point:  0.20794906993 0.744146805159 0.0223493999826
+('range ', [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.322715338267 0.844857450273 1.14620390245
+reset starting point:  0.813331356906 0.0319218676223 1.49490910747
+reset starting point:  0.801836636553 0.39848551139 1.04638104054
+('range ', [[0.0, 1.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.660394022586 1.50137814944 0.373584032913
+reset starting point:  0.202453009905 1.52481043241 0.206832863617
+reset starting point:  0.939541117718 1.20763941845 0.785737411557
+('range ', [[0.0, 1.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.0379850781622 1.97726626005 1.37715402448
+reset starting point:  0.376620482686 1.56756111267 1.57935251197
+reset starting point:  0.102854347078 1.01071536636 1.85040095963
+('range ', [[0.0, 1.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.185340315066 2.51960315439 0.952781951064
+reset starting point:  0.720901963847 2.74923933804 0.109942738337
+reset starting point:  0.935721467731 2.83445172385 0.841187639189
+('range ', [[0.0, 1.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.537574622292 2.71476227984 1.46587968842
+reset starting point:  0.730019837222 2.72432764425 1.29152083895
+reset starting point:  0.353586987893 2.81989002461 1.13419834945
+('range ', [[0.0, 1.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.62510679285 0.937362029941 0.922131912437
+reset starting point:  1.5367108035 0.946190718453 0.847952171281
+reset starting point:  1.83689377111 0.288019541985 0.967900242717
+('range ', [[1.0, 2.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.92734508506 0.829742059261 1.38591967728
+reset starting point:  1.48160911525 0.191337706328 1.24374441084
+reset starting point:  1.48357542287 0.638059543828 1.00333983602
+('range ', [[1.0, 2.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.65566045534 1.96680576404 0.445784594113
+reset starting point:  1.16257154034 1.76115192421 0.270146032631
+reset starting point:  1.99231690329 1.14222262529 0.713698635531
+('range ', [[1.0, 2.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.45502591838 1.82294992379 1.88254458398
+reset starting point:  1.3422088122 1.65628149045 1.64346828017
+reset starting point:  1.50094802083 1.92119498258 1.54682918096
+('range ', [[1.0, 2.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.50921581301 2.50301853411 0.536335125118
+reset starting point:  1.6481133248 2.38381779969 0.0578471747878
+reset starting point:  1.12334074276 2.00537631845 0.814631311334
+('range ', [[1.0, 2.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.29989909481 2.67281113645 1.20684622911
+reset starting point:  1.1414364221 2.96763814431 1.29343448843
+reset starting point:  1.00395683336 2.02139775888 1.07588555625
+('range ', [[1.0, 2.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.61194189722 0.144248128515 0.634466339629
+reset starting point:  2.05203183439 0.349244248779 0.247475036642
+reset starting point:  2.92261486063 0.141347370941 0.0718617248151
+('range ', [[2.0, 3.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.78615344486 0.807704453408 1.93403451843
+reset starting point:  2.78322663347 0.165399189766 1.78052619847
+reset starting point:  2.15773278761 0.706701203273 1.25864487676
+('range ', [[2.0, 3.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.80214247705 1.14327373549 0.440896388033
+reset starting point:  2.39136175715 1.53909861873 0.408854899627
+reset starting point:  2.60693635381 1.08963170619 0.583427904364
+('range ', [[2.0, 3.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.51005334674 1.7006675746 1.61342096075
+reset starting point:  2.04420239525 1.78374526233 1.7048771291
+reset starting point:  2.30524008747 1.34047767218 1.88721128942
+('range ', [[2.0, 3.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.6913318796 2.43852733367 0.134846200884
+reset starting point:  2.35942733419 2.21125849694 0.620509955341
+reset starting point:  2.31183237068 2.209848193 0.331475835436
+('range ', [[2.0, 3.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.04174275262 2.76929964568 1.58076795044
+reset starting point:  2.23919328167 2.77665639985 1.74796363384
+reset starting point:  2.93067817515 2.43234785589 1.49608714637
+('range ', [[2.0, 3.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+cannot find solution.
+===========
+[2, 0, 0]
+reset starting point:  0.152755254892 0.857699890554 0.647767647487
+reset starting point:  0.429626935635 0.120127011194 0.373836956945
+reset starting point:  0.514107564172 0.322699762072 0.213798222538
+('range ', [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.195493091926 0.400566730208 1.2969594685
+reset starting point:  0.44391468297 0.907616355492 1.61760307093
+reset starting point:  0.50921089513 0.952660010282 1.90820162881
+('range ', [[0.0, 1.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.28191989227 0.186644412827 2.94831921766
+reset starting point:  0.434896387401 0.698975109718 2.47895254985
+reset starting point:  0.48615675741 0.666300447615 2.7815723946
+('range ', [[0.0, 1.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  0.533466554595 1.72288423265 0.12080388295
+reset starting point:  0.647124754161 1.39480275587 0.598489166753
+reset starting point:  0.941087584508 1.05732788786 0.546721005689
+('range ', [[0.0, 1.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.838479803862 1.8981578792 1.43330562768
+reset starting point:  0.0255827593354 1.98628434109 1.65460607261
+reset starting point:  0.254130135805 1.62836293799 1.74636218462
+('range ', [[0.0, 1.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.185632193926 1.85172202616 2.79202254978
+reset starting point:  0.144036317549 1.42125001097 2.04295718713
+reset starting point:  0.819156462852 1.58419555348 2.86163010575
+('range ', [[0.0, 1.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  0.962032403179 2.39626509208 0.406493390875
+reset starting point:  0.756536643858 2.57854075379 0.685670046686
+reset starting point:  0.302308737424 2.31454126719 0.97757429276
+('range ', [[0.0, 1.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.528658420345 2.69250995318 1.0381528817
+reset starting point:  0.312896131139 2.45826325611 1.52407504078
+reset starting point:  0.991158763573 2.26513152611 1.827548903
+('range ', [[0.0, 1.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.814724167742 2.52684749539 2.25177837438
+reset starting point:  0.264834580814 2.93263005571 2.55531671174
+reset starting point:  0.259443177711 2.53810681158 2.22692090993
+('range ', [[0.0, 1.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.19478077992 0.541241278091 0.671278710992
+reset starting point:  1.01923494169 0.540744203367 0.21579223321
+reset starting point:  1.48251187427 0.711701320746 0.37920860992
+('range ', [[1.0, 2.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.37117192741 0.746111499898 1.52606711363
+reset starting point:  1.44966840091 0.189491112435 1.77889394763
+reset starting point:  1.03091696713 0.59034055554 1.53122514253
+('range ', [[1.0, 2.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.69166029901 0.418794136698 2.59343362172
+reset starting point:  1.69778112156 0.863974825293 2.12921241
+reset starting point:  1.58223202144 0.196060605069 2.93045167403
+('range ', [[1.0, 2.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.12359035561 1.02426686147 0.333885543485
+reset starting point:  1.50730590231 1.10811665946 0.994813310501
+reset starting point:  1.56871349938 1.0638698633 0.172260018159
+('range ', [[1.0, 2.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.70432548553 1.71550465746 1.42753931467
+reset starting point:  1.3461799873 1.37348421539 1.96584434812
+reset starting point:  1.72460364052 1.2630723485 1.06778464882
+('range ', [[1.0, 2.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.58238615174 1.94927083689 2.41634715991
+reset starting point:  1.1208647413 1.88222984668 2.46113640832
+reset starting point:  1.32025965175 1.69813133215 2.7608177677
+('range ', [[1.0, 2.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.27828242462 2.96672523262 0.927858694578
+reset starting point:  1.6756458312 2.63754741162 0.859699367056
+reset starting point:  1.16834085751 2.9755173029 0.674784385566
+('range ', [[1.0, 2.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.00697622972 2.19041896212 1.88396294299
+reset starting point:  1.91902417759 2.55133578085 1.50446852747
+reset starting point:  1.23594421448 2.83470340034 1.42928055615
+('range ', [[1.0, 2.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.48788396203 2.44473477972 2.05668173325
+reset starting point:  1.64717748883 2.88943089685 2.0989649824
+reset starting point:  1.21848643134 2.40032359329 2.11704069078
+('range ', [[1.0, 2.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.53660969747 0.0544636376723 0.883710933663
+reset starting point:  2.06517466123 0.633850460523 0.647797996279
+reset starting point:  2.1866778741 0.000274624929938 0.728221333098
+('range ', [[2.0, 3.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.75891521655 0.933684383845 1.43971290889
+reset starting point:  2.22476236246 0.744632188903 1.33360705779
+reset starting point:  2.1846653747 0.485065280442 1.30242112196
+('range ', [[2.0, 3.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.18801490935 0.555865747273 2.00015393433
+reset starting point:  2.3517728756 0.0708046030363 2.75300026508
+reset starting point:  2.12071853399 0.755456955578 2.76822101934
+('range ', [[2.0, 3.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.16069758203 1.87341461104 0.562400790006
+reset starting point:  2.02838725471 1.15701600463 0.961498324861
+reset starting point:  2.83867085979 1.05963535128 0.187879028922
+('range ', [[2.0, 3.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.15502845998 1.89458588713 1.86683035755
+reset starting point:  2.22648220229 1.13118712208 1.28409651785
+reset starting point:  2.57124581439 1.04355043159 1.26524708868
+('range ', [[2.0, 3.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.50545495063 1.85994722427 2.25818158079
+reset starting point:  2.07273357321 1.37053969058 2.35569179763
+reset starting point:  2.04414451772 1.45609728197 2.13157230842
+('range ', [[2.0, 3.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.7634284725 2.06148485132 0.344642903211
+reset starting point:  2.65554059042 2.46887428502 0.0313230913277
+reset starting point:  2.34831091697 2.16257606885 0.831106180032
+('range ', [[2.0, 3.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.32600080684 2.69710551816 1.07638193359
+reset starting point:  2.48856646976 2.52647569653 1.20513780031
+reset starting point:  2.74561691472 2.78203489044 1.41582895473
+('range ', [[2.0, 3.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.83606570356 2.43661533919 2.02732735969
+reset starting point:  2.85263580057 2.85817502928 2.40689791222
+reset starting point:  2.63885818854 2.73564396848 2.51399884903
+('range ', [[2.0, 3.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+cannot find solution.
+===========
+[2, 1, 0]
+reset starting point:  0.931613135768 0.747606906966 0.747179524813
+reset starting point:  0.635768901794 0.0073335132899 0.588558764181
+reset starting point:  0.69730730088 0.753321806659 0.658279238419
+('range ', [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.994102361425 0.0875959573157 1.95250051172
+reset starting point:  0.290943686354 0.787319314219 1.67264077613
+reset starting point:  0.616918760849 0.850027659883 1.76436971787
+('range ', [[0.0, 1.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.647007170992 0.0758796431414 2.90911174107
+reset starting point:  0.996765577256 0.387408249711 2.2491488279
+reset starting point:  0.451282859263 0.864818192629 2.35473684016
+('range ', [[0.0, 1.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  0.528148296839 1.90060858575 0.0289815820437
+reset starting point:  0.782381689203 1.96665996914 0.373086429305
+reset starting point:  0.175572451644 1.60497099119 0.781581481832
+('range ', [[0.0, 1.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.96094493806 1.42739177288 1.9842248215
+reset starting point:  0.4094259469 1.17348357495 1.2874031519
+reset starting point:  0.129350707297 1.82903432978 1.34019770101
+('range ', [[0.0, 1.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.847597313302 1.38423187938 2.800627087
+reset starting point:  0.206705175482 1.39417559909 2.22217092994
+reset starting point:  0.0145087984297 1.14205307757 2.87442114924
+('range ', [[0.0, 1.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  0.314377286131 2.61599264555 0.795922457973
+reset starting point:  0.900982331277 2.32645889051 0.142352212794
+reset starting point:  0.154469107308 2.83610859287 0.725858391931
+('range ', [[0.0, 1.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.847904520104 2.10039179694 1.72622047597
+reset starting point:  0.766877337959 2.31677590643 1.77535930961
+reset starting point:  0.362270343037 2.64919081292 1.17326762563
+('range ', [[0.0, 1.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.226152205056 2.30659955653 2.33962659505
+reset starting point:  0.601451649476 2.78995510308 2.28116016572
+reset starting point:  0.167797075302 2.38693366294 2.11770841984
+('range ', [[0.0, 1.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.62459746373 0.392740241447 0.112194966021
+reset starting point:  1.23915280076 0.911856392094 0.500870768868
+reset starting point:  1.24113590199 0.4393836063 0.588863733994
+('range ', [[1.0, 2.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.45127645582 0.0676014395824 1.16753139062
+reset starting point:  1.17766894957 0.372455034991 1.22031797101
+reset starting point:  1.85930939148 0.362507668409 1.01639341072
+('range ', [[1.0, 2.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.96748816643 0.456909809167 2.63998493305
+reset starting point:  1.03566944828 0.289818724765 2.64456818536
+reset starting point:  1.37825977958 0.458111766179 2.71083077022
+('range ', [[1.0, 2.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.10950285941 1.98686142289 0.944009709971
+reset starting point:  1.8515151592 1.16929253834 0.00799757375761
+reset starting point:  1.87958468587 1.23560519625 0.535649623963
+('range ', [[1.0, 2.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.77576463087 1.59383416842 1.80706563806
+reset starting point:  1.86309095193 1.74965728419 1.84953664558
+reset starting point:  1.94992104321 1.24006522971 1.45270079075
+('range ', [[1.0, 2.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.2938955556 1.45593612844 2.83599921218
+reset starting point:  1.02298248196 1.86433638458 2.19151697792
+reset starting point:  1.38500150056 1.32635225583 2.88671687206
+('range ', [[1.0, 2.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.74828764693 2.870352657 0.45904389566
+reset starting point:  1.37307574873 2.68666606896 0.704171876315
+reset starting point:  1.41206843719 2.46049042946 0.87028739271
+('range ', [[1.0, 2.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.92484345461 2.64895563087 1.11157980298
+reset starting point:  1.64329490551 2.72256059954 1.60686372674
+reset starting point:  1.46563342666 2.715419099 1.45498795997
+('range ', [[1.0, 2.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.57239557515 2.42485334733 2.75885084367
+reset starting point:  1.08056212285 2.20126964785 2.29734390977
+reset starting point:  1.88767788021 2.0856891596 2.42539051401
+('range ', [[1.0, 2.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.27141637145 0.638517882809 0.705349700963
+reset starting point:  2.66297848129 0.114974213466 0.67575922228
+reset starting point:  2.17714969834 0.622174895938 0.526253764497
+('range ', [[2.0, 3.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.85150167947 0.666866318571 1.87640264482
+reset starting point:  2.841655217 0.472933636203 1.66686745672
+reset starting point:  2.17867497581 0.385091347141 1.18525733101
+('range ', [[2.0, 3.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.48620809188 0.0139951573285 2.89371868055
+reset starting point:  2.58600719924 0.778100798625 2.39149988845
+reset starting point:  2.25546734069 0.363928575054 2.89357800846
+('range ', [[2.0, 3.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.1627309005 1.71168193814 0.772477255111
+reset starting point:  2.52822984544 1.28810160659 0.453828919125
+reset starting point:  2.06954032115 1.23604965433 0.817342568653
+('range ', [[2.0, 3.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.26965210556 1.29434434264 1.11236280109
+reset starting point:  2.64069504852 1.65468111928 1.7528752413
+reset starting point:  2.02443298968 1.72348628764 1.86464992864
+('range ', [[2.0, 3.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.67361951146 1.690379391 2.10265941975
+reset starting point:  2.68681382048 1.78210929334 2.70802881625
+reset starting point:  2.07884030785 1.13877881591 2.83475896398
+('range ', [[2.0, 3.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.4524647756 2.3600743085 0.255521904563
+reset starting point:  2.41902375673 2.85086161294 0.744805137821
+reset starting point:  2.45128935768 2.70500264315 0.906077889008
+('range ', [[2.0, 3.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.90034761802 2.48702859423 1.07582866486
+reset starting point:  2.90791785358 2.9827747067 1.82144566917
+reset starting point:  2.8999922111 2.04302453323 1.09548264873
+('range ', [[2.0, 3.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.56603494769 2.60601563485 2.55932402562
+reset starting point:  2.50362499466 2.21336220584 2.90231430077
+reset starting point:  2.82120816591 2.34979218726 2.00196278082
+('range ', [[2.0, 3.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+cannot find solution.
+===========
+[2, 1, 1]
+reset starting point:  0.891926503431 0.793821675742 0.592473641495
+reset starting point:  0.695096972406 0.212218980766 0.371074617064
+reset starting point:  0.557066714645 0.117851226625 0.976887965776
+('range ', [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.384670446399 0.610707877243 1.50150156041
+reset starting point:  0.101007417937 0.337706507197 1.82828012059
+reset starting point:  0.150934541203 0.779620326473 1.81153311425
+('range ', [[0.0, 1.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.544358526996 0.759322240309 2.23045354094
+reset starting point:  0.719189478671 0.888981516615 2.85951886429
+reset starting point:  0.933467104409 0.527411510363 2.79604652899
+('range ', [[0.0, 1.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  0.972874189581 1.35673633221 0.902771849639
+reset starting point:  0.230344922635 1.43220102399 0.107366169417
+reset starting point:  0.109536633413 1.51982553332 0.481173927831
+('range ', [[0.0, 1.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.31964708982 1.8427323002 1.89747896714
+reset starting point:  0.359740483993 1.41442960541 1.8022598907
+reset starting point:  0.95719172894 1.53840345872 1.09023152936
+('range ', [[0.0, 1.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.893318622098 1.86365789575 2.27525946327
+reset starting point:  0.571725502721 1.61948382345 2.64365931258
+reset starting point:  0.4844745745 1.59621032044 2.2036015676
+('range ', [[0.0, 1.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  0.249814485003 2.1026380387 0.666318592552
+reset starting point:  0.640752437419 2.99104943668 0.404859772169
+reset starting point:  0.101803323722 2.34236248696 0.737140885303
+('range ', [[0.0, 1.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.767950459365 2.3308421496 1.43374030748
+reset starting point:  0.858200262052 2.30261313797 1.2350309868
+reset starting point:  0.271166260739 2.93932008456 1.81196496316
+('range ', [[0.0, 1.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.608612649147 2.67936141655 2.91734303785
+reset starting point:  0.683299411875 2.73286885955 2.84439942705
+reset starting point:  0.466159217958 2.95257206638 2.3374652193
+('range ', [[0.0, 1.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.56914892802 0.627786949006 0.252509973203
+reset starting point:  1.94486122304 0.0970100431909 0.830420123087
+reset starting point:  1.80838740189 0.926883768351 0.497053230643
+('range ', [[1.0, 2.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.09870573859 0.151230945864 1.47519237567
+reset starting point:  1.8552133334 0.218736152255 1.95413291544
+reset starting point:  1.06830069959 0.426659253642 1.44915153499
+('range ', [[1.0, 2.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.83240472914 0.680719453562 2.04748001915
+reset starting point:  1.39649607838 0.853567693877 2.24483015325
+reset starting point:  1.82062679406 0.204042687587 2.56141757707
+('range ', [[1.0, 2.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.10540604876 1.60925577769 0.0433978617086
+reset starting point:  1.22703353214 1.97252297149 0.121544493288
+reset starting point:  1.57516246588 1.93220621805 0.0224912764581
+('range ', [[1.0, 2.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.89427264878 1.77735453797 1.45040714998
+reset starting point:  1.15706327276 1.01201470571 1.84538669832
+reset starting point:  1.42749281823 1.09897753029 1.9134173441
+('range ', [[1.0, 2.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.04463646446 1.42635635839 2.03379150797
+reset starting point:  1.83616827106 1.70174576196 2.51561066241
+reset starting point:  1.37283252395 1.85938682452 2.14363679816
+('range ', [[1.0, 2.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.0785149098 2.21194331616 0.535270540646
+reset starting point:  1.49958993649 2.13311333424 0.719609681965
+reset starting point:  1.82390525316 2.4444046287 0.333890701235
+('range ', [[1.0, 2.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.6328786899 2.77853510857 1.69973121234
+reset starting point:  1.4585909667 2.28567510087 1.44770500739
+reset starting point:  1.22975303217 2.95655617286 1.58310633208
+('range ', [[1.0, 2.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.20703195502 2.96067746635 2.78203514109
+reset starting point:  1.15834067546 2.9655749224 2.82190170314
+reset starting point:  1.10059269232 2.11833293966 2.41723393845
+('range ', [[1.0, 2.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.70370252449 0.716682257358 0.539856577632
+reset starting point:  2.31956559221 0.563166966791 0.571063767245
+reset starting point:  2.5757324247 0.0444788721809 0.471913088884
+('range ', [[2.0, 3.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.92250913293 0.772139027899 1.03719352526
+reset starting point:  2.23267070024 0.727540409165 1.18038971105
+reset starting point:  2.14892672048 0.719345508385 1.81305512767
+('range ', [[2.0, 3.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.88633325254 0.199266269797 2.4727261654
+reset starting point:  2.66933985283 0.371645916628 2.82508353442
+reset starting point:  2.6683183635 0.828464351993 2.95070008617
+('range ', [[2.0, 3.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.39758952704 1.63840127784 0.37178202307
+reset starting point:  2.55415350971 1.74754561081 0.222079817168
+reset starting point:  2.66881317893 1.16230198 0.448424823599
+('range ', [[2.0, 3.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.97937555578 1.35687999346 1.33720004268
+reset starting point:  2.58795057419 1.81409885293 1.059685767
+reset starting point:  2.80371347015 1.90941893225 1.07067874529
+('range ', [[2.0, 3.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.95350260257 1.21129374315 2.13217361985
+reset starting point:  2.00093278823 1.02588968384 2.74567207571
+reset starting point:  2.91329543848 1.1737996212 2.23473609385
+('range ', [[2.0, 3.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.3073372283 2.57173918881 0.662314907899
+reset starting point:  2.32304441415 2.9822535248 0.295785111855
+reset starting point:  2.04249390856 2.77804359017 0.402552976211
+('range ', [[2.0, 3.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.60963911688 2.73829568325 1.40638185414
+reset starting point:  2.89625104996 2.14965314566 1.85871080971
+reset starting point:  2.10634180887 2.93968870403 1.01522614253
+('range ', [[2.0, 3.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.36009324309 2.67131874704 2.09994350058
+reset starting point:  2.16568197336 2.24551829857 2.54073030524
+reset starting point:  2.8337420878 2.57547375979 2.34344448685
+('range ', [[2.0, 3.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+cannot find solution.
+===========
+[2, 2, 0]
+reset starting point:  0.433060491778 0.633475472778 0.665789598452
+reset starting point:  0.13335521716 0.969635874654 0.257558767434
+reset starting point:  0.999632052017 0.0748914359318 0.071956920522
+('range ', [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.597963228155 0.334980998164 1.44298982694
+reset starting point:  0.291691797563 0.695858962404 1.97996322905
+reset starting point:  0.962233684961 0.679398584187 1.20997159348
+('range ', [[0.0, 1.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.143331414714 0.468626805777 2.84391466662
+reset starting point:  0.604378268432 0.959867160446 2.19152539101
+reset starting point:  0.0466139244045 0.0303844585366 2.1249047105
+('range ', [[0.0, 1.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  0.210255182826 1.2811668419 0.727595224996
+reset starting point:  0.177869410523 1.27159316783 0.324317042237
+reset starting point:  0.432778189588 1.59657358233 0.680976717744
+('range ', [[0.0, 1.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.339003380411 1.96914980874 1.48369282472
+reset starting point:  0.996448731045 1.47043922581 1.31973203101
+reset starting point:  0.269670001676 1.15340879998 1.91060653932
+('range ', [[0.0, 1.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.592493641203 1.09636250231 2.06449356172
+reset starting point:  0.723978520025 1.53680877551 2.10180109946
+reset starting point:  0.85462298099 1.34169532736 2.84730412934
+('range ', [[0.0, 1.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  0.977907590441 2.56893053437 0.733486210188
+reset starting point:  0.271348247413 2.73786334463 0.33133390302
+reset starting point:  0.588287884819 2.8267404867 0.797689383976
+('range ', [[0.0, 1.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.835372280751 2.85453166342 1.44809414403
+reset starting point:  0.123954359112 2.54167618963 1.97415735075
+reset starting point:  0.664586002159 2.60405684792 1.77470601344
+('range ', [[0.0, 1.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.689023211544 2.83266181617 2.78368027895
+reset starting point:  0.322534398328 2.55917121912 2.57416834826
+reset starting point:  0.744335067051 2.03318912815 2.50145800593
+('range ', [[0.0, 1.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.69878144534 0.394787607917 0.523035321902
+reset starting point:  1.06571262239 0.330543307526 0.227474602873
+reset starting point:  1.39867115199 0.856372243455 0.550415552877
+('range ', [[1.0, 2.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.69759454632 0.371822460717 1.04710865588
+reset starting point:  1.58483609214 0.14523153494 1.17825130353
+reset starting point:  1.83442471588 0.780349939026 1.11574752596
+('range ', [[1.0, 2.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.53424211639 0.238074934943 2.12449946292
+reset starting point:  1.54580715532 0.840913196695 2.07962252389
+reset starting point:  1.50812460189 0.091225151829 2.68099377129
+('range ', [[1.0, 2.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.70875276822 1.70697550988 0.843920385561
+reset starting point:  1.21816150633 1.28127879629 0.697576750847
+reset starting point:  1.97423319335 1.33138009059 0.175720792752
+('range ', [[1.0, 2.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.05299514213 1.75701918202 1.79503005528
+reset starting point:  1.33243336491 1.00478694992 1.28842603634
+reset starting point:  1.10950049141 1.70635937943 1.84018345251
+('range ', [[1.0, 2.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.38196642694 1.7790377091 2.10979674529
+reset starting point:  1.12584191318 1.32977769581 2.43953141465
+reset starting point:  1.99026051333 1.92262171429 2.41185404008
+('range ', [[1.0, 2.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.51263125297 2.90661181964 0.435169717097
+reset starting point:  1.52636587466 2.94764143003 0.26728792872
+reset starting point:  1.15283929227 2.78703014685 0.673647058271
+('range ', [[1.0, 2.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.90730360142 2.05454597997 1.64989871681
+reset starting point:  1.4220955327 2.82269444305 1.81993311294
+reset starting point:  1.22306323284 2.28697774894 1.54776359211
+('range ', [[1.0, 2.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.58814264741 2.10114589296 2.18297503195
+reset starting point:  1.25298990922 2.70971063048 2.04894330552
+reset starting point:  1.9130783192 2.51381230752 2.88556911541
+('range ', [[1.0, 2.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.26834565922 0.345651400239 0.324312371814
+reset starting point:  2.31285935275 0.300827927313 0.280509181837
+reset starting point:  2.9828852543 0.870179865541 0.237530704473
+('range ', [[2.0, 3.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.69872100357 0.904921677122 1.33830626505
+reset starting point:  2.08005595678 0.217926313911 1.66754968095
+reset starting point:  2.40023208131 0.684987971625 1.96181141268
+('range ', [[2.0, 3.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.39290541805 0.902036338643 2.15188081584
+reset starting point:  2.68837904326 0.975233985156 2.21142507588
+reset starting point:  2.72808023407 0.35487538487 2.84078999867
+('range ', [[2.0, 3.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.62281171869 1.59533151919 0.422924618488
+reset starting point:  2.12118095383 1.74809932384 0.960081300532
+reset starting point:  2.70282698905 1.93746249059 0.831121716933
+('range ', [[2.0, 3.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.37957306863 1.80280220441 1.06439786406
+reset starting point:  2.04415199718 1.65819559266 1.66801322388
+reset starting point:  2.8317326205 1.05737914147 1.34357619676
+('range ', [[2.0, 3.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.16766260424 1.96180107978 2.45693953255
+reset starting point:  2.41662770999 1.61440477278 2.1744191266
+reset starting point:  2.82827045616 1.74503601415 2.32954831457
+('range ', [[2.0, 3.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.34495930827 2.98122770825 0.276694829373
+reset starting point:  2.85614712313 2.4019296176 0.320467224441
+reset starting point:  2.82941664899 2.11624898493 0.715084952008
+('range ', [[2.0, 3.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.15497239851 2.04769979174 1.96804049316
+reset starting point:  2.03797932105 2.83185048739 1.15176236616
+reset starting point:  2.20857934098 2.34310056934 1.64153068154
+('range ', [[2.0, 3.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.73720036414 2.65441439054 2.07887230632
+reset starting point:  2.7906862689 2.749056523 2.59935512665
+reset starting point:  2.17087668584 2.37975145634 2.64764089043
+('range ', [[2.0, 3.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+cannot find solution.
+===========
+[2, 2, 1]
+reset starting point:  0.596091200198 0.485458310983 0.1153795913
+reset starting point:  0.801623012168 0.162858802721 0.979976533188
+reset starting point:  0.844072405008 0.94927183364 0.9654778508
+('range ', [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.287738724891 0.175766681126 1.96472622616
+reset starting point:  0.79555957262 0.249129092403 1.91998401224
+reset starting point:  0.0014012284361 0.923119298058 1.90797326885
+('range ', [[0.0, 1.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.985552341847 0.94235172163 2.83302166537
+reset starting point:  0.31933382535 0.845697411019 2.40954166649
+reset starting point:  0.78440203285 0.48379474258 2.91653353408
+('range ', [[0.0, 1.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  0.253630368764 1.30038180778 0.0672216584451
+reset starting point:  0.523910849551 1.70994864913 0.325735887508
+reset starting point:  0.291751446359 1.0079466534 0.728286768583
+('range ', [[0.0, 1.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.362304550304 1.57603422884 1.40560487631
+reset starting point:  0.898872935784 1.60501953935 1.49935494705
+reset starting point:  0.824824137726 1.42942498115 1.58650876459
+('range ', [[0.0, 1.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.356045125854 1.10912570006 2.64012599969
+reset starting point:  0.841431300942 1.07999127012 2.44741210179
+reset starting point:  0.252002045469 1.86280834778 2.55840984666
+('range ', [[0.0, 1.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  0.244746935521 2.98906963256 0.998901281792
+reset starting point:  0.0790308637463 2.5342618562 0.562619168913
+reset starting point:  0.184601005064 2.27989472819 0.573438542302
+('range ', [[0.0, 1.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.600460261854 2.5819922775 1.02886510862
+reset starting point:  0.381575506904 2.39056312502 1.34123966547
+reset starting point:  0.685791129147 2.16525637709 1.92631992031
+('range ', [[0.0, 1.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.914121912415 2.91286515367 2.96338761641
+reset starting point:  0.773879724626 2.75847747855 2.21182255891
+reset starting point:  0.420654748711 2.65101347297 2.63272910754
+('range ', [[0.0, 1.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.49836325688 0.576850618663 0.804510468121
+reset starting point:  1.36574259776 0.359374076956 0.930639073021
+reset starting point:  1.1648695251 0.627286708975 0.66131499847
+('range ', [[1.0, 2.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.56742241042 0.460635443825 1.26310009526
+reset starting point:  1.45296021587 0.430301147949 1.55888248796
+reset starting point:  1.38776688379 0.11095993323 1.18886023148
+('range ', [[1.0, 2.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.24507996405 0.71962445913 2.2417721246
+reset starting point:  1.20544949984 0.553457668691 2.00259196728
+reset starting point:  1.47083542256 0.773848296524 2.81020168851
+('range ', [[1.0, 2.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.85431112764 1.47923665791 0.289759990595
+reset starting point:  1.70432222706 1.41642464511 0.871381738659
+reset starting point:  1.92276622781 1.31017341328 0.860680505936
+('range ', [[1.0, 2.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.84931416658 1.76179623751 1.94646599731
+reset starting point:  1.76708728873 1.63865442142 1.34034866964
+reset starting point:  1.94243096157 1.60935013237 1.36676207121
+('range ', [[1.0, 2.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.21006138287 1.39749767394 2.03815201619
+reset starting point:  1.23908028532 1.56333849153 2.58444948051
+reset starting point:  1.22209934415 1.95145627434 2.37950271451
+('range ', [[1.0, 2.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.43497737196 2.66825211664 0.548772641939
+reset starting point:  1.79742340959 2.48761269588 0.737899057309
+reset starting point:  1.14940786697 2.09922999522 0.655020642401
+('range ', [[1.0, 2.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.69593728251 2.0924352103 1.10819143542
+reset starting point:  1.38434235148 2.6432306678 1.57211771255
+reset starting point:  1.43225821502 2.27540477206 1.27044422663
+('range ', [[1.0, 2.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.30138014083 2.97657538352 2.98049004009
+reset starting point:  1.4266994697 2.15491058316 2.09604208963
+reset starting point:  1.72135117771 2.18793452656 2.50116021006
+('range ', [[1.0, 2.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.76671011315 0.445770857793 0.482798297621
+reset starting point:  2.87507717086 0.878712644611 0.83468219967
+reset starting point:  2.64949514605 0.221850267704 0.482024627481
+('range ', [[2.0, 3.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.61277273899 0.425543169234 1.18455762108
+reset starting point:  2.74762270328 0.639239012048 1.91267996975
+reset starting point:  2.64474306073 0.622498503139 1.95940885411
+('range ', [[2.0, 3.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.42374457977 0.050205660579 2.72872799636
+reset starting point:  2.67303936039 0.155535738695 2.14936266932
+reset starting point:  2.22148376449 0.934835213204 2.24140773084
+('range ', [[2.0, 3.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.08904188343 1.36069979618 0.91886769526
+reset starting point:  2.73745808663 1.40052087069 0.967411002567
+reset starting point:  2.47840650616 1.32917558292 0.916930454801
+('range ', [[2.0, 3.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.69637630996 1.37757179542 1.73601744196
+reset starting point:  2.91385622404 1.90061807195 1.3468407913
+reset starting point:  2.29967160869 1.39637060827 1.91458771435
+('range ', [[2.0, 3.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.16054111624 1.30751083925 2.80364544258
+reset starting point:  2.95932030789 1.91837213694 2.79396953889
+reset starting point:  2.29623881564 1.63753877244 2.00925705962
+('range ', [[2.0, 3.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.116569862 2.21419018265 0.713570446726
+reset starting point:  2.60957128472 2.4195395871 0.597945984991
+reset starting point:  2.42448761378 2.28437617106 0.644149289082
+('range ', [[2.0, 3.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.67479113122 2.99534554629 1.65863222928
+reset starting point:  2.98322069527 2.63881500022 1.35970482656
+reset starting point:  2.8692778814 2.87361861856 1.790930593
+('range ', [[2.0, 3.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.43171648095 2.71764249986 2.69903679415
+reset starting point:  2.66082799009 2.2231535863 2.36560962423
+reset starting point:  2.65919139637 2.800102985 2.47518434926
+('range ', [[2.0, 3.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+cannot find solution.
+===========
+[2, 2, 2]
+reset starting point:  0.841698611172 0.865721712362 0.234445645734
+reset starting point:  0.258572556437 0.46749996799 0.0768650380009
+reset starting point:  0.730616683646 0.897012711723 0.233509744458
+('range ', [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.638047352389 0.739006917506 1.00770509987
+reset starting point:  0.865277672813 0.991599376075 1.04293768517
+reset starting point:  0.171117291966 0.27945289019 1.8516471256
+('range ', [[0.0, 1.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.206149098033 0.808782950653 2.47347550158
+reset starting point:  0.870908167339 0.289743305359 2.19567370905
+reset starting point:  0.396611341122 0.780465156833 2.97801010738
+('range ', [[0.0, 1.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  0.107020408828 1.41555542687 0.118295837532
+reset starting point:  0.977530060874 1.4214689899 0.336424851633
+reset starting point:  0.676728738247 1.31167719476 0.249331236605
+('range ', [[0.0, 1.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.298320782357 1.05808921735 1.26764593205
+reset starting point:  0.0172670608406 1.58630474577 1.65673658694
+reset starting point:  0.0377164961953 1.10322575391 1.41062948474
+('range ', [[0.0, 1.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.751375363292 1.51134182237 2.01003893123
+reset starting point:  0.478400530524 1.34192183728 2.72570124446
+reset starting point:  0.484807477229 1.78017442616 2.2656806655
+('range ', [[0.0, 1.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  0.788179007656 2.43002879284 0.0860441358447
+reset starting point:  0.640480188445 2.62598801445 0.596308139333
+reset starting point:  0.183445580097 2.86389391987 0.748442629448
+('range ', [[0.0, 1.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.304192847022 2.60823123571 1.1989831669
+reset starting point:  0.760357109431 2.44642503753 1.62289260288
+reset starting point:  0.265490402708 2.8235187368 1.86538805187
+('range ', [[0.0, 1.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  0.384493293832 2.7019342324 2.46822055418
+reset starting point:  0.752430411067 2.97994784697 2.14180120733
+reset starting point:  0.343958749268 2.8375293499 2.04394548156
+('range ', [[0.0, 1.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.05685440212 0.353475638751 0.119705294032
+reset starting point:  1.69187244531 0.220723152223 0.15735401193
+reset starting point:  1.16779470923 0.394845228728 0.837132159514
+('range ', [[1.0, 2.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.22439082577 0.408679956036 1.31668987226
+reset starting point:  1.75969244901 0.770864777593 1.04429236664
+reset starting point:  1.40153802892 0.339527919774 1.32624585503
+('range ', [[1.0, 2.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.51811668768 0.0225133893134 2.55161696092
+reset starting point:  1.77437666769 0.210914195091 2.85654596574
+reset starting point:  1.80095883601 0.44722070012 2.68626454704
+('range ', [[1.0, 2.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.33814995492 1.33307551225 0.0846060927044
+reset starting point:  1.76959627579 1.46703145334 0.290413152058
+reset starting point:  1.85341452084 1.86983291241 0.670351005154
+('range ', [[1.0, 2.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.4766294901 1.30782667112 1.70511705248
+reset starting point:  1.99827568954 1.47270585878 1.9416285158
+reset starting point:  1.87314053963 1.31430069735 1.12583545333
+('range ', [[1.0, 2.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.55657599357 1.99066566074 2.18916427184
+reset starting point:  1.51502758358 1.40002551323 2.78762628613
+reset starting point:  1.31827490519 1.3969261414 2.41848991936
+('range ', [[1.0, 2.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  1.09646970268 2.37547914045 0.120975179376
+reset starting point:  1.8224771852 2.55493510201 0.407357262179
+reset starting point:  1.53230388359 2.48131433609 0.628911846012
+('range ', [[1.0, 2.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  1.36789612368 2.26075006013 1.88251499119
+reset starting point:  1.84633478338 2.85174827916 1.17179386701
+reset starting point:  1.95516520478 2.64452011722 1.34578751973
+('range ', [[1.0, 2.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  1.67471029596 2.77853657977 2.21460830308
+reset starting point:  1.96575161449 2.74299085994 2.48151256076
+reset starting point:  1.62840390037 2.23716324167 2.73023639864
+('range ', [[1.0, 2.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.90668961382 0.066667264896 0.885188556687
+reset starting point:  2.34450881226 0.617967025487 0.0609632733564
+reset starting point:  2.48840316231 0.187910573412 0.718993851191
+('range ', [[2.0, 3.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.38869743409 0.442931708188 1.10384444651
+reset starting point:  2.40313014848 0.689411007294 1.98290347311
+reset starting point:  2.66030235984 0.73722542666 1.47296216163
+('range ', [[2.0, 3.0], [0.0, 1.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.30678512337 0.669446042887 2.42753122417
+reset starting point:  2.89362973027 0.718800189546 2.89933099189
+reset starting point:  2.14223981456 0.301421014175 2.12557940243
+('range ', [[2.0, 3.0], [0.0, 1.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.86042372966 1.70507165466 0.985531369182
+reset starting point:  2.35327251385 1.55485567946 0.252859454225
+reset starting point:  2.81158621417 1.16707116369 0.426205531621
+('range ', [[2.0, 3.0], [1.0, 2.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.29808503267 1.08716859649 1.7395107322
+reset starting point:  2.48398631014 1.66426151278 1.38035183587
+reset starting point:  2.18018999557 1.05978101419 1.22595564875
+('range ', [[2.0, 3.0], [1.0, 2.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.33970502736 1.47636897831 2.91278744323
+reset starting point:  2.68516896721 1.23914173277 2.16490939188
+reset starting point:  2.70175297903 1.10692520173 2.90667469458
+('range ', [[2.0, 3.0], [1.0, 2.0], [2.0, 3.0]], ' does not work')
+reset starting point:  2.85119870005 2.14721290942 0.00987086812298
+reset starting point:  2.00606834395 2.89868760533 0.434751032937
+reset starting point:  2.93428004233 2.39447646211 0.549211270725
+('range ', [[2.0, 3.0], [2.0, 3.0], [0.0, 1.0]], ' does not work')
+reset starting point:  2.67169964579 2.63123114152 1.70378852824
+reset starting point:  2.8825281792 2.18923529542 1.23294029035
+reset starting point:  2.80322744401 2.8953543228 1.89771313456
+('range ', [[2.0, 3.0], [2.0, 3.0], [1.0, 2.0]], ' does not work')
+reset starting point:  2.9988516236 2.73791283174 2.84073352065
+reset starting point:  2.81242132991 2.37172527684 2.32402297372
+reset starting point:  2.73621633041 2.71742297678 2.97709996257
+('range ', [[2.0, 3.0], [2.0, 3.0], [2.0, 3.0]], ' does not work')
+cannot find solution.
+===========
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ python numerical_solve.py
+[1, 0, 0]
+reset starting point:  0.740182579556 0.181273741226 0.0645772674867
+Traceback (most recent call last):
+  File "numerical_solve.py", line 204, in <module>
+    find_vol_from_series('series_0_2.npy')
+  File "numerical_solve.py", line 199, in find_vol_from_series
+    vol, sol = solver(series, h1*coeff, euler)
+  File "numerical_solve.py", line 120, in solver
+    vol, sol = NSolve(series, d, euler, bound=bound)
+  File "numerical_solve.py", line 92, in NSolve
+    sol = fsolve(func, x0 = np.array([d1_0, d2_0, d3_0]), args = d)
+  File "/usr/lib/python2.7/dist-packages/scipy/optimize/minpack.py", line 146, in fsolve
+    res = _root_hybr(func, x0, args, jac=fprime, **options)
+  File "/usr/lib/python2.7/dist-packages/scipy/optimize/minpack.py", line 212, in _root_hybr
+    shape, dtype = _check_func('fsolve', 'func', func, x0, args, n, (n,))
+  File "/usr/lib/python2.7/dist-packages/scipy/optimize/minpack.py", line 26, in _check_func
+    res = atleast_1d(thefunc(*((x0[:numinputs],) + args)))
+  File "numerical_solve.py", line 55, in func
+    return (f1(b1 = p[0], b2 = p[1], b3 = p[2]), f2(b1 = p[0], b2 = p[1], b3 = p[2]), f3(b1 = p[0], b2 = p[1], b3 = p[2]))
+TypeError: 'Add' object is not callable
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ cd ..
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ ls
+Readme.md  [0m[01;34mdata[0m  datavol_0_10_test.pkl  [01;34mdocs[0m  [01;34mold[0m  [01;34msrc[0m  [01;34mtest[0m
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ rm -rf [K[K[K[K[K[K[Krm -rf data[K[K[K[K[K[K[K[K[K[K[Kls
+Readme.md  [0m[01;34mdata[0m  [01;34mdocs[0m  [01;34mold[0m  [01;34msrc[0m  [01;34mtest[0m
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ git add [K[K[K[K[K[K[K[Kgit sta[K[K[K[K[K[K[Kgit [K[K[K[Kgi[K[Kgit stac[Ksh
+Saved working directory and index state WIP on master: a1f6757 download from google
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ git pull
+remote: Enumerating objects: 1519, done.[K
+remote: Counting objects:   0% (1/1519)   [Kremote: Counting objects:   1% (16/1519)   [Kremote: Counting objects:   2% (31/1519)   [Kremote: Counting objects:   3% (46/1519)   [Kremote: Counting objects:   4% (61/1519)   [Kremote: Counting objects:   5% (76/1519)   [Kremote: Counting objects:   6% (92/1519)   [Kremote: Counting objects:   7% (107/1519)   [Kremote: Counting objects:   8% (122/1519)   [Kremote: Counting objects:   9% (137/1519)   [Kremote: Counting objects:  10% (152/1519)   [Kremote: Counting objects:  11% (168/1519)   [Kremote: Counting objects:  12% (183/1519)   [Kremote: Counting objects:  13% (198/1519)   [Kremote: Counting objects:  14% (213/1519)   [Kremote: Counting objects:  15% (228/1519)   [Kremote: Counting objects:  16% (244/1519)   [Kremote: Counting objects:  17% (259/1519)   [Kremote: Counting objects:  18% (274/1519)   [Kremote: Counting objects:  19% (289/1519)   [Kremote: Counting objects:  20% (304/1519)   [Kremote: Counting objects:  21% (319/1519)   [Kremote: Counting objects:  22% (335/1519)   [Kremote: Counting objects:  23% (350/1519)   [Kremote: Counting objects:  24% (365/1519)   [Kremote: Counting objects:  25% (380/1519)   [Kremote: Counting objects:  26% (395/1519)   [Kremote: Counting objects:  27% (411/1519)   [Kremote: Counting objects:  28% (426/1519)   [Kremote: Counting objects:  29% (441/1519)   [Kremote: Counting objects:  30% (456/1519)   [Kremote: Counting objects:  31% (471/1519)   [Kremote: Counting objects:  32% (487/1519)   [Kremote: Counting objects:  33% (502/1519)   [Kremote: Counting objects:  34% (517/1519)   [Kremote: Counting objects:  35% (532/1519)   [Kremote: Counting objects:  36% (547/1519)   [Kremote: Counting objects:  37% (563/1519)   [Kremote: Counting objects:  38% (578/1519)   [Kremote: Counting objects:  39% (593/1519)   [Kremote: Counting objects:  40% (608/1519)   [Kremote: Counting objects:  41% (623/1519)   [Kremote: Counting objects:  42% (638/1519)   [Kremote: Counting objects:  43% (654/1519)   [Kremote: Counting objects:  44% (669/1519)   [Kremote: Counting objects:  45% (684/1519)   [Kremote: Counting objects:  46% (699/1519)   [Kremote: Counting objects:  47% (714/1519)   [Kremote: Counting objects:  48% (730/1519)   [Kremote: Counting objects:  49% (745/1519)   [Kremote: Counting objects:  50% (760/1519)   [Kremote: Counting objects:  51% (775/1519)   [Kremote: Counting objects:  52% (790/1519)   [Kremote: Counting objects:  53% (806/1519)   [Kremote: Counting objects:  54% (821/1519)   [Kremote: Counting objects:  55% (836/1519)   [Kremote: Counting objects:  56% (851/1519)   [Kremote: Counting objects:  57% (866/1519)   [Kremote: Counting objects:  58% (882/1519)   [Kremote: Counting objects:  59% (897/1519)   [Kremote: Counting objects:  60% (912/1519)   [Kremote: Counting objects:  61% (927/1519)   [Kremote: Counting objects:  62% (942/1519)   [Kremote: Counting objects:  63% (957/1519)   [Kremote: Counting objects:  64% (973/1519)   [Kremote: Counting objects:  65% (988/1519)   [Kremote: Counting objects:  66% (1003/1519)   [Kremote: Counting objects:  67% (1018/1519)   [Kremote: Counting objects:  68% (1033/1519)   [Kremote: Counting objects:  69% (1049/1519)   [Kremote: Counting objects:  70% (1064/1519)   [Kremote: Counting objects:  71% (1079/1519)   [Kremote: Counting objects:  72% (1094/1519)   [Kremote: Counting objects:  73% (1109/1519)   [Kremote: Counting objects:  74% (1125/1519)   [Kremote: Counting objects:  75% (1140/1519)   [Kremote: Counting objects:  76% (1155/1519)   [Kremote: Counting objects:  77% (1170/1519)   [Kremote: Counting objects:  78% (1185/1519)   [Kremote: Counting objects:  79% (1201/1519)   [Kremote: Counting objects:  80% (1216/1519)   [Kremote: Counting objects:  81% (1231/1519)   [Kremote: Counting objects:  82% (1246/1519)   [Kremote: Counting objects:  83% (1261/1519)   [Kremote: Counting objects:  84% (1276/1519)   [Kremote: Counting objects:  85% (1292/1519)   [Kremote: Counting objects:  86% (1307/1519)   [Kremote: Counting objects:  87% (1322/1519)   [Kremote: Counting objects:  88% (1337/1519)   [Kremote: Counting objects:  89% (1352/1519)   [Kremote: Counting objects:  90% (1368/1519)   [Kremote: Counting objects:  91% (1383/1519)   [Kremote: Counting objects:  92% (1398/1519)   [Kremote: Counting objects:  93% (1413/1519)   [Kremote: Counting objects:  94% (1428/1519)   [Kremote: Counting objects:  95% (1444/1519)   [Kremote: Counting objects:  96% (1459/1519)   [Kremote: Counting objects:  97% (1474/1519)   [Kremote: Counting objects:  98% (1489/1519)   [Kremote: Counting objects:  99% (1504/1519)   [Kremote: Counting objects: 100% (1519/1519)   [Kremote: Counting objects: 100% (1519/1519), done.[K
+remote: Compressing objects:   0% (1/823)   [Kremote: Compressing objects:   1% (9/823)   [Kremote: Compressing objects:   2% (17/823)   [Kremote: Compressing objects:   3% (25/823)   [Kremote: Compressing objects:   4% (33/823)   [Kremote: Compressing objects:   5% (42/823)   [Kremote: Compressing objects:   6% (50/823)   [Kremote: Compressing objects:   7% (58/823)   [Kremote: Compressing objects:   8% (66/823)   [Kremote: Compressing objects:   9% (75/823)   [Kremote: Compressing objects:  10% (83/823)   [Kremote: Compressing objects:  11% (91/823)   [Kremote: Compressing objects:  12% (99/823)   [Kremote: Compressing objects:  13% (107/823)   [Kremote: Compressing objects:  14% (116/823)   [Kremote: Compressing objects:  15% (124/823)   [Kremote: Compressing objects:  16% (132/823)   [Kremote: Compressing objects:  17% (140/823)   [Kremote: Compressing objects:  18% (149/823)   [Kremote: Compressing objects:  19% (157/823)   [Kremote: Compressing objects:  20% (165/823)   [Kremote: Compressing objects:  21% (173/823)   [Kremote: Compressing objects:  22% (182/823)   [Kremote: Compressing objects:  23% (190/823)   [Kremote: Compressing objects:  24% (198/823)   [Kremote: Compressing objects:  25% (206/823)   [Kremote: Compressing objects:  26% (214/823)   [Kremote: Compressing objects:  27% (223/823)   [Kremote: Compressing objects:  28% (231/823)   [Kremote: Compressing objects:  29% (239/823)   [Kremote: Compressing objects:  30% (247/823)   [Kremote: Compressing objects:  31% (256/823)   [Kremote: Compressing objects:  32% (264/823)   [Kremote: Compressing objects:  33% (272/823)   [Kremote: Compressing objects:  34% (280/823)   [Kremote: Compressing objects:  35% (289/823)   [Kremote: Compressing objects:  36% (297/823)   [Kremote: Compressing objects:  37% (305/823)   [Kremote: Compressing objects:  38% (313/823)   [Kremote: Compressing objects:  39% (321/823)   [Kremote: Compressing objects:  40% (330/823)   [Kremote: Compressing objects:  41% (338/823)   [Kremote: Compressing objects:  42% (346/823)   [Kremote: Compressing objects:  43% (354/823)   [Kremote: Compressing objects:  44% (363/823)   [Kremote: Compressing objects:  45% (371/823)   [Kremote: Compressing objects:  46% (379/823)   [Kremote: Compressing objects:  47% (387/823)   [Kremote: Compressing objects:  48% (396/823)   [Kremote: Compressing objects:  49% (404/823)   [Kremote: Compressing objects:  50% (412/823)   [Kremote: Compressing objects:  51% (420/823)   [Kremote: Compressing objects:  52% (428/823)   [Kremote: Compressing objects:  53% (437/823)   [Kremote: Compressing objects:  54% (445/823)   [Kremote: Compressing objects:  55% (453/823)   [Kremote: Compressing objects:  56% (461/823)   [Kremote: Compressing objects:  57% (470/823)   [Kremote: Compressing objects:  58% (478/823)   [Kremote: Compressing objects:  59% (486/823)   [Kremote: Compressing objects:  60% (494/823)   [Kremote: Compressing objects:  61% (503/823)   [Kremote: Compressing objects:  62% (511/823)   [Kremote: Compressing objects:  63% (519/823)   [Kremote: Compressing objects:  64% (527/823)   [Kremote: Compressing objects:  65% (535/823)   [Kremote: Compressing objects:  66% (544/823)   [Kremote: Compressing objects:  67% (552/823)   [Kremote: Compressing objects:  68% (560/823)   [Kremote: Compressing objects:  69% (568/823)   [Kremote: Compressing objects:  70% (577/823)   [Kremote: Compressing objects:  71% (585/823)   [Kremote: Compressing objects:  72% (593/823)   [Kremote: Compressing objects:  73% (601/823)   [Kremote: Compressing objects:  74% (610/823)   [Kremote: Compressing objects:  75% (618/823)   [Kremote: Compressing objects:  76% (626/823)   [Kremote: Compressing objects:  77% (634/823)   [Kremote: Compressing objects:  78% (642/823)   [Kremote: Compressing objects:  79% (651/823)   [Kremote: Compressing objects:  80% (659/823)   [Kremote: Compressing objects:  81% (667/823)   [Kremote: Compressing objects:  82% (675/823)   [Kremote: Compressing objects:  83% (684/823)   [Kremote: Compressing objects:  84% (692/823)   [Kremote: Compressing objects:  85% (700/823)   [Kremote: Compressing objects:  86% (708/823)   [Kremote: Compressing objects:  87% (717/823)   [Kremote: Compressing objects:  88% (725/823)   [Kremote: Compressing objects:  89% (733/823)   [Kremote: Compressing objects:  90% (741/823)   [Kremote: Compressing objects:  91% (749/823)   [Kremote: Compressing objects:  92% (758/823)   [Kremote: Compressing objects:  93% (766/823)   [Kremote: Compressing objects:  94% (774/823)   [Kremote: Compressing objects:  95% (782/823)   [Kremote: Compressing objects:  96% (791/823)   [Kremote: Compressing objects:  97% (799/823)   [Kremote: Compressing objects:  98% (807/823)   [Kremote: Compressing objects:  99% (815/823)   [Kremote: Compressing objects: 100% (823/823)   [Kremote: Compressing objects: 100% (823/823), done.[K
+Receiving objects:   0% (1/1519)   Receiving objects:   1% (16/1519)   Receiving objects:   2% (31/1519)   Receiving objects:   3% (46/1519)   Receiving objects:   4% (61/1519)   Receiving objects:   5% (76/1519)   Receiving objects:   6% (92/1519)   Receiving objects:   7% (107/1519)   Receiving objects:   8% (122/1519)   Receiving objects:   9% (137/1519)   Receiving objects:  10% (152/1519)   Receiving objects:  11% (168/1519), 3.84 MiB | 7.42 MiB/s   Receiving objects:  12% (183/1519), 3.84 MiB | 7.42 MiB/s   Receiving objects:  13% (198/1519), 3.84 MiB | 7.42 MiB/s   Receiving objects:  14% (213/1519), 3.84 MiB | 7.42 MiB/s   Receiving objects:  15% (228/1519), 3.84 MiB | 7.42 MiB/s   Receiving objects:  16% (244/1519), 3.84 MiB | 7.42 MiB/s   Receiving objects:  16% (258/1519), 11.15 MiB | 10.97 MiB/s   Receiving objects:  16% (258/1519), 31.79 MiB | 15.74 MiB/s   Receiving objects:  16% (258/1519), 56.30 MiB | 18.64 MiB/s   Receiving objects:  17% (259/1519), 69.88 MiB | 19.85 MiB/s   Receiving objects:  17% (259/1519), 86.66 MiB | 14.00 MiB/s   Receiving objects:  17% (263/1519), 104.18 MiB | 15.06 MiB/s   Receiving objects:  17% (263/1519), 131.07 MiB | 16.08 MiB/s   Receiving objects:  17% (263/1519), 155.25 MiB | 15.96 MiB/s   Receiving objects:  17% (264/1519), 155.25 MiB | 15.96 MiB/s   Receiving objects:  17% (264/1519), 184.37 MiB | 16.30 MiB/s   Receiving objects:  17% (264/1519), 212.09 MiB | 18.01 MiB/s   Receiving objects:  17% (265/1519), 212.09 MiB | 18.01 MiB/s   Receiving objects:  17% (265/1519), 240.89 MiB | 13.69 MiB/s   Receiving objects:  17% (265/1519), 272.35 MiB | 14.65 MiB/s   Receiving objects:  17% (266/1519), 287.18 MiB | 19.98 MiB/s   Receiving objects:  17% (266/1519), 307.30 MiB | 15.39 MiB/s   Receiving objects:  17% (266/1519), 325.80 MiB | 14.23 MiB/s   Receiving objects:  17% (266/1519), 344.83 MiB | 17.43 MiB/s   Receiving objects:  17% (266/1519), 363.93 MiB | 15.35 MiB/s   Receiving objects:  17% (267/1519), 363.93 MiB | 15.35 MiB/s   Receiving objects:  17% (267/1519), 376.84 MiB | 15.07 MiB/s   Receiving objects:  17% (267/1519), 395.46 MiB | 14.61 MiB/s   Receiving objects:  17% (267/1519), 417.72 MiB | 15.16 MiB/s   Receiving objects:  17% (268/1519), 417.72 MiB | 15.16 MiB/s   Receiving objects:  18% (274/1519), 420.57 MiB | 12.04 MiB/s   Receiving objects:  18% (286/1519), 440.86 MiB | 12.23 MiB/s   Receiving objects:  18% (287/1519), 451.21 MiB | 16.08 MiB/s   Receiving objects:  19% (289/1519), 458.35 MiB | 12.58 MiB/s   Receiving objects:  19% (302/1519), 458.35 MiB | 12.58 MiB/s   Receiving objects:  20% (304/1519), 458.35 MiB | 12.58 MiB/s   Receiving objects:  21% (319/1519), 462.18 MiB | 11.81 MiB/s   Receiving objects:  22% (335/1519), 462.18 MiB | 11.81 MiB/s   Receiving objects:  23% (350/1519), 462.18 MiB | 11.81 MiB/s   Receiving objects:  24% (365/1519), 462.18 MiB | 11.81 MiB/s   Receiving objects:  25% (380/1519), 462.18 MiB | 11.81 MiB/s   Receiving objects:  26% (395/1519), 462.18 MiB | 11.81 MiB/s   Receiving objects:  27% (411/1519), 464.78 MiB | 10.66 MiB/s   Receiving objects:  28% (426/1519), 464.78 MiB | 10.66 MiB/s   Receiving objects:  29% (441/1519), 464.78 MiB | 10.66 MiB/s   Receiving objects:  30% (456/1519), 464.78 MiB | 10.66 MiB/s   Receiving objects:  30% (470/1519), 466.40 MiB | 9.25 MiB/s   Receiving objects:  31% (471/1519), 466.40 MiB | 9.25 MiB/s   Receiving objects:  32% (487/1519), 466.40 MiB | 9.25 MiB/s   Receiving objects:  33% (502/1519), 468.78 MiB | 7.85 MiB/s   Receiving objects:  33% (506/1519), 470.26 MiB | 8.83 MiB/s   Receiving objects:  34% (517/1519), 470.26 MiB | 8.83 MiB/s   Receiving objects:  35% (532/1519), 470.26 MiB | 8.83 MiB/s   Receiving objects:  35% (535/1519), 477.22 MiB | 6.45 MiB/s   Receiving objects:  35% (535/1519), 488.77 MiB | 6.71 MiB/s   Receiving objects:  35% (536/1519), 488.77 MiB | 6.71 MiB/s   Receiving objects:  36% (547/1519), 492.59 MiB | 5.50 MiB/s   Receiving objects:  37% (563/1519), 492.59 MiB | 5.50 MiB/s   Receiving objects:  37% (571/1519), 492.59 MiB | 5.50 MiB/s   Receiving objects:  38% (578/1519), 506.75 MiB | 7.32 MiB/s   Receiving objects:  39% (593/1519), 506.75 MiB | 7.32 MiB/s   Receiving objects:  40% (608/1519), 506.75 MiB | 7.32 MiB/s   Receiving objects:  41% (623/1519), 506.75 MiB | 7.32 MiB/s   Receiving objects:  42% (638/1519), 506.75 MiB | 7.32 MiB/s   Receiving objects:  42% (653/1519), 506.75 MiB | 7.32 MiB/s   Receiving objects:  43% (654/1519), 506.75 MiB | 7.32 MiB/s   Receiving objects:  44% (669/1519), 506.75 MiB | 7.32 MiB/s   Receiving objects:  45% (684/1519), 506.75 MiB | 7.32 MiB/s   Receiving objects:  46% (699/1519), 506.75 MiB | 7.32 MiB/s   Receiving objects:  47% (714/1519), 506.75 MiB | 7.32 MiB/s   Receiving objects:  48% (730/1519), 506.75 MiB | 7.32 MiB/s   Receiving objects:  49% (745/1519), 511.25 MiB | 7.71 MiB/s   Receiving objects:  50% (760/1519), 511.25 MiB | 7.71 MiB/s   Receiving objects:  51% (775/1519), 511.25 MiB | 7.71 MiB/s   Receiving objects:  52% (790/1519), 511.25 MiB | 7.71 MiB/s   Receiving objects:  53% (806/1519), 511.25 MiB | 7.71 MiB/s   Receiving objects:  54% (821/1519), 511.25 MiB | 7.71 MiB/s   Receiving objects:  55% (836/1519), 511.25 MiB | 7.71 MiB/s   Receiving objects:  56% (851/1519), 519.28 MiB | 8.90 MiB/s   Receiving objects:  57% (866/1519), 519.28 MiB | 8.90 MiB/s   Receiving objects:  58% (882/1519), 519.28 MiB | 8.90 MiB/s   Receiving objects:  59% (897/1519), 519.28 MiB | 8.90 MiB/s   Receiving objects:  59% (901/1519), 519.28 MiB | 8.90 MiB/s   Receiving objects:  60% (912/1519), 523.22 MiB | 8.32 MiB/s   Receiving objects:  60% (917/1519), 523.22 MiB | 8.32 MiB/s   Receiving objects:  61% (927/1519), 524.74 MiB | 7.46 MiB/s   Receiving objects:  61% (939/1519), 527.62 MiB | 6.97 MiB/s   Receiving objects:  62% (942/1519), 527.62 MiB | 6.97 MiB/s   Receiving objects:  63% (957/1519), 530.22 MiB | 8.21 MiB/s   Receiving objects:  64% (973/1519), 530.22 MiB | 8.21 MiB/s   Receiving objects:  65% (988/1519), 530.22 MiB | 8.21 MiB/s   Receiving objects:  66% (1003/1519), 530.22 MiB | 8.21 MiB/s   Receiving objects:  67% (1018/1519), 530.22 MiB | 8.21 MiB/s   Receiving objects:  68% (1033/1519), 530.22 MiB | 8.21 MiB/s   Receiving objects:  69% (1049/1519), 534.67 MiB | 7.90 MiB/s   Receiving objects:  70% (1064/1519), 534.67 MiB | 7.90 MiB/s   Receiving objects:  71% (1079/1519), 534.67 MiB | 7.90 MiB/s   Receiving objects:  72% (1094/1519), 534.67 MiB | 7.90 MiB/s   Receiving objects:  73% (1109/1519), 534.67 MiB | 7.90 MiB/s   Receiving objects:  74% (1125/1519), 534.67 MiB | 7.90 MiB/s   Receiving objects:  74% (1138/1519), 534.67 MiB | 7.90 MiB/s   Receiving objects:  75% (1140/1519), 534.67 MiB | 7.90 MiB/s   Receiving objects:  76% (1155/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  77% (1170/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  78% (1185/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  79% (1201/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  80% (1216/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  81% (1231/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  82% (1246/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  83% (1261/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  84% (1276/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  85% (1292/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  86% (1307/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  87% (1322/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  88% (1337/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  89% (1352/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  90% (1368/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  91% (1383/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  92% (1398/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  93% (1413/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  94% (1428/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  95% (1444/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  96% (1459/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  97% (1474/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects:  98% (1489/1519), 545.97 MiB | 8.57 MiB/s   remote: Total 1519 (delta 613), reused 1519 (delta 613), pack-reused 0[K
+Receiving objects:  99% (1504/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects: 100% (1519/1519), 545.97 MiB | 8.57 MiB/s   Receiving objects: 100% (1519/1519), 552.40 MiB | 12.69 MiB/s, done.
+Resolving deltas:   0% (0/613)   Resolving deltas:   5% (32/613)   Resolving deltas:   8% (52/613)   Resolving deltas:  13% (82/613)   Resolving deltas:  14% (86/613)   Resolving deltas:  15% (98/613)   Resolving deltas:  16% (101/613)   Resolving deltas:  17% (105/613)   Resolving deltas:  18% (112/613)   Resolving deltas:  19% (117/613)   Resolving deltas:  20% (124/613)   Resolving deltas:  21% (130/613)   Resolving deltas:  22% (136/613)   Resolving deltas:  24% (152/613)   Resolving deltas:  25% (155/613)   Resolving deltas:  26% (161/613)   Resolving deltas:  27% (166/613)   Resolving deltas:  28% (172/613)   Resolving deltas:  29% (178/613)   Resolving deltas:  30% (189/613)   Resolving deltas:  31% (191/613)   Resolving deltas:  32% (197/613)   Resolving deltas:  34% (209/613)   Resolving deltas:  35% (215/613)   Resolving deltas:  37% (227/613)   Resolving deltas:  38% (237/613)   Resolving deltas:  40% (247/613)   Resolving deltas:  41% (253/613)   Resolving deltas:  42% (258/613)   Resolving deltas:  43% (267/613)   Resolving deltas:  44% (272/613)   Resolving deltas:  46% (282/613)   Resolving deltas:  47% (289/613)   Resolving deltas:  48% (299/613)   Resolving deltas:  51% (314/613)   Resolving deltas:  52% (319/613)   Resolving deltas:  53% (326/613)   Resolving deltas:  56% (348/613)   Resolving deltas:  58% (358/613)   Resolving deltas:  60% (370/613)   Resolving deltas:  63% (387/613)   Resolving deltas:  69% (423/613)   Resolving deltas:  70% (430/613)   Resolving deltas:  71% (440/613)   Resolving deltas:  72% (443/613)   Resolving deltas:  73% (450/613)   Resolving deltas:  74% (458/613)   Resolving deltas:  75% (461/613)   Resolving deltas:  76% (467/613)   Resolving deltas:  77% (473/613)   Resolving deltas:  79% (486/613)   Resolving deltas:  80% (492/613)   Resolving deltas:  81% (502/613)   Resolving deltas:  82% (506/613)   Resolving deltas:  83% (509/613)   Resolving deltas:  84% (515/613)   Resolving deltas:  85% (523/613)   Resolving deltas:  86% (531/613)   Resolving deltas:  87% (535/613)   Resolving deltas:  87% (536/613)   Resolving deltas:  88% (540/613)   Resolving deltas:  89% (547/613)   Resolving deltas:  90% (555/613)   Resolving deltas:  91% (562/613)   Resolving deltas:  92% (564/613)   Resolving deltas:  93% (573/613)   Resolving deltas:  94% (577/613)   Resolving deltas:  97% (596/613)   Resolving deltas:  98% (601/613)   Resolving deltas: 100% (613/613)   Resolving deltas: 100% (613/613), done.
+From https://github.com/caoandong/Calabi_Yau
+ * [new branch]      update     -> origin/update
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> master
+
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ git pull re[K[Korigin master
+From https://github.com/caoandong/Calabi_Yau
+ * branch            master     -> FETCH_HEAD
+Already up to date.
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ gt[Kit stac[Ksh pop
+error: Your local changes to the following files would be overwritten by merge:
+	src/.numerical_solve.py-0.term
+	src/notebook/.Triangulation.ipynb.sage-jupyter2
+Please commit your changes or stash them before you merge.
+Aborting
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ g
