@@ -24,27 +24,53 @@ from scipy.optimize import fsolve
 import os
 from os.path import expanduser
 from pathlib import Path
+import itertools
+
+def merge_lists(list1, list2):
+    return [x for x in itertools.chain.from_iterable(itertools.izip_longest(list1,list2)) if x]
+
+def find_bound(i,j,k, bound):
+    b1_min = bound[0][i]
+    b1_max = b1_min+1
+    b2_min = bound[1][j]
+    b2_max = b2_min+1
+    b3_min = bound[2][k]
+    b3_max = b3_min+1
+    return [[b1_min, b1_max],[b2_min,b2_max],[b3_min,b3_max]]
+
+def generate_grid(b3_max, b1_max=2, b2_max=2):
+    l1 = np.linspace(0, b1_max, b1_max+1).tolist()
+    l2 = np.linspace(0, b2_max, b2_max+1).tolist()
+    l3 = np.linspace(0, b3_max, b3_max+1).tolist()
+    return [l1,l2,l3]
+
+def upper_bound(euler):
+    return 0.85*euler
+
+def lower_bound(euler):
+    return 0.79*euler
+
 def func(p, *d):
     f1, f2, f3 = d
     return (f1(p[0], p[1], p[2]), f2(p[0], p[1], p[2]), f3(p[0], p[1], p[2]))
 
-def constraint(Series, sol, vol_min_global, b_list):
+def constraint(Series, sol, euler, b_list):
     b1, b2, b3 = b_list
     vol = Series(sol[0], sol[1], sol[2])
-    vol = abs(vol)
-    if vol <= 1 and vol >= vol_min_global:
+    vol_min = lower_bound(euler)
+    vol_max = upper_bound(euler)
+    if 1.0/vol <= vol_max and 1.0/vol >= vol_min:
         return 1, vol
     
     print 'volume: ', vol, ' is out of bounds.'
     
     return 0, -1
     
-def NSolve(Series, d, vol_min_global, b_list, bound=[[0,1],[0,1],[0,1]], MAX_COUNT=3):
+def NSolve(Series, d, euler, b_list, bound=[[0,1],[0,1],[0,1]], MAX_COUNT=3):
     vol = -1
     sol = -1
     const = 0
     count = 0
-    
     b1, b2, b3 = b_list
     
     b1_min = bound[0][0]
@@ -53,7 +79,6 @@ def NSolve(Series, d, vol_min_global, b_list, bound=[[0,1],[0,1],[0,1]], MAX_COU
     b2_max = bound[1][1]
     b3_min = bound[2][0]
     b3_max = bound[2][1]
-    
 
     while const == 0:
         if count >= MAX_COUNT:
@@ -64,21 +89,22 @@ def NSolve(Series, d, vol_min_global, b_list, bound=[[0,1],[0,1],[0,1]], MAX_COU
         d2_0 = np.random.uniform(low=b2_min, high=b2_max)
         d3_0 = np.random.uniform(low=b3_min, high=b3_max)
         print 'reset starting point: ', d1_0, d2_0, d3_0
-
-#         try:
-        sol = fsolve(func, x0 = np.array([d1_0, d2_0, d3_0]), args = d)
-        print 'solution: ', sol
-        print 'guessed vol: ', Series(sol[0], sol[1], sol[2])
-#         except:
-#             continue
         
-        const, vol = constraint(Series, sol, vol_min_global, b_list)
+        try:
+            sol = fsolve(func, x0 = np.array([d1_0, d2_0, d3_0]), args = d)
+            print 'solution: ', sol
+            print 'guessed vol: ', Series(sol[0], sol[1], sol[2])
+        except:
+            continue
+        
+        const, vol = constraint(Series, sol, euler, b_list)
 
     print 'Done.'
 
     return vol, sol
 
-def solver(series, b_max, h_max, b_list, sol_max=100):
+
+def solver(series, h_max, b_list, euler, sol_max=100):
     b1, b2, b3 = b_list
     # find derivative
     d1 = diff(series, b1)
@@ -89,30 +115,18 @@ def solver(series, b_max, h_max, b_list, sol_max=100):
     d3 = lambdify((b1,b2,b3),d3)
     d = (d1, d2, d3)
     series = lambdify((b1,b2,b3),series)
-    # find the volume lower bound
-    vol_min_global = 1/h_max**3
+    
     # divide solution space into grids
-    x_max, y_max, z_max = b_max
-    x = np.linspace(0, x_max, x_max+1)
-    y = np.linspace(0, y_max, y_max+1)
-    z = np.linspace(0, z_max, z_max+1)
-    xv, yv, zv = np.meshgrid(x, y, z)
-    for i in range(x_max):
-        for j in range(y_max):
-            for k in range(z_max):
-                # find the bounds
-                b1_min = xv[i,j,k]
-                b1_max = b1_min+1
-                b2_min = yv[i,j,k]
-                b2_max = b2_min+1
-                b3_min = zv[i,j,k]
-                b3_max = b3_min+1
-                bounds = [[b1_min, b1_max],[b2_min,b2_max],[b3_min,b3_max]]
+    bounds = generate_grid(h_max)
+    for i in range(len(bounds[0])):
+        for j in range(len(bounds[1])):
+            for k in range(len(bounds[2])):
+                bound = find_bound(i,j,k, bounds)
                 # try solve
-                vol, sol = NSolve(series, d, vol_min_global, b_list, bounds)
+                vol, sol = NSolve(series, d, euler, b_list, bound=bound)
                 if type(sol) == int or type(vol) == int:
                     # sol = -1 and vol = -1
-                    print ('range ', b1_min,b2_min,b3_min,' does not work')
+                    print ('range ', bound,' does not work')
                     continue
                 if type(sol) == np.ndarray:
                     # edge case
@@ -120,13 +134,13 @@ def solver(series, b_max, h_max, b_list, sol_max=100):
                 if sol[0] > sol_max or sol[1] > sol_max or sol[2] > sol_max:
                     print ('solution out of bounds.')
                     continue
-                if vol_min_global < vol < 1:
+                if 0 < vol < 1:
                     print ('vol:', vol, '; sol:', sol)
                     return vol, sol
     print('cannot find solution.')
     return -1,-1
 
-def generate_vol(h_max, coeff=2):
+def generate_vol(h_max, coeff=1):
     # Input:
     #   h_max: the max height of the polytope
     #   coeff: an empirical factor that determines the search space
@@ -144,10 +158,9 @@ def generate_vol(h_max, coeff=2):
         for h2 in range(h1+1):
             for h3 in range(h2+1):
                 print(h1,h2,h3)
-                prism, series, triang, power = lift_prism(h1,h2,h3)
-                b_max = (h1*coeff,h1*coeff,h1*coeff)
-                vol, sol = solver(series, b_max, h1*coeff)
-                triang_list.append([[h1,h2,h3], vol, sol, prism, series, triang, power])
+                prism, series, triang, power, euler = lift_prism(h1,h2,h3)
+                vol, sol = solver(series, h1*coeff, euler)
+                triang_list.append([[h1,h2,h3], vol, sol, prism, series, triang, power, euler])
                 print('')
     return triang_list
 
@@ -168,11 +181,11 @@ def load_file(fname):
             out_list.append(np.load(f))
     return out_list
 
-def load_series(file_name, home=expanduser("~")):
+def load_series(file_name, home=expanduser("~/Calabi_Yau")):
     path_name = home+'/data/'+file_name
     return load_file(path_name)
     
-def find_vol_from_series(file_name, coeff=2, home=expanduser("~")):
+def find_vol_from_series(file_name, coeff=1, home=expanduser("~/Calabi_Yau")):
     output_name = 'vol_'+file_name
     output_path = home+'/data/'+output_name
     
@@ -187,11 +200,12 @@ def find_vol_from_series(file_name, coeff=2, home=expanduser("~")):
             h_list = eval(data[0])
         print(h_list)
         series = eval(data[2])
+        euler = eval(data[-1])
         h1 = max(h_list)
-        b_max = (h1*coeff,h1*coeff,h1*coeff)
-        vol, sol = solver(series, b_max, h1*coeff, [b1,b2,b3])
+        vol, sol = solver(series, h1*coeff, [b1,b2,b3], euler) #series, h_max, b_list, euler
         write_file(output_path, [h_list, vol, sol])
         print('===========')
+
         
-# find_vol_from_series('series_0_2.npy')
-print load_series('vol_series_0_2.npy')
+find_vol_from_series('series_0_2.npy')
+# print load_series('vol_series_0_2.npy')

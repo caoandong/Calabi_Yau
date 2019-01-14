@@ -174,7 +174,6 @@ def idx_to_pts(triang, pts):
         triang_new.append([pts[j] for j in triang[i]])
     return triang_new
 
-
 def lift_prism(h1, h2, h3):
     """Triangulate the polytope defined by input heights
        
@@ -198,6 +197,7 @@ def lift_prism(h1, h2, h3):
     power = []
     if h1 == h2 == h3:
         series = 0
+        euler = 0
         prism = []
         # h1 = h2 = h3
         for h in range(h1):
@@ -205,6 +205,7 @@ def lift_prism(h1, h2, h3):
             prism_1 = [[[1,0,0],[0,0,h],[0,0,h+1],[1,1,h3]]]
             prism_2 = [[[1,1,h3],[0,0,h],[0,0,h+1],[0,1,h2]]]
             prism += prism_1 + prism_2
+            euler += 2
             
             series_1, triang_1, power_1 = Hilb(prism_1)
             series_2, triang_2, power_2 = Hilb(prism_2)
@@ -213,18 +214,20 @@ def lift_prism(h1, h2, h3):
             triang.append(triang_2)
             power.append(power_1)
             power.append(power_2)
-        return prism, series, triang, power
+        return prism, series, triang, power, euler
             
     if h2 > h3:
         # h1 >= h2 > h3
         assert((h1 >= h2) and (h2 > h3))
         series = 0
+        euler = 0
         prism = []
         for h in range(h3):
             # 0 <= h < h3
             prism_1 = [[[1,0,0],[0,0,h],[0,0,h+1],[1,1,h3]]]
             prism_2 = [[[0,1,h2],[0,0,h],[0,0,h+1],[1,1,h3]]]
             prism += prism_1 + prism_2
+            euler += 2
             
             series_1, triang_1, power_1 = Hilb(prism_1)
             series_2, triang_2, power_2 = Hilb(prism_2)
@@ -239,6 +242,7 @@ def lift_prism(h1, h2, h3):
             prism_1 = [[[1,0,0],[0,0,h],[0,0,h+1],[1,1,h3]]]
             prism_2 = [[[0,1,h2],[0,0,h],[0,0,h+1],[1,1,h3]]]
             prism += prism_1 + prism_2
+            euler += 2
             
             series_1, triang_1, power_1 = Hilb(prism_1)
             series_2, triang_2, power_2 = Hilb(prism_2)
@@ -256,6 +260,7 @@ def lift_prism(h1, h2, h3):
                 prism_1 = [[[1,0,0],[0,0,h],[0,0,h+1],[1,1,h3]]]
                 prism_2 = [[[0,1,h2],[0,0,h],[0,0,h+1],[1,1,h3]]]
                 prism += prism_1 + prism_2
+                euler += 2
                 
                 series_1, triang_1, power_1 = Hilb(prism_1)
                 series_2, triang_2, power_2 = Hilb(prism_2)
@@ -264,10 +269,11 @@ def lift_prism(h1, h2, h3):
                 triang.append(triang_2)
                 power.append(power_1)
                 power.append(power_2)
-        return prism, series, triang, power
+        return prism, series, triang, power, euler
         
     elif h2 < h3:
         series = 0
+        euler = 0
         prism = []
         if h1 > h3:
             # h1 > h3 > h2
@@ -276,6 +282,7 @@ def lift_prism(h1, h2, h3):
                 # 0 <= h < h2
                 prism_1 = [[[1,0,0],[0,0,h],[0,0,h+1],[0,1,h2]]]
                 prism += prism_1
+                euler += 1
                 
                 series_1, triang_1, power_1 = Hilb(prism_1)
                 series += series_1
@@ -285,6 +292,7 @@ def lift_prism(h1, h2, h3):
             # Middle prism:
             prism_1 = [[[1,0,0],[0,1,h2],[0,0,h2],[1,1,h3]]]
             prism += prism_1
+            euler += 1
             
             series_1, triang_1, power_1 = Hilb(prism_1)
             series += series_1
@@ -296,6 +304,7 @@ def lift_prism(h1, h2, h3):
                 prism_1 = [[[1,0,0],[0,0,h],[0,0,h+1],[1,1,h3]]]
                 prism_2 = [[[0,1,h2],[0,0,h],[0,0,h+1],[1,1,h3]]]
                 prism += prism_1 + prism_2
+                euler += 2
                 
                 series_1, triang_1, power_1 = Hilb(prism_1)
                 series_2, triang_2, power_2 = Hilb(prism_2)
@@ -304,7 +313,7 @@ def lift_prism(h1, h2, h3):
                 triang.append(triang_2)
                 power.append(power_1)
                 power.append(power_2)
-            return prism, series, triang, power
+            return prism, series, triang, power, euler
                 
         else:
             # h1 = h3 > h2
@@ -313,6 +322,7 @@ def lift_prism(h1, h2, h3):
                 # 0 <= h < h2
                 prism_1 = [[[1,0,0],[0,0,h],[0,0,h+1],[0,1,h2]]]
                 prism += prism_1
+                euler += 1
                 
                 series_1, triang_1, power_1 = Hilb(prism_1)
                 series += series_1
@@ -322,6 +332,7 @@ def lift_prism(h1, h2, h3):
             # Middle prism:
             prism_1 = [[[1,0,0],[0,1,h2],[0,0,h1],[1,1,h3]]]
             prism += prism_1
+            euler += 1
             
             series_1, triang_1, power_1 = Hilb(prism_1)
             series += series_1
@@ -332,25 +343,27 @@ def lift_prism(h1, h2, h3):
                 # h2 <= h < h1
                 prism_1 = [[[1,0,0],[0,0,h],[0,0,h+1],[0,1,h2]]]
                 prism += prism_1
+                euler += 1
                 
                 series_1, triang_1, power_1 = Hilb(prism_1)
                 series += series_1
                 triang.append(triang_1)
                 power.append(power_1)
-            return prism, series, triang, power
+            return prism, series, triang, power, euler
                 
     else:
-        # h1 > h2 = h3
         assert(h2 == h3)
         assert(h1 > h2)
-        
+        # h1 > h2 = h3
         prism = []
         series = 0
+        euler = 0
         for h in range(h2):
             # 0 <= h < h2
             prism_1 = [[[1,0,0],[0,0,h],[0,0,h+1],[1,1,h3]]]
             prism_2 = [[[0,1,h2],[0,0,h],[0,0,h+1],[1,1,h3]]]
             prism += prism_1 + prism_2
+            euler += 2
 
             series_1, triang_1, power_1 = Hilb(prism_1)
             series_2, triang_2, power_2 = Hilb(prism_2)
@@ -365,6 +378,7 @@ def lift_prism(h1, h2, h3):
             prism_1 = [[[1,0,0],[0,0,h],[0,0,h+1],[1,1,h3]]]
             prism_2 = [[[0,1,h2],[0,0,h],[0,0,h+1],[1,1,h3]]]
             prism += prism_1 + prism_2
+            euler += 2
 
             series_1, triang_1, power_1 = Hilb(prism_1)
             series_2, triang_2, power_2 = Hilb(prism_2)
@@ -374,7 +388,7 @@ def lift_prism(h1, h2, h3):
             power.append(power_1)
             power.append(power_2)
         
-    return prism, series, triang, power
+    return prism, series, triang, power, euler
 
 def prism_plot(prism):
     """Plot the input prism
@@ -432,22 +446,30 @@ def generate_series(h_max):
              triang: triangulation of the polytope
              power: order of the t's in the hilbert series
         """
-    home = expanduser("~")
+    home = expanduser("~/Calabi_Yau")
     file_name='series'+'_0_'+str(int(h_max-1))+'.npy'
     path_name = home+'/data/'+file_name
     for h1 in range(1,h_max):
         for h2 in range(h1+1):
             for h3 in range(h2+1):
                 print(h1,h2,h3)
-                prism, series, triang, power = lift_prism(h1,h2,h3)
-                data = [str([h1,h2,h3]), str(prism), str(series), str(triang), str(power)]
+                prism, series, triang, power, euler = lift_prism(h1,h2,h3)
+                data = [str([h1,h2,h3]), str(prism), str(series), str(triang), str(power), str(euler)]
                 write_file(path_name, data)
 
 def load_series(file_name):
-    home = expanduser("~")
+    home = expanduser("~/Calabi_Yau")
     path_name = home+'/data/'+file_name
     return load_file(path_name)
 
 
 
 generate_series(50)
+# data_list = load_series('series_0_2.npy')
+
+# for data in data_list:
+#     heights = eval(data[0])
+#     series = data[2]
+#     euler = eval(data[-1])
+#     print heights, euler, series
+    

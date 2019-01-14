@@ -3414,4 +3414,214 @@ error: Your local changes to the following files would be overwritten by merge:
 	src/notebook/.Triangulation.ipynb.sage-jupyter2
 Please commit your changes or stash them before you merge.
 Aborting
-]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ g
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ git add *
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ ls
+Readme.md  [0m[01;34mdata[0m  [01;34mdocs[0m  [01;34mold[0m  [01;34msrc[0m  [01;34mtest[0m
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ cd [K[K[Kgit commit -m 'local'
+[master 766c0c7] local
+ 6 files changed, 1246 insertions(+), 14 deletions(-)
+ create mode 100644 src/2019-01-13-170812.zip
+ create mode 100644 src/notebook/.Triang_tmp.ipynb.sage-jupyter2
+ rewrite src/notebook/.Triangulation.ipynb.sage-jupyter2 (99%)
+ create mode 100644 src/notebook/Triang_tmp.ipynb
+ create mode 100644 src/notebook/euler_data_tmp.txt
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ git stach [K[K[Ksh ppo[K[Kop
+error: Your local changes to the following files would be overwritten by merge:
+	src/.numerical_solve.py-0.term
+Please commit your changes or stash them before you merge.
+Aborting
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ git checkout [K[K[K[K[K[K[K[K[Kstash show -p | git apply
+<stdin>:101: trailing whitespace.
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ 
+<stdin>:112: trailing whitespace.
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ 
+<stdin>:125: trailing whitespace.
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ python numerical_solve.py 
+<stdin>:156: trailing whitespace.
+Python 2.7.15rc1 (default, Nov 12 2018, 14:31:15) 
+<stdin>:162: trailing whitespace.
+    b3_max = 
+error: cannot apply binary patch to 'data/series_0_2.npy' without full index line
+error: data/series_0_2.npy: patch does not apply
+error: cannot apply binary patch to 'data/vol_series_0_2.npy' without full index line
+error: data/vol_series_0_2.npy: patch does not apply
+error: patch failed: src/.numerical_solve.py-0.term:2401
+error: src/.numerical_solve.py-0.term: patch does not apply
+error: patch failed: src/notebook/.Triangulation.ipynb.sage-jupyter2:1
+error: src/notebook/.Triangulation.ipynb.sage-jupyter2: patch does not apply
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ git checkout stash --
+error: Your local changes to the following files would be overwritten by checkout:
+	src/.numerical_solve.py-0.term
+Please commit your changes or stash them before you switch branches.
+Aborting
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ git commit
+On branch master
+Changes not staged for commit:
+	[31mmodified:   src/.numerical_solve.py-0.term[m
+	[31mdeleted:    src/2019-01-13-170812.zip[m
+
+no changes added to commit
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ git add -u
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ git stash pop
+Auto-merging src/notebook/.Triangulation.ipynb.sage-jupyter2
+CONFLICT (content): Merge conflict in src/notebook/.Triangulation.ipynb.sage-jupyter2
+Auto-merging src/.numerical_solve.py-0.term
+CONFLICT (content): Merge conflict in src/.numerical_solve.py-0.term
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ git reset
+Unstaged changes after reset:
+M	data/series_0_2.npy
+M	data/vol_series_0_2.npy
+M	src/.Triangulation.sage-0.term
+M	src/.numerical_solve.py-0.term
+D	src/2019-01-13-170812.zip
+M	src/Triangulation.sage
+M	src/Triangulation.sage.py
+M	src/notebook/.Triangulation.ipynb.sage-jupyter2
+M	src/notebook/Triangulation.ipynb
+M	src/numerical_solve.py
+]0;~/Calabi_Yau[01;34m~/Calabi_Yau[00m$ git resetstash pop[3Padd -ucommit[K[K[K[K[K[K[K[K[K[Kcd src/
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ python numerical_solve.py 
+[1, 0, 0]
+Traceback (most recent call last):
+  File "numerical_solve.py", line 210, in <module>
+    find_vol_from_series('series_0_2.npy')
+  File "numerical_solve.py", line 205, in find_vol_from_series
+    vol, sol = solver(series, h1*coeff, euler)
+  File "numerical_solve.py", line 108, in solver
+    b1, b2, b3 = b_list
+TypeError: 'int' object is not iterable
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ python numerical_solve.py 
+[1, 0, 0]
+reset starting point:  0.158116013146 0.114327039197 0.22853579189
+/usr/lib/python2.7/dist-packages/scipy/optimize/minpack.py:161: RuntimeWarning: The iteration is not making good progress, as measured by the 
+  improvement from the last ten iterations.
+  warnings.warn(msg, RuntimeWarning)
+solution:  [1.50000277 1.49999971 1.00000009]
+guessed vol:  0.5925925926421769
+Done.
+Traceback (most recent call last):
+  File "numerical_solve.py", line 210, in <module>
+    find_vol_from_series('series_0_2.npy')
+  File "numerical_solve.py", line 205, in find_vol_from_series
+    vol, sol = solver(series, h1*coeff, [b1,b2,b3], euler) #series, h_max, b_list, euler
+  File "numerical_solve.py", line 137, in solver
+    if vol_min < vol < 1:
+NameError: global name 'vol_min' is not defined
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ python numerical_solve.py 
+[1, 0, 0]
+reset starting point:  0.551708860573 0.453780992603 0.384699708153
+solution:  [1.5000347 1.5000115 0.9999883]
+guessed vol:  0.5925925928750075
+Done.
+('vol:', '0.5925925928750075', '; sol:', [1.5000347033630643, 1.5000115008216908, 0.999988297025121])
+===========
+[1, 1, 0]
+reset starting point:  0.783885485921 0.0158452038594 0.488614143492
+/usr/lib/python2.7/dist-packages/scipy/optimize/minpack.py:161: RuntimeWarning: The iteration is not making good progress, as measured by the 
+  improvement from the last five Jacobian evaluations.
+  warnings.warn(msg, RuntimeWarning)
+solution:  [1.38578666 0.08556742 1.33033787]
+guessed vol:  5.0981460529521705
+volume:  5.0981460529521705  is out of bounds.
+reset starting point:  0.454957754735 0.320982414412 0.597510558972
+solution:  [1.50000104 1.49999899 1.49999897]
+guessed vol:  0.5925925925548654
+Done.
+('vol:', '0.5925925925548654', '; sol:', [1.5000010406176736, 1.4999989930445459, 1.4999989675451906])
+===========
+[1, 1, 1]
+reset starting point:  0.688275611548 0.873253351412 0.390554516092
+/usr/lib/python2.7/dist-packages/scipy/optimize/minpack.py:161: RuntimeWarning: The number of calls to function has reached maxfev = 800.
+  warnings.warn(msg, RuntimeWarning)
+solution:  [ 5.84564914e+38  7.71358246e+38 -1.19279841e+39]
+guessed vol:  -1.3477008058530772e-156
+volume:  -1.3477008058530772e-156  is out of bounds.
+reset starting point:  0.997557650052 0.759050798124 0.0683140085393
+solution:  [ 5.05472082e+38  3.66408600e+38 -9.03069030e+38]
+guessed vol:  -7.825637138835365e-156
+volume:  -7.825637138835365e-156  is out of bounds.
+reset starting point:  0.846263620206 0.206607215792 0.86567372623
+solution:  [1.5000081  1.49999613 2.49999507]
+guessed vol:  0.592592592627625
+Done.
+('vol:', '0.592592592627625', '; sol:', [1.500008103942563, 1.4999961292342026, 2.4999950708411696])
+===========
+[2, 0, 0]
+reset starting point:  0.82244541115 0.663087231734 0.867952264267
+solution:  [1.50000222 1.49999418 2.0000018 ]
+guessed vol:  0.2962962962919846
+Done.
+('vol:', '0.2962962962919846', '; sol:', [1.5000022211729014, 1.4999941809931432, 2.0000017960184233])
+===========
+[2, 1, 0]
+reset starting point:  0.740990211285 0.963466819094 0.489491954615
+/usr/lib/python2.7/dist-packages/scipy/optimize/minpack.py:161: RuntimeWarning: The iteration is not making good progress, as measured by the 
+  improvement from the last ten iterations.
+  warnings.warn(msg, RuntimeWarning)
+solution:  [1.46403986 1.46406469 2.53620806]
+guessed vol:  0.3126157149672508
+Done.
+('vol:', '0.3126157149672508', '; sol:', [1.4640398596898758, 1.4640646863006896, 2.536208055478814])
+===========
+[2, 1, 1]
+reset starting point:  0.809807766589 0.416027983453 0.0626381469711
+solution:  [ 2.77137873e+37  1.87777138e+37 -5.70563173e+37]
+guessed vol:  -4.920029635876813e-150
+volume:  -4.920029635876813e-150  is out of bounds.
+reset starting point:  0.243073257953 0.383586455072 0.00143047145967
+solution:  [ 7.49610693e+37  1.14659645e+38 -3.09820708e+38]
+guessed vol:  -4.3426618299965336e-153
+volume:  -4.3426618299965336e-153  is out of bounds.
+reset starting point:  0.800565280134 0.592630789543 0.519316621377
+solution:  [ 1.00119420e+35  1.16498927e+35 -3.42310629e+35]
+guessed vol:  -2.936729607747473e-141
+volume:  -2.936729607747473e-141  is out of bounds.
+('range ', [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.590757510901 0.195698072539 1.92319694423
+solution:  [1.49999026 1.50002501 3.50003266]
+guessed vol:  0.296296296401124
+Done.
+('vol:', '0.296296296401124', '; sol:', [1.499990258934537, 1.5000250136195612, 3.5000326614306685])
+===========
+[2, 2, 0]
+reset starting point:  0.207173389559 0.0391961716816 0.475828513292
+solution:  [1.499985   1.49999739 3.00002616]
+guessed vol:  0.2962962963501923
+Done.
+('vol:', '0.2962962963501923', '; sol:', [1.4999849985547464, 1.499997387451775, 3.0000261628736675])
+===========
+[2, 2, 1]
+reset starting point:  0.0834799276219 0.467978093809 0.393641066237
+solution:  [2.9999853  3.00001522 0.394479  ]
+guessed vol:  -0.00925925925946558
+volume:  -0.00925925925946558  is out of bounds.
+reset starting point:  0.645874071909 0.436688801972 0.711433036867
+solution:  [1.46341632 1.46437737 4.00168895]
+guessed vol:  0.31261580786667764
+Done.
+('vol:', '0.31261580786667764', '; sol:', [1.4634163177029795, 1.4643773679410392, 4.001688948992975])
+===========
+[2, 2, 2]
+reset starting point:  0.0150369085778 0.92526745276 0.36237072303
+solution:  [ 1.01222885e+37  4.60672129e+38 -1.50766911e+39]
+guessed vol:  -1.18102255869844e-154
+volume:  -1.18102255869844e-154  is out of bounds.
+reset starting point:  0.268561071793 0.129018304616 0.158999473101
+solution:  [ 1.56880971e+36  1.49907027e+36 -4.79891681e+36]
+guessed vol:  -3.8033035162236912e-146
+volume:  -3.8033035162236912e-146  is out of bounds.
+reset starting point:  0.743697828276 0.554507719262 0.921500549341
+solution:  [ 3.39225836e+36  3.89390327e+36 -1.44008525e+37]
+guessed vol:  -6.825432750644971e-148
+volume:  -6.825432750644971e-148  is out of bounds.
+('range ', [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0]], ' does not work')
+reset starting point:  0.831456958824 0.627182619415 1.74678833778
+solution:  [1.50001239 1.5000089  5.00000715]
+guessed vol:  0.29629629630653653
+Done.
+('vol:', '0.29629629630653653', '; sol:', [1.5000123912643823, 1.5000089010899913, 5.000007147063577])
+===========
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ ^C
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ ls
+Triangulation.sage  Triangulation.sage.py  download_google_drive.py  [0m[01;34mjulia[0m  [01;34mnotebook[0m  numerical_solve.py  saveTest.sage  saveTest.sage.py
+]0;~/Calabi_Yau/src[01;34m~/Calabi_Yau/src[00m$ 
