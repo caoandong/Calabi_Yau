@@ -185,14 +185,21 @@ def load_series(file_name, home=expanduser("~/Calabi_Yau")):
     path_name = home+'/data/'+file_name
     return load_file(path_name)
     
-def find_vol_from_series(file_name, coeff=1, home=expanduser("~/Calabi_Yau")):
-    output_name = 'vol_'+file_name
+def find_vol_from_series(file_name, start=0, coeff=1, home=expanduser("~/Calabi_Yau")):
+    output_name = 'vol_3913_'+file_name
     output_path = home+'/data/'+output_name
     
     data_list = load_series(file_name)
     b1,b2,b3 = sp.symbols('b1 b2 b3')
     
+    counter = 0
+    
     for data in data_list:
+        counter += 1
+        if counter <= start:
+            continue
+        if counter%10 == 0:
+            print counter
         h_list = []
         if type(data[0]) == list:
             h_list = data[0]
@@ -207,5 +214,5 @@ def find_vol_from_series(file_name, coeff=1, home=expanduser("~/Calabi_Yau")):
         print('===========')
 
         
-find_vol_from_series('series_0_2.npy')
+find_vol_from_series('series_0_49.npy', start=3913) #3913
 # print load_series('vol_series_0_2.npy')
